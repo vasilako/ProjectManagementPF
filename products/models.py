@@ -19,6 +19,12 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(
+        upload_to='products/%Y/%m/%d',
+        blank=True,
+        null=True,
+        default='defaults/no-image-available.png'
+    )
 
     class Meta:
         verbose_name_plural = "Products"

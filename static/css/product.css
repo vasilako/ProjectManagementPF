@@ -1,0 +1,20 @@
+.text-truncate-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+  line-height: 1.5em;
+  max-height: 4.5em; /* 3 lines × 1.5 */
+}
+
+.read-more-link {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: white;
+  padding-left: 4px;
+  font-weight: 500;
+  color: #007bff;
+  text-decoration: none;
+}

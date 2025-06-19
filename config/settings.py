@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.global_categories',
             ],
         },
     },
@@ -118,7 +119,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# Used for project-wide static assets, served via STATICFILES_DIRS during development.
+# Static files are served from STATICFILES_DIRS (in dev) and collected with collectstatic (in prod).
+# Place custom assets (logo images, JS, CSS) inside the `static/` folder at project root.
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Media files (user-uploaded content)
+# These are files uploaded through ImageField/FileField, like product images.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

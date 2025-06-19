@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% load static %}
 
 <h2>Products</h2>
-
+<!--
 <form method="get">
     <select name="category" onchange="this.form.submit()">
           {% for cat in categories %}
@@ -13,16 +14,20 @@
         {% endfor %}
     </select>
 </form>
+-->
 
-<ul>
-    {% for product in products %}
-    <li>
-        <strong>{{ product.name }}</strong> - {{ product.category.name }} - ${{ product.price }}
-    </li>
-    {% empty %}
-    <li>No products found.</li>
-    {% endfor %}
-</ul>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+  {% for product in products %}
+    {% include "products/_product_card.html" %}
+  {% empty %}
+    <div class="col">
+      <div class="alert alert-warning text-center w-100">
+        No products found.
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
 
 {% if is_paginated %}
 <div>
