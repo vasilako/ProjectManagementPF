@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <div class="text-center">
+    <h2>Welcome to ProjectManagementPF</h2>
+    <p class="lead">Start by browsing <a href="{% url 'product_list' %}">products</a>.</p>
+  </div>
+{% endblock %}
