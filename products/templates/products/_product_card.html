@@ -5,23 +5,37 @@
 <div class="col">
   <div class="card h-100 shadow-sm position-relative">
 
-    {% if product.image %}
-      <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+    {# Product image carousel (uses product.images.all) #}
+    {% if product.images.all %}
+    <div id="carousel{{ product.id }}" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for image in product.images.all %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+        </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ product.id }}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ product.id }}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </button>
+    </div>
     {% else %}
-      <img src="{% static 'img/product-placeholder.png' %}" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
+    <img src="{% static 'img/defaults/no-image-available.png' %}" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
     {% endif %}
 
+    {# Product name and description #}
     <div class="card-body p-3">
       <h5 class="card-title text-center">{{ product.name }}</h5>
       <p class="card-text text-truncate-multiline">
         {{ product.description }}
-        {% comment %}
-        <a href="{% url 'product_detail' product.pk %}" class="read-more-link">… Ampliar</a>
-          {% endcomment %}
         <a href="#" class="read-more-link">… Ampliar</a>
       </p>
     </div>
 
+    {# Footer with category and price #}
     <div class="card-footer d-flex justify-content-between align-items-center bg-white border-0 px-3 pb-3">
       <small class="text-muted">{{ product.category.name }}</small>
       <span class="btn btn-sm btn-outline-danger">${{ product.price }}</span>
