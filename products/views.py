@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from .models import Product,Category
+
 
 # Create your views here.
-from django.views.generic import ListView
-from .models import Product,Category
 
 class ProductListView(ListView):
     model = Product
@@ -24,4 +25,7 @@ class ProductListView(ListView):
         context['selected_category'] = int(category_id) if category_id and category_id.isdigit() else None
         return context
 
-
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "products/product_detail.html"
+    context_object_name = "product"
