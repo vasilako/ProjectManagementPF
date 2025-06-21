@@ -10,11 +10,13 @@
                 <div class="carousel-inner">
                     {% for image in product.images.all %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <img src="{{ image.image.url }}"
-                             class="d-block w-100"
-                             alt="{{ product.name }}"
-                             style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; object-position: center;">
-
+                        {% if image.image.name|slice:":4" == "http" %}
+                        <img src="{{ image.image.name }}" class="d-block w-100" alt="{{ product.name }}"
+                             style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.name }}"
+                             style="height: 200px; object-fit: cover;">
+                        {% endif %}
                     </div>
                     {% endfor %}
                 </div>
@@ -32,8 +34,8 @@
                  class="img-fluid"
                  alt="No image available"
                  style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; object-position: center;">
-
             {% endif %}
+
         </div>
 
         <div class="col-md-6">

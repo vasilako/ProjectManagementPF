@@ -30,14 +30,39 @@
 
 
 {% if is_paginated %}
-<div>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center mt-4">
     {% if page_obj.has_previous %}
-    <a href="?page={{ page_obj.previous_page_number }}&category={{ selected_category }}">Previous</a>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
     {% endif %}
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+      {% elif num > page_obj.number|add:"-3" and num < page_obj.number|add:"3" %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}">{{ num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
     {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}&category={{ selected_category }}">Next</a>
+    <li class="page-item">
+      <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% else %}
+    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
     {% endif %}
-</div>
+  </ul>
+</nav>
 {% endif %}
+
 {% endblock %}
