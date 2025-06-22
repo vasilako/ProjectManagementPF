@@ -1,0 +1,2751 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-06-19T17:20:04.545Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Deportes",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-06-19T17:22:20.953Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "Balón de voleibol",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-06-19T19:35:41.609Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "2",
+    "object_repr": "Raqueta de tenis",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-06-19T19:36:17.478Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Deportes",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-06-20T10:26:03.322Z",
+    "user": 1,
+    "content_type": 8,
+    "object_id": "1",
+    "object_repr": "Balón de voleibol",
+    "action_flag": 2,
+    "change_message": "[{\"added\": {\"name\": \"product image\", \"object\": \"Bal\\u00f3n de voleibol - Image\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"Bal\\u00f3n de voleibol - Image\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"Bal\\u00f3n de voleibol - Image\"}}, {\"added\": {\"name\": \"product image\", \"object\": \"Bal\\u00f3n de voleibol - Image\"}}]"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$CVTPOOoSzl1sX1GtL5xmN4$0lyiC2cwrOCqNJWKs/nFaVF3FpClSb7iXu4hHpyhd5E=",
+    "last_login": "2025-06-19T17:19:06.349Z",
+    "is_superuser": true,
+    "username": "vas",
+    "first_name": "",
+    "last_name": "",
+    "email": "vasilako@hotmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-06-19T14:47:38.397Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "958sx5imo2k68fgqhenpf4bu6iyik353",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSG8RsCl-34DGWCQqoGktCvjv2uTLnR7zzn3xQJuaw3boCXMmV2YZKffLWJ6UNtBvmO7dZ56W5c58l3hBx186pme18P9O6g46rfWiixEErkIp0GfnQUTs7UeZEkJrEyExfqkMfrijDCowCkHIpaCmQx7fwDcFjgT:1uSIuo:45jagYT_Bv6Db5JwovtijGHJ_Y-trzTMHaWFj2YsPL4",
+    "expire_date": "2025-07-03T17:19:06.351Z"
+  }
+},
+{
+  "model": "products.category",
+  "pk": 8,
+  "fields": {
+    "name": "Hogar",
+    "description": ""
+  }
+},
+{
+  "model": "products.category",
+  "pk": 9,
+  "fields": {
+    "name": "Auto",
+    "description": ""
+  }
+},
+{
+  "model": "products.category",
+  "pk": 10,
+  "fields": {
+    "name": "Deporte",
+    "description": ""
+  }
+},
+{
+  "model": "products.category",
+  "pk": 11,
+  "fields": {
+    "name": "Informática",
+    "description": ""
+  }
+},
+{
+  "model": "products.category",
+  "pk": 12,
+  "fields": {
+    "name": "Telefonía",
+    "description": ""
+  }
+},
+{
+  "model": "products.category",
+  "pk": 13,
+  "fields": {
+    "name": "Herramientas",
+    "description": ""
+  }
+},
+{
+  "model": "products.product",
+  "pk": 3,
+  "fields": {
+    "name": "Hogar Producto 1",
+    "description": "Descripción generada para Hogar Producto 1.",
+    "price": "13.70",
+    "stock": 6,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 4,
+  "fields": {
+    "name": "Hogar Producto 2",
+    "description": "Descripción generada para Hogar Producto 2.",
+    "price": "17.40",
+    "stock": 7,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 5,
+  "fields": {
+    "name": "Hogar Producto 3",
+    "description": "Descripción generada para Hogar Producto 3.",
+    "price": "21.10",
+    "stock": 8,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 6,
+  "fields": {
+    "name": "Hogar Producto 4",
+    "description": "Descripción generada para Hogar Producto 4.",
+    "price": "24.80",
+    "stock": 9,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 7,
+  "fields": {
+    "name": "Hogar Producto 5",
+    "description": "Descripción generada para Hogar Producto 5.",
+    "price": "28.50",
+    "stock": 10,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 8,
+  "fields": {
+    "name": "Hogar Producto 6",
+    "description": "Descripción generada para Hogar Producto 6.",
+    "price": "32.20",
+    "stock": 11,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 9,
+  "fields": {
+    "name": "Hogar Producto 7",
+    "description": "Descripción generada para Hogar Producto 7.",
+    "price": "35.90",
+    "stock": 12,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 10,
+  "fields": {
+    "name": "Hogar Producto 8",
+    "description": "Descripción generada para Hogar Producto 8.",
+    "price": "39.60",
+    "stock": 13,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 11,
+  "fields": {
+    "name": "Hogar Producto 9",
+    "description": "Descripción generada para Hogar Producto 9.",
+    "price": "43.30",
+    "stock": 14,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 12,
+  "fields": {
+    "name": "Hogar Producto 10",
+    "description": "Descripción generada para Hogar Producto 10.",
+    "price": "47.00",
+    "stock": 15,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 13,
+  "fields": {
+    "name": "Hogar Producto 11",
+    "description": "Descripción generada para Hogar Producto 11.",
+    "price": "50.70",
+    "stock": 16,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 14,
+  "fields": {
+    "name": "Hogar Producto 12",
+    "description": "Descripción generada para Hogar Producto 12.",
+    "price": "54.40",
+    "stock": 17,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 15,
+  "fields": {
+    "name": "Hogar Producto 13",
+    "description": "Descripción generada para Hogar Producto 13.",
+    "price": "58.10",
+    "stock": 18,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 16,
+  "fields": {
+    "name": "Hogar Producto 14",
+    "description": "Descripción generada para Hogar Producto 14.",
+    "price": "61.80",
+    "stock": 19,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 17,
+  "fields": {
+    "name": "Hogar Producto 15",
+    "description": "Descripción generada para Hogar Producto 15.",
+    "price": "65.50",
+    "stock": 20,
+    "category": 8
+  }
+},
+{
+  "model": "products.product",
+  "pk": 18,
+  "fields": {
+    "name": "Auto Producto 1",
+    "description": "Descripción generada para Auto Producto 1.",
+    "price": "13.70",
+    "stock": 6,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 19,
+  "fields": {
+    "name": "Auto Producto 2",
+    "description": "Descripción generada para Auto Producto 2.",
+    "price": "17.40",
+    "stock": 7,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 20,
+  "fields": {
+    "name": "Auto Producto 3",
+    "description": "Descripción generada para Auto Producto 3.",
+    "price": "21.10",
+    "stock": 8,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 21,
+  "fields": {
+    "name": "Auto Producto 4",
+    "description": "Descripción generada para Auto Producto 4.",
+    "price": "24.80",
+    "stock": 9,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 22,
+  "fields": {
+    "name": "Auto Producto 5",
+    "description": "Descripción generada para Auto Producto 5.",
+    "price": "28.50",
+    "stock": 10,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 23,
+  "fields": {
+    "name": "Auto Producto 6",
+    "description": "Descripción generada para Auto Producto 6.",
+    "price": "32.20",
+    "stock": 11,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 24,
+  "fields": {
+    "name": "Auto Producto 7",
+    "description": "Descripción generada para Auto Producto 7.",
+    "price": "35.90",
+    "stock": 12,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 25,
+  "fields": {
+    "name": "Auto Producto 8",
+    "description": "Descripción generada para Auto Producto 8.",
+    "price": "39.60",
+    "stock": 13,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 26,
+  "fields": {
+    "name": "Auto Producto 9",
+    "description": "Descripción generada para Auto Producto 9.",
+    "price": "43.30",
+    "stock": 14,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 27,
+  "fields": {
+    "name": "Auto Producto 10",
+    "description": "Descripción generada para Auto Producto 10.",
+    "price": "47.00",
+    "stock": 15,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 28,
+  "fields": {
+    "name": "Auto Producto 11",
+    "description": "Descripción generada para Auto Producto 11.",
+    "price": "50.70",
+    "stock": 16,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 29,
+  "fields": {
+    "name": "Auto Producto 12",
+    "description": "Descripción generada para Auto Producto 12.",
+    "price": "54.40",
+    "stock": 17,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 30,
+  "fields": {
+    "name": "Auto Producto 13",
+    "description": "Descripción generada para Auto Producto 13.",
+    "price": "58.10",
+    "stock": 18,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 31,
+  "fields": {
+    "name": "Auto Producto 14",
+    "description": "Descripción generada para Auto Producto 14.",
+    "price": "61.80",
+    "stock": 19,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 32,
+  "fields": {
+    "name": "Auto Producto 15",
+    "description": "Descripción generada para Auto Producto 15.",
+    "price": "65.50",
+    "stock": 20,
+    "category": 9
+  }
+},
+{
+  "model": "products.product",
+  "pk": 33,
+  "fields": {
+    "name": "Deporte Producto 1",
+    "description": "Descripción generada para Deporte Producto 1.",
+    "price": "13.70",
+    "stock": 6,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 34,
+  "fields": {
+    "name": "Deporte Producto 2",
+    "description": "Descripción generada para Deporte Producto 2.",
+    "price": "17.40",
+    "stock": 7,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 35,
+  "fields": {
+    "name": "Deporte Producto 3",
+    "description": "Descripción generada para Deporte Producto 3.",
+    "price": "21.10",
+    "stock": 8,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 36,
+  "fields": {
+    "name": "Deporte Producto 4",
+    "description": "Descripción generada para Deporte Producto 4.",
+    "price": "24.80",
+    "stock": 9,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 37,
+  "fields": {
+    "name": "Deporte Producto 5",
+    "description": "Descripción generada para Deporte Producto 5.",
+    "price": "28.50",
+    "stock": 10,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 38,
+  "fields": {
+    "name": "Deporte Producto 6",
+    "description": "Descripción generada para Deporte Producto 6.",
+    "price": "32.20",
+    "stock": 11,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 39,
+  "fields": {
+    "name": "Deporte Producto 7",
+    "description": "Descripción generada para Deporte Producto 7.",
+    "price": "35.90",
+    "stock": 12,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 40,
+  "fields": {
+    "name": "Deporte Producto 8",
+    "description": "Descripción generada para Deporte Producto 8.",
+    "price": "39.60",
+    "stock": 13,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 41,
+  "fields": {
+    "name": "Deporte Producto 9",
+    "description": "Descripción generada para Deporte Producto 9.",
+    "price": "43.30",
+    "stock": 14,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 42,
+  "fields": {
+    "name": "Deporte Producto 10",
+    "description": "Descripción generada para Deporte Producto 10.",
+    "price": "47.00",
+    "stock": 15,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 43,
+  "fields": {
+    "name": "Deporte Producto 11",
+    "description": "Descripción generada para Deporte Producto 11.",
+    "price": "50.70",
+    "stock": 16,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 44,
+  "fields": {
+    "name": "Deporte Producto 12",
+    "description": "Descripción generada para Deporte Producto 12.",
+    "price": "54.40",
+    "stock": 17,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 45,
+  "fields": {
+    "name": "Deporte Producto 13",
+    "description": "Descripción generada para Deporte Producto 13.",
+    "price": "58.10",
+    "stock": 18,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 46,
+  "fields": {
+    "name": "Deporte Producto 14",
+    "description": "Descripción generada para Deporte Producto 14.",
+    "price": "61.80",
+    "stock": 19,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 47,
+  "fields": {
+    "name": "Deporte Producto 15",
+    "description": "Descripción generada para Deporte Producto 15.",
+    "price": "65.50",
+    "stock": 20,
+    "category": 10
+  }
+},
+{
+  "model": "products.product",
+  "pk": 48,
+  "fields": {
+    "name": "Informática Producto 1",
+    "description": "Descripción generada para Informática Producto 1.",
+    "price": "13.70",
+    "stock": 6,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 49,
+  "fields": {
+    "name": "Informática Producto 2",
+    "description": "Descripción generada para Informática Producto 2.",
+    "price": "17.40",
+    "stock": 7,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 50,
+  "fields": {
+    "name": "Informática Producto 3",
+    "description": "Descripción generada para Informática Producto 3.",
+    "price": "21.10",
+    "stock": 8,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 51,
+  "fields": {
+    "name": "Informática Producto 4",
+    "description": "Descripción generada para Informática Producto 4.",
+    "price": "24.80",
+    "stock": 9,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 52,
+  "fields": {
+    "name": "Informática Producto 5",
+    "description": "Descripción generada para Informática Producto 5.",
+    "price": "28.50",
+    "stock": 10,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 53,
+  "fields": {
+    "name": "Informática Producto 6",
+    "description": "Descripción generada para Informática Producto 6.",
+    "price": "32.20",
+    "stock": 11,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 54,
+  "fields": {
+    "name": "Informática Producto 7",
+    "description": "Descripción generada para Informática Producto 7.",
+    "price": "35.90",
+    "stock": 12,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 55,
+  "fields": {
+    "name": "Informática Producto 8",
+    "description": "Descripción generada para Informática Producto 8.",
+    "price": "39.60",
+    "stock": 13,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 56,
+  "fields": {
+    "name": "Informática Producto 9",
+    "description": "Descripción generada para Informática Producto 9.",
+    "price": "43.30",
+    "stock": 14,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 57,
+  "fields": {
+    "name": "Informática Producto 10",
+    "description": "Descripción generada para Informática Producto 10.",
+    "price": "47.00",
+    "stock": 15,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 58,
+  "fields": {
+    "name": "Informática Producto 11",
+    "description": "Descripción generada para Informática Producto 11.",
+    "price": "50.70",
+    "stock": 16,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 59,
+  "fields": {
+    "name": "Informática Producto 12",
+    "description": "Descripción generada para Informática Producto 12.",
+    "price": "54.40",
+    "stock": 17,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 60,
+  "fields": {
+    "name": "Informática Producto 13",
+    "description": "Descripción generada para Informática Producto 13.",
+    "price": "58.10",
+    "stock": 18,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 61,
+  "fields": {
+    "name": "Informática Producto 14",
+    "description": "Descripción generada para Informática Producto 14.",
+    "price": "61.80",
+    "stock": 19,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 62,
+  "fields": {
+    "name": "Informática Producto 15",
+    "description": "Descripción generada para Informática Producto 15.",
+    "price": "65.50",
+    "stock": 20,
+    "category": 11
+  }
+},
+{
+  "model": "products.product",
+  "pk": 63,
+  "fields": {
+    "name": "Telefonía Producto 1",
+    "description": "Descripción generada para Telefonía Producto 1.",
+    "price": "13.70",
+    "stock": 6,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 64,
+  "fields": {
+    "name": "Telefonía Producto 2",
+    "description": "Descripción generada para Telefonía Producto 2.",
+    "price": "17.40",
+    "stock": 7,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 65,
+  "fields": {
+    "name": "Telefonía Producto 3",
+    "description": "Descripción generada para Telefonía Producto 3.",
+    "price": "21.10",
+    "stock": 8,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 66,
+  "fields": {
+    "name": "Telefonía Producto 4",
+    "description": "Descripción generada para Telefonía Producto 4.",
+    "price": "24.80",
+    "stock": 9,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 67,
+  "fields": {
+    "name": "Telefonía Producto 5",
+    "description": "Descripción generada para Telefonía Producto 5.",
+    "price": "28.50",
+    "stock": 10,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 68,
+  "fields": {
+    "name": "Telefonía Producto 6",
+    "description": "Descripción generada para Telefonía Producto 6.",
+    "price": "32.20",
+    "stock": 11,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 69,
+  "fields": {
+    "name": "Telefonía Producto 7",
+    "description": "Descripción generada para Telefonía Producto 7.",
+    "price": "35.90",
+    "stock": 12,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 70,
+  "fields": {
+    "name": "Telefonía Producto 8",
+    "description": "Descripción generada para Telefonía Producto 8.",
+    "price": "39.60",
+    "stock": 13,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 71,
+  "fields": {
+    "name": "Telefonía Producto 9",
+    "description": "Descripción generada para Telefonía Producto 9.",
+    "price": "43.30",
+    "stock": 14,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 72,
+  "fields": {
+    "name": "Telefonía Producto 10",
+    "description": "Descripción generada para Telefonía Producto 10.",
+    "price": "47.00",
+    "stock": 15,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 73,
+  "fields": {
+    "name": "Telefonía Producto 11",
+    "description": "Descripción generada para Telefonía Producto 11.",
+    "price": "50.70",
+    "stock": 16,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 74,
+  "fields": {
+    "name": "Telefonía Producto 12",
+    "description": "Descripción generada para Telefonía Producto 12.",
+    "price": "54.40",
+    "stock": 17,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 75,
+  "fields": {
+    "name": "Telefonía Producto 13",
+    "description": "Descripción generada para Telefonía Producto 13.",
+    "price": "58.10",
+    "stock": 18,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 76,
+  "fields": {
+    "name": "Telefonía Producto 14",
+    "description": "Descripción generada para Telefonía Producto 14.",
+    "price": "61.80",
+    "stock": 19,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 77,
+  "fields": {
+    "name": "Telefonía Producto 15",
+    "description": "Descripción generada para Telefonía Producto 15.",
+    "price": "65.50",
+    "stock": 20,
+    "category": 12
+  }
+},
+{
+  "model": "products.product",
+  "pk": 78,
+  "fields": {
+    "name": "Herramientas Producto 1",
+    "description": "Descripción generada para Herramientas Producto 1.",
+    "price": "13.70",
+    "stock": 6,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 79,
+  "fields": {
+    "name": "Herramientas Producto 2",
+    "description": "Descripción generada para Herramientas Producto 2.",
+    "price": "17.40",
+    "stock": 7,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 80,
+  "fields": {
+    "name": "Herramientas Producto 3",
+    "description": "Descripción generada para Herramientas Producto 3.",
+    "price": "21.10",
+    "stock": 8,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 81,
+  "fields": {
+    "name": "Herramientas Producto 4",
+    "description": "Descripción generada para Herramientas Producto 4.",
+    "price": "24.80",
+    "stock": 9,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 82,
+  "fields": {
+    "name": "Herramientas Producto 5",
+    "description": "Descripción generada para Herramientas Producto 5.",
+    "price": "28.50",
+    "stock": 10,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 83,
+  "fields": {
+    "name": "Herramientas Producto 6",
+    "description": "Descripción generada para Herramientas Producto 6.",
+    "price": "32.20",
+    "stock": 11,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 84,
+  "fields": {
+    "name": "Herramientas Producto 7",
+    "description": "Descripción generada para Herramientas Producto 7.",
+    "price": "35.90",
+    "stock": 12,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 85,
+  "fields": {
+    "name": "Herramientas Producto 8",
+    "description": "Descripción generada para Herramientas Producto 8.",
+    "price": "39.60",
+    "stock": 13,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 86,
+  "fields": {
+    "name": "Herramientas Producto 9",
+    "description": "Descripción generada para Herramientas Producto 9.",
+    "price": "43.30",
+    "stock": 14,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 87,
+  "fields": {
+    "name": "Herramientas Producto 10",
+    "description": "Descripción generada para Herramientas Producto 10.",
+    "price": "47.00",
+    "stock": 15,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 88,
+  "fields": {
+    "name": "Herramientas Producto 11",
+    "description": "Descripción generada para Herramientas Producto 11.",
+    "price": "50.70",
+    "stock": 16,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 89,
+  "fields": {
+    "name": "Herramientas Producto 12",
+    "description": "Descripción generada para Herramientas Producto 12.",
+    "price": "54.40",
+    "stock": 17,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 90,
+  "fields": {
+    "name": "Herramientas Producto 13",
+    "description": "Descripción generada para Herramientas Producto 13.",
+    "price": "58.10",
+    "stock": 18,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 91,
+  "fields": {
+    "name": "Herramientas Producto 14",
+    "description": "Descripción generada para Herramientas Producto 14.",
+    "price": "61.80",
+    "stock": 19,
+    "category": 13
+  }
+},
+{
+  "model": "products.product",
+  "pk": 92,
+  "fields": {
+    "name": "Herramientas Producto 15",
+    "description": "Descripción generada para Herramientas Producto 15.",
+    "price": "65.50",
+    "stock": 20,
+    "category": 13
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 5,
+  "fields": {
+    "product": 3,
+    "image": "https://picsum.photos/seed/3-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 6,
+  "fields": {
+    "product": 3,
+    "image": "https://picsum.photos/seed/3-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 7,
+  "fields": {
+    "product": 4,
+    "image": "https://picsum.photos/seed/4-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 8,
+  "fields": {
+    "product": 4,
+    "image": "https://picsum.photos/seed/4-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 9,
+  "fields": {
+    "product": 5,
+    "image": "https://picsum.photos/seed/5-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 10,
+  "fields": {
+    "product": 5,
+    "image": "https://picsum.photos/seed/5-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 11,
+  "fields": {
+    "product": 6,
+    "image": "https://picsum.photos/seed/6-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 12,
+  "fields": {
+    "product": 6,
+    "image": "https://picsum.photos/seed/6-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 13,
+  "fields": {
+    "product": 7,
+    "image": "https://picsum.photos/seed/7-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 14,
+  "fields": {
+    "product": 7,
+    "image": "https://picsum.photos/seed/7-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 15,
+  "fields": {
+    "product": 8,
+    "image": "https://picsum.photos/seed/8-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 16,
+  "fields": {
+    "product": 8,
+    "image": "https://picsum.photos/seed/8-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 17,
+  "fields": {
+    "product": 9,
+    "image": "https://picsum.photos/seed/9-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 18,
+  "fields": {
+    "product": 9,
+    "image": "https://picsum.photos/seed/9-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 19,
+  "fields": {
+    "product": 10,
+    "image": "https://picsum.photos/seed/10-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 20,
+  "fields": {
+    "product": 10,
+    "image": "https://picsum.photos/seed/10-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 21,
+  "fields": {
+    "product": 11,
+    "image": "https://picsum.photos/seed/11-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 22,
+  "fields": {
+    "product": 11,
+    "image": "https://picsum.photos/seed/11-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 23,
+  "fields": {
+    "product": 12,
+    "image": "https://picsum.photos/seed/12-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 24,
+  "fields": {
+    "product": 12,
+    "image": "https://picsum.photos/seed/12-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 25,
+  "fields": {
+    "product": 13,
+    "image": "https://picsum.photos/seed/13-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 26,
+  "fields": {
+    "product": 13,
+    "image": "https://picsum.photos/seed/13-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 27,
+  "fields": {
+    "product": 14,
+    "image": "https://picsum.photos/seed/14-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 28,
+  "fields": {
+    "product": 14,
+    "image": "https://picsum.photos/seed/14-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 29,
+  "fields": {
+    "product": 15,
+    "image": "https://picsum.photos/seed/15-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 30,
+  "fields": {
+    "product": 15,
+    "image": "https://picsum.photos/seed/15-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 31,
+  "fields": {
+    "product": 16,
+    "image": "https://picsum.photos/seed/16-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 32,
+  "fields": {
+    "product": 16,
+    "image": "https://picsum.photos/seed/16-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 33,
+  "fields": {
+    "product": 17,
+    "image": "https://picsum.photos/seed/17-1/600/400",
+    "caption": "Imagen automática 1 para Hogar Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 34,
+  "fields": {
+    "product": 17,
+    "image": "https://picsum.photos/seed/17-2/600/400",
+    "caption": "Imagen automática 2 para Hogar Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 35,
+  "fields": {
+    "product": 18,
+    "image": "https://picsum.photos/seed/18-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 36,
+  "fields": {
+    "product": 18,
+    "image": "https://picsum.photos/seed/18-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 37,
+  "fields": {
+    "product": 19,
+    "image": "https://picsum.photos/seed/19-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 38,
+  "fields": {
+    "product": 19,
+    "image": "https://picsum.photos/seed/19-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 39,
+  "fields": {
+    "product": 20,
+    "image": "https://picsum.photos/seed/20-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 40,
+  "fields": {
+    "product": 20,
+    "image": "https://picsum.photos/seed/20-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 41,
+  "fields": {
+    "product": 21,
+    "image": "https://picsum.photos/seed/21-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 42,
+  "fields": {
+    "product": 21,
+    "image": "https://picsum.photos/seed/21-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 43,
+  "fields": {
+    "product": 22,
+    "image": "https://picsum.photos/seed/22-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 44,
+  "fields": {
+    "product": 22,
+    "image": "https://picsum.photos/seed/22-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 45,
+  "fields": {
+    "product": 23,
+    "image": "https://picsum.photos/seed/23-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 46,
+  "fields": {
+    "product": 23,
+    "image": "https://picsum.photos/seed/23-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 47,
+  "fields": {
+    "product": 24,
+    "image": "https://picsum.photos/seed/24-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 48,
+  "fields": {
+    "product": 24,
+    "image": "https://picsum.photos/seed/24-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 49,
+  "fields": {
+    "product": 25,
+    "image": "https://picsum.photos/seed/25-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 50,
+  "fields": {
+    "product": 25,
+    "image": "https://picsum.photos/seed/25-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 51,
+  "fields": {
+    "product": 26,
+    "image": "https://picsum.photos/seed/26-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 52,
+  "fields": {
+    "product": 26,
+    "image": "https://picsum.photos/seed/26-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 53,
+  "fields": {
+    "product": 27,
+    "image": "https://picsum.photos/seed/27-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 54,
+  "fields": {
+    "product": 27,
+    "image": "https://picsum.photos/seed/27-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 55,
+  "fields": {
+    "product": 28,
+    "image": "https://picsum.photos/seed/28-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 56,
+  "fields": {
+    "product": 28,
+    "image": "https://picsum.photos/seed/28-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 57,
+  "fields": {
+    "product": 29,
+    "image": "https://picsum.photos/seed/29-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 58,
+  "fields": {
+    "product": 29,
+    "image": "https://picsum.photos/seed/29-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 59,
+  "fields": {
+    "product": 30,
+    "image": "https://picsum.photos/seed/30-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 60,
+  "fields": {
+    "product": 30,
+    "image": "https://picsum.photos/seed/30-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 61,
+  "fields": {
+    "product": 31,
+    "image": "https://picsum.photos/seed/31-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 62,
+  "fields": {
+    "product": 31,
+    "image": "https://picsum.photos/seed/31-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 63,
+  "fields": {
+    "product": 32,
+    "image": "https://picsum.photos/seed/32-1/600/400",
+    "caption": "Imagen automática 1 para Auto Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 64,
+  "fields": {
+    "product": 32,
+    "image": "https://picsum.photos/seed/32-2/600/400",
+    "caption": "Imagen automática 2 para Auto Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 65,
+  "fields": {
+    "product": 33,
+    "image": "https://picsum.photos/seed/33-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 66,
+  "fields": {
+    "product": 33,
+    "image": "https://picsum.photos/seed/33-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 67,
+  "fields": {
+    "product": 34,
+    "image": "https://picsum.photos/seed/34-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 68,
+  "fields": {
+    "product": 34,
+    "image": "https://picsum.photos/seed/34-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 69,
+  "fields": {
+    "product": 35,
+    "image": "https://picsum.photos/seed/35-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 70,
+  "fields": {
+    "product": 35,
+    "image": "https://picsum.photos/seed/35-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 71,
+  "fields": {
+    "product": 36,
+    "image": "https://picsum.photos/seed/36-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 72,
+  "fields": {
+    "product": 36,
+    "image": "https://picsum.photos/seed/36-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 73,
+  "fields": {
+    "product": 37,
+    "image": "https://picsum.photos/seed/37-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 74,
+  "fields": {
+    "product": 37,
+    "image": "https://picsum.photos/seed/37-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 75,
+  "fields": {
+    "product": 38,
+    "image": "https://picsum.photos/seed/38-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 76,
+  "fields": {
+    "product": 38,
+    "image": "https://picsum.photos/seed/38-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 77,
+  "fields": {
+    "product": 39,
+    "image": "https://picsum.photos/seed/39-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 78,
+  "fields": {
+    "product": 39,
+    "image": "https://picsum.photos/seed/39-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 79,
+  "fields": {
+    "product": 40,
+    "image": "https://picsum.photos/seed/40-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 80,
+  "fields": {
+    "product": 40,
+    "image": "https://picsum.photos/seed/40-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 81,
+  "fields": {
+    "product": 41,
+    "image": "https://picsum.photos/seed/41-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 82,
+  "fields": {
+    "product": 41,
+    "image": "https://picsum.photos/seed/41-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 83,
+  "fields": {
+    "product": 42,
+    "image": "https://picsum.photos/seed/42-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 84,
+  "fields": {
+    "product": 42,
+    "image": "https://picsum.photos/seed/42-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 85,
+  "fields": {
+    "product": 43,
+    "image": "https://picsum.photos/seed/43-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 86,
+  "fields": {
+    "product": 43,
+    "image": "https://picsum.photos/seed/43-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 87,
+  "fields": {
+    "product": 44,
+    "image": "https://picsum.photos/seed/44-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 88,
+  "fields": {
+    "product": 44,
+    "image": "https://picsum.photos/seed/44-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 89,
+  "fields": {
+    "product": 45,
+    "image": "https://picsum.photos/seed/45-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 90,
+  "fields": {
+    "product": 45,
+    "image": "https://picsum.photos/seed/45-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 91,
+  "fields": {
+    "product": 46,
+    "image": "https://picsum.photos/seed/46-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 92,
+  "fields": {
+    "product": 46,
+    "image": "https://picsum.photos/seed/46-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 93,
+  "fields": {
+    "product": 47,
+    "image": "https://picsum.photos/seed/47-1/600/400",
+    "caption": "Imagen automática 1 para Deporte Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 94,
+  "fields": {
+    "product": 47,
+    "image": "https://picsum.photos/seed/47-2/600/400",
+    "caption": "Imagen automática 2 para Deporte Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 95,
+  "fields": {
+    "product": 48,
+    "image": "https://picsum.photos/seed/48-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 96,
+  "fields": {
+    "product": 48,
+    "image": "https://picsum.photos/seed/48-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 97,
+  "fields": {
+    "product": 49,
+    "image": "https://picsum.photos/seed/49-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 98,
+  "fields": {
+    "product": 49,
+    "image": "https://picsum.photos/seed/49-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 99,
+  "fields": {
+    "product": 50,
+    "image": "https://picsum.photos/seed/50-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 100,
+  "fields": {
+    "product": 50,
+    "image": "https://picsum.photos/seed/50-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 101,
+  "fields": {
+    "product": 51,
+    "image": "https://picsum.photos/seed/51-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 102,
+  "fields": {
+    "product": 51,
+    "image": "https://picsum.photos/seed/51-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 103,
+  "fields": {
+    "product": 52,
+    "image": "https://picsum.photos/seed/52-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 104,
+  "fields": {
+    "product": 52,
+    "image": "https://picsum.photos/seed/52-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 105,
+  "fields": {
+    "product": 53,
+    "image": "https://picsum.photos/seed/53-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 106,
+  "fields": {
+    "product": 53,
+    "image": "https://picsum.photos/seed/53-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 107,
+  "fields": {
+    "product": 54,
+    "image": "https://picsum.photos/seed/54-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 108,
+  "fields": {
+    "product": 54,
+    "image": "https://picsum.photos/seed/54-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 109,
+  "fields": {
+    "product": 55,
+    "image": "https://picsum.photos/seed/55-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 110,
+  "fields": {
+    "product": 55,
+    "image": "https://picsum.photos/seed/55-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 111,
+  "fields": {
+    "product": 56,
+    "image": "https://picsum.photos/seed/56-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 112,
+  "fields": {
+    "product": 56,
+    "image": "https://picsum.photos/seed/56-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 113,
+  "fields": {
+    "product": 57,
+    "image": "https://picsum.photos/seed/57-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 114,
+  "fields": {
+    "product": 57,
+    "image": "https://picsum.photos/seed/57-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 115,
+  "fields": {
+    "product": 58,
+    "image": "https://picsum.photos/seed/58-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 116,
+  "fields": {
+    "product": 58,
+    "image": "https://picsum.photos/seed/58-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 117,
+  "fields": {
+    "product": 59,
+    "image": "https://picsum.photos/seed/59-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 118,
+  "fields": {
+    "product": 59,
+    "image": "https://picsum.photos/seed/59-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 119,
+  "fields": {
+    "product": 60,
+    "image": "https://picsum.photos/seed/60-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 120,
+  "fields": {
+    "product": 60,
+    "image": "https://picsum.photos/seed/60-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 121,
+  "fields": {
+    "product": 61,
+    "image": "https://picsum.photos/seed/61-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 122,
+  "fields": {
+    "product": 61,
+    "image": "https://picsum.photos/seed/61-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 123,
+  "fields": {
+    "product": 62,
+    "image": "https://picsum.photos/seed/62-1/600/400",
+    "caption": "Imagen automática 1 para Informática Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 124,
+  "fields": {
+    "product": 62,
+    "image": "https://picsum.photos/seed/62-2/600/400",
+    "caption": "Imagen automática 2 para Informática Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 125,
+  "fields": {
+    "product": 63,
+    "image": "https://picsum.photos/seed/63-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 126,
+  "fields": {
+    "product": 63,
+    "image": "https://picsum.photos/seed/63-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 127,
+  "fields": {
+    "product": 64,
+    "image": "https://picsum.photos/seed/64-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 128,
+  "fields": {
+    "product": 64,
+    "image": "https://picsum.photos/seed/64-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 129,
+  "fields": {
+    "product": 65,
+    "image": "https://picsum.photos/seed/65-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 130,
+  "fields": {
+    "product": 65,
+    "image": "https://picsum.photos/seed/65-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 131,
+  "fields": {
+    "product": 66,
+    "image": "https://picsum.photos/seed/66-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 132,
+  "fields": {
+    "product": 66,
+    "image": "https://picsum.photos/seed/66-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 133,
+  "fields": {
+    "product": 67,
+    "image": "https://picsum.photos/seed/67-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 134,
+  "fields": {
+    "product": 67,
+    "image": "https://picsum.photos/seed/67-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 135,
+  "fields": {
+    "product": 68,
+    "image": "https://picsum.photos/seed/68-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 136,
+  "fields": {
+    "product": 68,
+    "image": "https://picsum.photos/seed/68-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 137,
+  "fields": {
+    "product": 69,
+    "image": "https://picsum.photos/seed/69-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 138,
+  "fields": {
+    "product": 69,
+    "image": "https://picsum.photos/seed/69-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 139,
+  "fields": {
+    "product": 70,
+    "image": "https://picsum.photos/seed/70-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 140,
+  "fields": {
+    "product": 70,
+    "image": "https://picsum.photos/seed/70-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 141,
+  "fields": {
+    "product": 71,
+    "image": "https://picsum.photos/seed/71-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 142,
+  "fields": {
+    "product": 71,
+    "image": "https://picsum.photos/seed/71-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 143,
+  "fields": {
+    "product": 72,
+    "image": "https://picsum.photos/seed/72-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 144,
+  "fields": {
+    "product": 72,
+    "image": "https://picsum.photos/seed/72-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 145,
+  "fields": {
+    "product": 73,
+    "image": "https://picsum.photos/seed/73-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 146,
+  "fields": {
+    "product": 73,
+    "image": "https://picsum.photos/seed/73-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 147,
+  "fields": {
+    "product": 74,
+    "image": "https://picsum.photos/seed/74-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 148,
+  "fields": {
+    "product": 74,
+    "image": "https://picsum.photos/seed/74-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 149,
+  "fields": {
+    "product": 75,
+    "image": "https://picsum.photos/seed/75-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 150,
+  "fields": {
+    "product": 75,
+    "image": "https://picsum.photos/seed/75-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 151,
+  "fields": {
+    "product": 76,
+    "image": "https://picsum.photos/seed/76-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 152,
+  "fields": {
+    "product": 76,
+    "image": "https://picsum.photos/seed/76-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 153,
+  "fields": {
+    "product": 77,
+    "image": "https://picsum.photos/seed/77-1/600/400",
+    "caption": "Imagen automática 1 para Telefonía Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 154,
+  "fields": {
+    "product": 77,
+    "image": "https://picsum.photos/seed/77-2/600/400",
+    "caption": "Imagen automática 2 para Telefonía Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 155,
+  "fields": {
+    "product": 78,
+    "image": "https://picsum.photos/seed/78-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 156,
+  "fields": {
+    "product": 78,
+    "image": "https://picsum.photos/seed/78-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 1"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 157,
+  "fields": {
+    "product": 79,
+    "image": "https://picsum.photos/seed/79-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 158,
+  "fields": {
+    "product": 79,
+    "image": "https://picsum.photos/seed/79-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 2"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 159,
+  "fields": {
+    "product": 80,
+    "image": "https://picsum.photos/seed/80-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 160,
+  "fields": {
+    "product": 80,
+    "image": "https://picsum.photos/seed/80-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 3"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 161,
+  "fields": {
+    "product": 81,
+    "image": "https://picsum.photos/seed/81-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 162,
+  "fields": {
+    "product": 81,
+    "image": "https://picsum.photos/seed/81-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 4"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 163,
+  "fields": {
+    "product": 82,
+    "image": "https://picsum.photos/seed/82-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 164,
+  "fields": {
+    "product": 82,
+    "image": "https://picsum.photos/seed/82-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 5"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 165,
+  "fields": {
+    "product": 83,
+    "image": "https://picsum.photos/seed/83-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 166,
+  "fields": {
+    "product": 83,
+    "image": "https://picsum.photos/seed/83-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 6"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 167,
+  "fields": {
+    "product": 84,
+    "image": "https://picsum.photos/seed/84-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 168,
+  "fields": {
+    "product": 84,
+    "image": "https://picsum.photos/seed/84-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 7"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 169,
+  "fields": {
+    "product": 85,
+    "image": "https://picsum.photos/seed/85-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 170,
+  "fields": {
+    "product": 85,
+    "image": "https://picsum.photos/seed/85-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 8"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 171,
+  "fields": {
+    "product": 86,
+    "image": "https://picsum.photos/seed/86-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 172,
+  "fields": {
+    "product": 86,
+    "image": "https://picsum.photos/seed/86-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 9"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 173,
+  "fields": {
+    "product": 87,
+    "image": "https://picsum.photos/seed/87-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 174,
+  "fields": {
+    "product": 87,
+    "image": "https://picsum.photos/seed/87-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 10"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 175,
+  "fields": {
+    "product": 88,
+    "image": "https://picsum.photos/seed/88-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 176,
+  "fields": {
+    "product": 88,
+    "image": "https://picsum.photos/seed/88-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 11"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 177,
+  "fields": {
+    "product": 89,
+    "image": "https://picsum.photos/seed/89-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 178,
+  "fields": {
+    "product": 89,
+    "image": "https://picsum.photos/seed/89-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 12"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 179,
+  "fields": {
+    "product": 90,
+    "image": "https://picsum.photos/seed/90-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 180,
+  "fields": {
+    "product": 90,
+    "image": "https://picsum.photos/seed/90-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 13"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 181,
+  "fields": {
+    "product": 91,
+    "image": "https://picsum.photos/seed/91-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 182,
+  "fields": {
+    "product": 91,
+    "image": "https://picsum.photos/seed/91-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 14"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 183,
+  "fields": {
+    "product": 92,
+    "image": "https://picsum.photos/seed/92-1/600/400",
+    "caption": "Imagen automática 1 para Herramientas Producto 15"
+  }
+},
+{
+  "model": "products.productimage",
+  "pk": 184,
+  "fields": {
+    "product": 92,
+    "image": "https://picsum.photos/seed/92-2/600/400",
+    "caption": "Imagen automática 2 para Herramientas Producto 15"
+  }
+}
+]
