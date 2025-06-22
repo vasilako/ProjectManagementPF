@@ -2,49 +2,113 @@ name: Django CI
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, main ]
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: productmanagement_db
+          POSTGRES_USER: productmanagement_db_user
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     env:
       DEBUG: 'False'
       USE_POSTGRES: 'True'
-      POSTGRES_DB: $POSTGRES_DB
-      POSTGRES_USER: $POSTGRES_USER
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_HOST: $POSTGRES_HOST
-      POSTGRES_PORT: '5432'
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+      DJANGO_SETTINGS_MODULE: 'config.settings'
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: '3.11'
+          cache: 'pip'
 
-      - name: Install dependencies
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Wait for PostgreSQL
+        run: |
+          until pg_isready -h localhost -p 5432 -U productmanagement_db_user; do
+            echo "Waiting for PostgreSQL..."
+            sleep 2
+          done
+          echo "PostgreSQL is ready!"
+          # Esperar un poco más para asegurar que esté completamente listo
+          sleep 5
+
+      - name: Verify database connection
+        run: |
+          python manage.py dbshell --command="SELECT version();" || echo "Database connection failed"
+
+      - name: Create and run migrations
+        run: |
+          echo "Making migrations..."
+          python manage.py makemigrations --verbosity=2
+          echo "Running migrations..."
+          python manage.py migrate --verbosity=2
+          echo "Showing migration status..."
+          python manage.py showmigrations
+
       - name: Load initial data (fixtures)
         run: |
-          python manage.py loaddata fixtures/inicial.json
+          echo "Loading fixtures..."
+          if [ -f "fixtures/inicial.json" ]; then
+            python manage.py loaddata fixtures/inicial.json --verbosity=2
+          else
+            echo "No fixture file found at fixtures/inicial.json"
+          fi
+        continue-on-error: false  # Fallar si el fixture es crítico
 
       - name: Collect static files
         run: |
           python manage.py collectstatic --noinput
 
-      - name: Run tests
+      - name: Run Django tests
         run: |
-          python manage.py test
+          echo "Running tests..."
+          python manage.py test --verbosity=2 --keepdb
+          echo "Tests completed!"
 
-      - name: Apply database migrations
+      - name: Verify database tables
         run: |
-          python manage.py makemigrations --noinput
-          python manage.py migrate --noinput
+          echo "Checking created tables..."
+          python manage.py dbshell --command="\dt" || echo "Could not list tables"
+
+      - name: Run code quality checks (opcional)
+        run: |
+          # Descomenta si tienes estas herramientas en requirements.txt
+          # flake8 .
+          # black --check .
+          # isort --check-only .
+        continue-on-error: true
