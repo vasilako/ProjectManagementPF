@@ -13,6 +13,30 @@ import os
 from pathlib import Path
 from decouple import config
 
+
+
+import logging
+import sys
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console':{
+            'class':'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
+
+
+
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
