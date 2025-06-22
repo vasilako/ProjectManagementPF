@@ -142,6 +142,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Media files (user-uploaded content)
 # These are files uploaded through ImageField/FileField, like product images.
