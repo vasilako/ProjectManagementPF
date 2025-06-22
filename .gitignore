@@ -6,3 +6,4 @@ __pycache__/
 tareas_semanales.md
 .htmlcov/
 .env
+Django_secret_key_for_render
