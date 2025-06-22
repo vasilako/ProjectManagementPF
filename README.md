@@ -129,3 +129,28 @@ Pillow
   ```
 - Open PR to `develop`, get it reviewed, then merge.
 
+
+---
+
+## ✅ Completed Work (Day 2)
+
+- **ProductListView Enhancements**:
+  - Refactored `get_queryset()` to support category-based filtering via `GET` parameters.
+  - Applied alphabetical ordering by product name.
+  - Pagination added (`paginate_by = 8`), integrated into the Bootstrap layout.
+  - Category menu overlay now allows filtering products by category.
+
+- **Unit Testing**:
+  - Created `ProductListViewTests` covering:
+    - Status code (200 OK)
+    - Template usage
+    - Product HTML content (name, price, stock, category)
+    - Pagination behavior and response context
+    - Fallback for empty or missing category filters
+
+- **Git Workflow**:
+  - Work completed on feature branch `test/product-list-view`.
+  - Pull Request opened, reviewed, and merged into `develop`.
+
+
+
