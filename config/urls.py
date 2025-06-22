@@ -19,10 +19,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django.http import HttpResponse
 
-from products.views import ProductListView
+def health_check_view(request):
+    return HttpResponse("✅ App is working.")
+
 
 urlpatterns = [
+    path('health/', health_check_view, name='health_check'),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('products/', include('products.urls')),
