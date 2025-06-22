@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI/CD with Render
 
 on:
   push:
@@ -28,7 +28,6 @@ jobs:
     env:
       DEBUG: 'False'
       USE_POSTGRES: 'True'
-      # Variables para el CONTENEDOR LOCAL (no Render)
       POSTGRES_DB: productmanagement_db
       POSTGRES_USER: productmanagement_db_user
       POSTGRES_PASSWORD: postgres
@@ -36,7 +35,6 @@ jobs:
       POSTGRES_PORT: '5432'
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       ALLOWED_HOSTS: 'localhost,127.0.0.1'
-      DJANGO_SETTINGS_MODULE: 'config.settings'
 
     steps:
       - name: Checkout code
@@ -48,12 +46,7 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client
-
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -61,77 +54,64 @@ jobs:
       - name: Wait for PostgreSQL
         run: |
           until pg_isready -h localhost -p 5432 -U productmanagement_db_user; do
-            echo "Waiting for PostgreSQL..."
             sleep 2
           done
-          echo "PostgreSQL is ready!"
-          sleep 5
 
-      - name: Test PostgreSQL connection
+      - name: Run migrations and tests
         run: |
-          echo "Testing direct PostgreSQL connection..."
-          PGPASSWORD=postgres psql -h localhost -p 5432 -U productmanagement_db_user -d productmanagement_db -c "SELECT version();" || echo "Direct PostgreSQL connection failed"
-
-      - name: Verify Django database connection
-        run: |
-          echo "Testing Django database connection..."
-          python -c "
-          import os
-          import django
-          from django.conf import settings
-          os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
-          django.setup()
-          from django.db import connection
-          try:
-              cursor = connection.cursor()
-              cursor.execute('SELECT version();')
-              version = cursor.fetchone()
-              print(f'✅ Database connection successful: {version[0]}')
-          except Exception as e:
-              print(f'❌ Database connection failed: {e}')
-              exit(1)
-          " || echo "Django database connection failed"
-
-      - name: Create and run migrations
-        run: |
-          echo "Making migrations..."
           python manage.py makemigrations --verbosity=2
-          echo "Running migrations..."
           python manage.py migrate --verbosity=2
-          echo "Showing migration status..."
-          python manage.py showmigrations
+          python manage.py test --verbosity=2
 
-      - name: Verify tables were created
-        run: |
-          echo "Checking created tables..."
-          PGPASSWORD=postgres psql -h localhost -p 5432 -U productmanagement_db_user -d productmanagement_db -c "\dt" || echo "Could not list tables"
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
 
-      - name: Load initial data (fixtures)
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
         run: |
-          echo "Loading fixtures..."
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute Build Commands on Render
+        env:
+          # Variables de Render (producción)
+          DEBUG: 'False'
+          USE_POSTGRES: 'True'
+          POSTGRES_DB: ${{ secrets.RENDER_POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.RENDER_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.RENDER_POSTGRES_PASSWORD }}
+          POSTGRES_HOST: ${{ secrets.RENDER_POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.RENDER_POSTGRES_PORT }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        run: |
+          echo "🚀 Executing build commands on Render database..."
+          echo "📋 Making migrations..."
+          python manage.py makemigrations --verbosity=2
+          echo "📋 Running migrations..."
+          python manage.py migrate --verbosity=2
+          echo "📂 Loading initial data..."
           if [ -f "fixtures/inicial.json" ]; then
             python manage.py loaddata fixtures/inicial.json --verbosity=2
+            echo "✅ Fixtures loaded successfully"
           else
-            echo "No fixture file found at fixtures/inicial.json - skipping"
+            echo "⚠️ No fixture file found at fixtures/inicial.json - skipping"
           fi
-        continue-on-error: true
-
-      - name: Collect static files
-        run: |
+          echo "📁 Collecting static files..."
           python manage.py collectstatic --noinput --verbosity=2
+          echo "✅ Build commands completed!"
 
-      - name: Run Django tests
+      - name: Trigger Render Deploy (optional)
         run: |
-          echo "Running tests..."
-          python manage.py test --verbosity=2 --keepdb
-          echo "Tests completed!"
-
-      - name: Final database verification
-        run: |
-          echo "Final verification - listing all tables..."
-          PGPASSWORD=postgres psql -h localhost -p 5432 -U productmanagement_db_user -d productmanagement_db -c "
-            SELECT schemaname, tablename 
-            FROM pg_tables 
-            WHERE schemaname = 'public' 
-            ORDER BY tablename;
-          " || echo "Could not verify final database state"
+          echo "🔄 Triggering Render redeploy..."
+          curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}" || echo "Deploy hook not configured"
