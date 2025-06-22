@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-e#0jlw*x9g*$9wc%+7+++xb9o=43t-cz*(l#uw(3i0ooh6m@a!
 # Defaults to False and ensures the value is cast as a boolean.
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='localhost,127.0.0.1',
+    cast=lambda v: [s.strip() for s in v.split(',')]
+)
+
 
 # Application definition
 
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,6 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Determines whether to use PostgreSQL instead of the default SQLite database.
 # The value is read from environment variables and cast to a boolean.
 USE_POSTGRES = config('USE_POSTGRES', default=False, cast=bool)
+
 
 # If USE_POSTGRES is True, configure the database to use PostgreSQL with environment-based credentials.
 # Otherwise, fall back to using the default local SQLite database.
@@ -154,3 +162,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
