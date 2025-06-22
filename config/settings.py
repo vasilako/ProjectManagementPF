@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,8 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-e#0jlw*x9g*$9wc%+7+++xb9o=43t-cz*(l#uw(3i0ooh6m@a!'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Retrieves the DEBUG setting from environment variables using decouple.
+# Defaults to False and ensures the value is cast as a boolean.
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -76,12 +78,31 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+# Determines whether to use PostgreSQL instead of the default SQLite database.
+# The value is read from environment variables and cast to a boolean.
+USE_POSTGRES = config('USE_POSTGRES', default=False, cast=bool)
+
+# If USE_POSTGRES is True, configure the database to use PostgreSQL with environment-based credentials.
+# Otherwise, fall back to using the default local SQLite database.
+if USE_POSTGRES:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('POSTGRES_DB'),
+            'USER': config('POSTGRES_USER'),
+            'PASSWORD': config('POSTGRES_PASSWORD'),
+            'HOST': config('POSTGRES_HOST', default='localhost'),
+            'PORT': config('POSTGRES_PORT', default='5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
