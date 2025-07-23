@@ -82,6 +82,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    'django.middleware.locale.LocaleMiddleware',
+    # Middleware to detect and set the user's timezone automatically based on their browser settings
+    'django.contrib.auth.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -135,6 +139,10 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+
+
+# Specifies the custom user model to be used throughout the application in place of Django's default User model
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
