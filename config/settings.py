@@ -82,7 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    # Middleware to detect and use the user's browser language preference
     'django.middleware.locale.LocaleMiddleware',
     # Middleware to detect and set the user's timezone automatically based on their browser settings
     'django.contrib.auth.middleware.TimezoneMiddleware',
@@ -165,7 +165,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
+
+USE_I18N = True  # Internationalization activated
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('es', 'Spanish'),
+]
 
 TIME_ZONE = 'UTC'
 
