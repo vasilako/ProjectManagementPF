@@ -34,9 +34,6 @@ LOGGING = {
 
 
 
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,7 +41,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e#0jlw*x9g*$9wc%+7+++xb9o=43t-cz*(l#uw(3i0ooh6m@a!'
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key')
+# SECRET_KEY ='django-insecure-e#0jlw*x9g*$9wc%+7+++xb9o=43t-cz*(l#uw(3i0ooh6m@a!'
+
 
 # Retrieves the DEBUG setting from environment variables using decouple.
 # Defaults to False and ensures the value is cast as a boolean.
@@ -61,6 +60,7 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,7 +69,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'products',
-    'users',
     'orders',
 ]
 
@@ -84,9 +83,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Middleware to detect and use the user's browser language preference
     'django.middleware.locale.LocaleMiddleware',
-    # Middleware to detect and set the user's timezone automatically based on their browser settings
-    'django.contrib.auth.middleware.TimezoneMiddleware',
+
 ]
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -175,9 +174,6 @@ LANGUAGES = [
 ]
 
 TIME_ZONE = 'UTC'
-
-USE_I18N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
