@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from products.models import Product
+import uuid
 
 
 class Order(models.Model):
@@ -23,8 +24,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_id = models.CharField(max_length=100, blank=True)
+    transaction_id = models.CharField(max_length=100, default=uuid.uuid4, editable=False, unique=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -45,7 +45,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
 
     class Meta:
         verbose_name = _('Order item')
@@ -56,3 +56,9 @@ class OrderItem(models.Model):
 
     def get_total_price(self):
         return self.price * self.quantity
+
+    def save(self, *args, **kwargs):
+        # Copy product price at time of creation
+        if not self.price:
+            self.price = self.product.price
+        super().save(*args, **kwargs)

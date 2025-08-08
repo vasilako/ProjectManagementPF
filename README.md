@@ -10,84 +10,93 @@ Una aplicación web basada en Django para la gestión de productos con categorí
 
 ```
 ProjectManagementPF/
-├── .github/ # Configuraciones de GitHub (workflows, PR templates, etc.)
-├── config/ # Configuración global del proyecto Django
-├── core/ # App principal para vistas generales y página de inicio
-│ ├── migrations/ # Migraciones de base de datos para core
-│ ├── templates/
-│ │ └── core/
-│ │ └── home.html # Página principal del sitio
-│ ├── init.py
-│ ├── admin.py
-│ ├── apps.py
-│ ├── models.py
-│ ├── tests.py
-│ ├── urls.py
-│ └── views.py
-├── fixtures/ # Datos de prueba en formato JSON
-├── htmlcov/ # Reportes de cobertura de pruebas
-├── libretranslate/ # Integración o cliente para traducción de textos
-├── locale/ # Archivos de internacionalización (i18n)
-│ └── es/
-│ └── LC_MESSAGES/
-│ ├── django.po # Archivo de traducción editable (mensajes en español)
-│ └── django.mo # Archivo compilado para uso por Django
-├── media/ # Archivos multimedia subidos por usuarios (productos)
-├── orders/ # App para gestionar pedidos (futura o en desarrollo)
-├── products/ # App principal para la gestión de productos y categorías
-│ ├── migrations/ # Migraciones de base de datos para products
-│ ├── static/
-│ │ └── products/ # Archivos estáticos específicos de productos (CSS, JS, imágenes)
-│ ├── templates/
-│ │ └── products/
-│ │ ├── _product-card.html # Partial: tarjeta para vista en cuadrícula
-│ │ ├── product-detail.html # Detalle de un producto individual
-│ │ └── product-list.html # Listado de productos
-│ ├── init.py
-│ ├── admin.py # Registro de modelos en panel de administración
-│ ├── apps.py # Configuración de la app, incluye verbose_name traducible
-│ ├── models.py # Modelos de producto y categoría
-│ ├── tests.py # Pruebas unitarias de productos
-│ ├── translation.py # Configuración de traducción para campos de modelo
-│ ├── urls.py # Rutas de productos (lista y detalle)
-│ └── views.py # Vistas basadas en clase para productos
-├── static/ # Archivos estáticos globales (CSS, JS, img)
-│ ├── css/
-│ │ └── product.css # Estilos personalizados para productos
-│ ├── img/
-│ │ ├── defaults/
-│ │ │ └── no-image-available.png # Imagen por defecto si no hay imagen del producto
-│ │ ├── favicon.ico # Icono del sitio web
-│ │ └── logo.png # Logotipo principal del sitio
-├── staticfiles/ # Carpeta generada para deploy (collectstatic)
-├── templates/ # Plantillas HTML globales
-│ ├── components/
-│ │ ├── footer.html # Pie de página reutilizable
-│ │ ├── messages.html # Mensajes del sistema (éxito, error, etc.)
-│ │ ├── navbar.html # Barra de navegación principal
-│ │ └── base.html # Plantilla base principal del sitio
-├── users/ # App para gestión de usuarios (login, perfiles, etc.)
-│ ├── migrations/ # Migraciones de base de datos para users
-│ ├── init.py
-│ ├── admin.py # Administración del modelo CustomUser en el panel admin
-│ ├── apps.py # Configuración y verbose_name traducible de la app
-│ ├── managers.py # Manager personalizado para crear usuarios y superusuarios
-│ ├── models.py # Modelo CustomUser basado en AbstractBaseUser
-│ ├── tests.py # Pruebas unitarias relacionadas con usuarios
-│ └── views.py # Vistas para funcionalidades de usuario
-├── utils/ # Funciones auxiliares o servicios comunes
-├── .coverage # Archivo de cobertura de pruebas
-├── .env # Variables de entorno (Django secret, DB, etc.)
-├── .gitignore # Archivos ignorados por Git
-├── db.sqlite3 # Base de datos local SQLite
+├── .github/                        # Configuraciones de GitHub (workflows, PR templates, etc.)
+├── config/                         # Configuración global del proyecto Django
+├── core/                           # App principal para vistas generales y página de inicio
+│   ├── migrations/                 # Migraciones de base de datos para core
+│   ├── templates/
+│   │   └── core/
+│   │       └── home.html          # Página principal del sitio
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── fixtures/                      # Datos de prueba en formato JSON
+├── htmlcov/                       # Reportes de cobertura de pruebas
+├── libretranslate/                # Integración o cliente para traducción de textos
+├── locale/                        # Archivos de internacionalización (i18n)
+│   └── es/
+│       └── LC_MESSAGES/
+│           ├── django.po         # Archivo de traducción editable (mensajes en español)
+│           └── django.mo         # Archivo compilado para uso por Django
+├── media/                         # Archivos multimedia subidos por usuarios (productos)
+├── orders/                        # App para gestionar pedidos de usuarios
+│   ├── migrations/                # Migraciones de base de datos para orders
+│   ├── __init__.py
+│   ├── admin.py                   # Panel de administración para pedidos y items
+│   ├── apps.py                    # Configuración y verbose_name traducible
+│   ├── forms.py                   # Formularios personalizados (ej. OrderItemInlineForm)
+│   ├── models.py                  # Modelos: Order y OrderItem, soporte multiidioma
+│   ├── tests.py                   # Pruebas unitarias para pedidos
+│   └── views.py                   # Vistas (próximamente: historial, detalle, gestión)
+├── products/                      # App principal para la gestión de productos y categorías
+│   ├── migrations/                # Migraciones de base de datos para products
+│   ├── static/
+│   │   └── products/             # Archivos estáticos específicos de productos (CSS, JS, imágenes)
+│   ├── templates/
+│   │   └── products/
+│   │       ├── _product-card.html # Partial: tarjeta para vista en cuadrícula
+│   │       ├── product-detail.html # Detalle de un producto individual
+│   │       └── product-list.html # Listado de productos
+│   ├── __init__.py
+│   ├── admin.py                  # Registro de modelos en panel de administración
+│   ├── apps.py                   # Configuración de la app, incluye verbose_name traducible
+│   ├── models.py                 # Modelos de producto y categoría
+│   ├── tests.py                  # Pruebas unitarias de productos
+│   ├── translation.py            # Configuración de traducción para campos de modelo
+│   ├── urls.py                   # Rutas de productos (lista y detalle)
+│   └── views.py                  # Vistas basadas en clase para productos
+├── static/                       # Archivos estáticos globales (CSS, JS, img)
+│   ├── css/
+│   │   └── product.css           # Estilos personalizados para productos
+│   ├── img/
+│   │   ├── defaults/
+│   │   │   └── no-image-available.png # Imagen por defecto si no hay imagen del producto
+│   │   ├── favicon.ico           # Icono del sitio web
+│   │   └── logo.png              # Logotipo principal del sitio
+├── staticfiles/                  # Carpeta generada para deploy (collectstatic)
+├── templates/                    # Plantillas HTML globales
+│   ├── components/
+│   │   ├── footer.html           # Pie de página reutilizable
+│   │   ├── messages.html         # Mensajes del sistema (éxito, error, etc.)
+│   │   ├── navbar.html           # Barra de navegación principal
+│   │   └── base.html             # Plantilla base principal del sitio
+├── users/                        # App para gestión de usuarios (login, perfiles, etc.)
+│   ├── migrations/               # Migraciones de base de datos para users
+│   ├── __init__.py
+│   ├── admin.py                  # Administración del modelo CustomUser en el panel admin
+│   ├── apps.py                   # Configuración y verbose_name traducible de la app
+│   ├── managers.py               # Manager personalizado para crear usuarios y superusuarios
+│   ├── models.py                 # Modelo CustomUser basado en AbstractBaseUser
+│   ├── tests.py                  # Pruebas unitarias relacionadas con usuarios
+│   └── views.py                  # Vistas para funcionalidades de usuario
+├── utils/                        # Funciones auxiliares o servicios comunes
+├── .coverage                     # Archivo de cobertura de pruebas
+├── .env                          # Variables de entorno (Django secret, DB, etc.)
+├── .gitignore                    # Archivos ignorados por Git
+├── db.sqlite3                    # Base de datos local SQLite
 ├── Django_secret_key_for_render # Clave secreta usada en despliegue con Render
-├── identifier.sqlite # Posible BD auxiliar (traducciones o tests)
-├── manage.py # Comando principal para gestionar Django
-├── README.md # Documentación inicial del proyecto
-├── requirements.txt # Dependencias del proyecto
-├── tareas_semanales.md # Planificación de tareas y progreso
-└── translate_data.py # Script para traducir datos utilizando libretranslate
+├── identifier.sqlite             # Posible BD auxiliar (traducciones o tests)
+├── manage.py                     # Comando principal para gestionar Django
+├── README.md                     # Documentación inicial del proyecto
+├── requirements.txt              # Dependencias del proyecto
+├── tareas_semanales.md           # Planificación de tareas y progreso
+└── translate_data.py             # Script para traducir datos utilizando libretranslate
 ```
+
 
 ---
 
@@ -234,6 +243,102 @@ Incluye:
 
 ¿Deseas extender este informe incluyendo el bloque de `TEMPLATES`, validadores de contraseña o configuración WSGI? Puedo añadirlo si quieres documentar al máximo esta configuración.
 
+
+
+# 📦Aplicaciones y funcionalidades 
+
+
+##  Actualización de desarrollo: Gestión de Pedidos (`orders`) en Django
+
+
+
+---
+
+## 🟢 Resumen de mejoras implementadas
+
+Durante esta jornada se han introducido optimizaciones clave en la app `orders` enfocadas en:
+
+- La definición de modelos robustos y multilanguage.
+- Un panel de administración seguro y cómodo.
+- Control granular de permisos y edición.
+- Mejoras UX para la gestión de productos en cada pedido.
+
+---
+
+### 🔧 Modelos y migraciones
+- Se han definido los modelos `Order` y `OrderItem` con soporte para multiidioma (`gettext_lazy`).
+- Métodos auxiliares como `get_total()` para pedidos y `get_total_price()` para cada item.
+- Se gestionó la rama `feature/orders` y se integraron migraciones iniciales controladas.
+
+### 🛡️ Panel de administración
+- Se registraron ambos modelos y se personalizó la presentación con columnas y filtros útiles.
+- Se implementó el filtrado y traducción del estado de cada pedido.
+
+### 🚀 Git y flujo de trabajo
+- Se limpiaron los commits históricos.
+- Se estructuró la rama de trabajo y el flujo de versiones (naming y PRs).
+
+---
+
+## 💡 Optimización de usabilidad en el admin
+
+### Problemas identificados
+- El selector de producto en los `OrderItem` era poco informativo.
+
+### Solución aplicada
+- Se personalizó el `OrderItemInline` mediante un formulario que muestra: `Nombre (ID, Categoría)`.
+- El desplegable de productos ahora es mucho más claro y práctico para el administrador.
+
+### Siguiente nivel (propuesto)
+- Añadir filtrado dinámico por categoría (campos encadenados tipo smart-selects).
+
+---
+
+## ⚙️ Control de permisos y edición avanzada
+
+- El campo **usuario** del pedido es siempre solo lectura (tanto creación como edición).
+- El campo **status** siempre editable, para permitir avanzar el estado desde el admin.
+- Los **OrderItems** solo son editables si el pedido está pendiente; en cualquier otro estado son solo lectura (ni añadir, ni modificar, ni borrar).
+- La lógica del admin garantiza que cualquier pedido es accesible (puede verse y auditarse), pero solo los pendientes se pueden modificar.
+
+### Extracto del código implementado
+
+```python
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+
+class ReadOnlyOrderItemInline(admin.TabularInline):
+    model = OrderItem
+    can_delete = False
+    extra = 0
+    readonly_fields = ('product', 'quantity', 'price')
+    def has_add_permission(self, request, obj=None): return False
+    def has_change_permission(self, request, obj=None): return False
+    def has_delete_permission(self, request, obj=None): return False
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'status', 'created_at', 'calculated_total')
+    list_filter  = ('status', 'created_at')
+    search_fields = ('user__email',)
+    def get_inline_instances(self, request, obj=None):
+        if obj and obj.status != 'pendiente':
+            return [ReadOnlyOrderItemInline(self.model, self.admin_site)]
+        return [OrderItemInline(self.model, self.admin_site)]
+    def get_readonly_fields(self, request, obj=None):
+        return ('user', 'transaction_id', 'created_at')
+    def has_change_permission(self, request, obj=None):
+        return True
+```
+
+---
+
+## 🏁 Resultado final
+- Gestión profesional y segura de pedidos en el admin.
+- Menos errores humanos y máxima trazabilidad.
+- UX mejorada para los usuarios responsables de pedidos.
+- Base sólida para añadir vistas y funcionalidades públicas/privadas en próximos sprints.
 
 
 
