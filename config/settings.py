@@ -1,3 +1,5 @@
+# config/settings.py
+
 """
 Django settings for config project.
 
@@ -13,17 +15,21 @@ import os
 from pathlib import Path
 from decouple import config
 
-
-
 import logging
 import sys
 
 LOGGING = {
     'version': 1,
     'handlers': {
-        'console':{
-            'class':'logging.StreamHandler',
+        'console': {
+            'class': 'logging.StreamHandler',
             'stream': sys.stdout,
+            'formatter': 'verbose',
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(asctime)s] %(levelname)s [%(name)s] %(message)s'
         },
     },
     'root': {
@@ -31,6 +37,7 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
 
 
 
@@ -60,16 +67,18 @@ ALLOWED_HOSTS = config(
 # Application definition
 
 INSTALLED_APPS = [
-    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'modeltranslation',
     'core',
-    'products',
+    'products.apps.ProductsConfig',
     'orders',
+
 ]
 
 MIDDLEWARE = [
@@ -81,7 +90,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Middleware to detect and use the user's browser language preference
+    # Middleware to detect and use the user's browser language preference, Internationalization (i18n)
     'django.middleware.locale.LocaleMiddleware',
 
 ]
@@ -164,17 +173,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'en-en'
 
 USE_I18N = True  # Internationalization activated
+USE_L10N = True # Localization activated
 
-LANGUAGES = [
+LANGUAGES = (
     ('en', 'English'),
     ('es', 'Spanish'),
-]
+)
+
 
 TIME_ZONE = 'UTC'
 USE_TZ = True
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',  # Carpeta donde se guardarán los archivos .po y .mo
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -196,6 +213,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+# Specifies the default primary key type for models as BigAutoField and configures WhiteNoise for serving static files
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Configures WhiteNoise for compressing and serving static files with manifest caching
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-

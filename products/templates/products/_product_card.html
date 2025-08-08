@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %} <!-- Añadir para cargar internacionalización -->
+
 
 <div class="col">
   <div class="card h-100 shadow-lg position-relative">
@@ -11,11 +13,11 @@
         {% for image in product.images.all %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
           {% if image.image.name|slice:":4" == "http" %}
-          <img src="{{ image.image.name }}" class="d-block w-100" alt="{{ product.name }}"
-               style="height: 200px; object-fit: cover;">
+          <img src="{{ image.image.name }}" class="d-block w-100" alt="{% trans 'Product image' %}"
+               style="object-fit: contain;">
           {% else %}
-          <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.name }}"
-               style="height: 200px; object-fit: cover;">
+          <img src="{{ image.image.url }}" class="d-block w-100" alt="{% trans 'Product image' %}"
+               style="object-fit: contain;">
           {% endif %}
         </div>
         {% endfor %}
@@ -23,14 +25,16 @@
       <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ product.id }}"
               data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Previous" %}</span> <!-- Para accesibilidad -->
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ product.id }}"
               data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{% trans "Next" %}</span> <!-- Para accesibilidad -->
       </button>
     </div>
     {% else %}
-    <img src="{% static 'img/defaults/no-image-available.png' %}" class="card-img-top" alt="No image"
+    <img src="{% static 'img/defaults/no-image-available.png' %}" class="card-img-top" alt="{% trans 'No image available' %}"
          style="height: 200px; object-fit: cover;">
     {% endif %}
 
@@ -39,7 +43,7 @@
       <h5 class="card-title text-center">{{ product.name }}</h5>
       <p class="card-text text-truncate-multiline">
         {{ product.description }}
-        <a href="{% url 'product_detail' product.pk %}" class="read-more-link">… Ampliar</a>
+        <a href="{% url 'product_detail' product.pk %}" class="read-more-link">{% trans "Read more" %}</a>
       </p>
     </div>
 
@@ -50,6 +54,5 @@
         €{{ product.price }}
       </span>
     </div>
-
   </div>
 </div>

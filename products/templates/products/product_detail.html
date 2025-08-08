@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %} <!-- Añadir para cargar internacionalización -->
 
 {% block content %}
 <div class="container py-5">
@@ -11,11 +12,11 @@
                     {% for image in product.images.all %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
                         {% if image.image.name|slice:":4" == "http" %}
-                        <img src="{{ image.image.name }}" class="d-block w-100" alt="{{ product.name }}"
-                             style="height: 200px; object-fit: cover;">
+                        <img src="{{ image.image.name }}" class="d-block w-100" alt="{% trans 'Product image' %}"
+                             style="object-fit: contain;">
                         {% else %}
-                        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.name }}"
-                             style="height: 200px; object-fit: cover;">
+                        <img src="{{ image.image.url }}" class="d-block w-100" alt="{% trans 'Product image' %}"
+                             style="object-fit: contain;">
                         {% endif %}
                     </div>
                     {% endfor %}
@@ -23,19 +24,20 @@
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselDetail{{ product.id }}"
                         data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">{% trans "Previous" %}</span> <!-- Para accesibilidad -->
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselDetail{{ product.id }}"
                         data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">{% trans "Next" %}</span> <!-- Para accesibilidad -->
                 </button>
             </div>
             {% else %}
             <img src="{% static 'img/defaults/no-image-available.png' %}"
                  class="img-fluid"
-                 alt="No image available"
+                 alt="{% trans 'No image available' %}"
                  style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; object-position: center;">
             {% endif %}
-
         </div>
 
         <div class="col-md-6">
@@ -43,7 +45,7 @@
             <p class="text-muted">{{ product.category.name }}</p>
             <p>{{ product.description }}</p>
             <h4 class="text-danger">€{{ product.price }}</h4>
-            <a href="{% url 'product_list' %}" class="btn btn-outline-secondary mt-3">← Volver a productos</a>
+            <a href="{% url 'product_list' %}" class="btn btn-outline-secondary mt-3">{% trans "Back to products" %}</a>
         </div>
     </div>
 </div>

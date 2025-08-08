@@ -1,17 +1,19 @@
+{% load i18n %} <!-- Añadir para cargar internacionalización -->
+
 <footer class="bg-dark text-light mt-4 py-4">
   <div class="container">
     <div class="row text-center text-md-start align-items-center">
 
       <!-- Left: Nav links -->
       <div class="col-md-4 mb-3 mb-md-0 d-flex justify-content-center justify-content-md-start gap-3">
-        <a href="#" class="text-light text-decoration-none">About</a>
-        <a href="#" class="text-light text-decoration-none">Contact</a>
-        <a href="#" class="text-light text-decoration-none">Terms</a>
+        <a href="#" class="text-light text-decoration-none">{% trans "About" %}</a>
+        <a href="#" class="text-light text-decoration-none">{% trans "Contact" %}</a>
+        <a href="#" class="text-light text-decoration-none">{% trans "Terms" %}</a>
       </div>
 
       <!-- Center: App name -->
       <div class="col-md-4 mb-3 mb-md-0 text-center">
-        <span class="fw-bold">© {% now "Y" %} Product Management PF</span>
+        <span class="fw-bold">© {% now "Y" %} {% trans "Product Management PF" %}</span>
       </div>
 
       <!-- Right: Social + Admin -->
@@ -19,8 +21,8 @@
         <a href="https://github.com/vasilako/ProjectManagementPF" target="_blank" class="text-light text-decoration-none">
           <i class="fab fa-github me-1"></i>GitHub
         </a>
-        <a href="{% url 'admin:index' %}" class="text-light text-decoration-none">Admin</a>
-        <a href="{% url 'test_messages' %}" class="text-light text-decoration-none">Messages</a>
+        <a href="{% url 'admin:index' %}" class="text-light text-decoration-none">{% trans "Admin" %}</a>
+        <a href="{% url 'test_messages' %}" class="text-light text-decoration-none">{% trans "Messages" %}</a>
       </div>
 
     </div>

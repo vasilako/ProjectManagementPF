@@ -25,6 +25,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # Additional fields required when creating a superuser
     REQUIRED_FIELDS = ['first_name', 'last_name']  # campos obligatorios aparte del email
 
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
+
     # String representation of the user
     def __str__(self):
         return self.email

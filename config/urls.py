@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
@@ -26,10 +27,19 @@ def health_check_view(request):
 
 
 urlpatterns = [
-    path('health/', health_check_view, name='health_check'),
-    path('admin/', admin.site.urls),
-    path('', include('core.urls')),
-    path('products/', include('products.urls')),
+    # path('health/', health_check_view, name='health_check'),
+    # path('admin/', admin.site.urls),
+    # path('', include('core.urls')),
+    # path('products/', include('products.urls')),
 ]
 
+# Add URL patterns with i18n support for internationalization and localization
+urlpatterns += i18n_patterns(
+    path('health/', health_check_view, name='health_check'),
+        path('admin/', admin.site.urls),
+        path('', include('core.urls')),
+        path('products/', include('products.urls')),
+)
+
+# Configure Django to serve media files (user-uploaded content) during development
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

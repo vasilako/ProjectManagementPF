@@ -22,4 +22,3 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ("category",)
 
 
-
