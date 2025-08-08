@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  libretranslate:
+    container_name: libretranslate
+    image: libretranslate/libretranslate:latest
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - LT_LOAD_ONLY=en,es  # Solo inglés y español
+      - LT_UPDATE_MODELS=true  # Actualiza modelos al iniciar
+      - LT_THREADS=2  # Reducido para Mac M1
+      - LT_FRONTEND_TIMEOUT=2000
+    volumes:
+      - libretranslate_models:/home/libretranslate/.local:rw
+    healthcheck:
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
+      interval: 30s
+      retries: 3
+volumes:
+  libretranslate_models:

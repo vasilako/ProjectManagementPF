@@ -4,10 +4,11 @@ __pycache__/
 *.sqlite3
 .env
 tareas_semanales.md
-.htmlcov/
 .env
 Django_secret_key_for_render
-utils/
 .DS_Store
 static/.DS_Store
 static/img/.DS_Store
+
+.htmlcov/
+.utils/
