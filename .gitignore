@@ -12,3 +12,5 @@ static/img/.DS_Store
 
 .htmlcov/
 .utils/
+# La basura que genera terabox, para limpiar:  find . -name "*.terabox.uploading.cfg" -delete
+*.terabox.uploading.cfg
