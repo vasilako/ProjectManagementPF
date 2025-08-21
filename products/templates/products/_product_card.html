@@ -4,7 +4,7 @@
 
 <div class="col">
   <div class="card h-100 shadow-lg position-relative">
-    <a href="{% url 'product_detail' product.pk %}" class="stretched-link"></a>
+    <a href="{% url 'products:product_detail' product.pk %}" class="stretched-link"></a>
 
     {# Product image carousel or placeholder #}
     {% if product.images.exists %}
@@ -43,7 +43,7 @@
       <h5 class="card-title text-center">{{ product.name }}</h5>
       <p class="card-text text-truncate-multiline">
         {{ product.description }}
-        <a href="{% url 'product_detail' product.pk %}" class="read-more-link">{% trans "Read more" %}</a>
+        <a href="{% url 'products:product_detail' product.pk %}" class="read-more-link">{% trans "Read more" %}</a>
       </p>
     </div>
 
