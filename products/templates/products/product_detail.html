@@ -1,52 +1,76 @@
 {% extends "base.html" %}
-{% load static %}
-{% load i18n %} <!-- Añadir para cargar internacionalización -->
+{% load static i18n %}
 
 {% block content %}
 <div class="container py-5">
-    <div class="row">
-        <div class="col-md-6">
-            {% if product.images.exists %}
-            <div id="carouselDetail{{ product.id }}" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    {% for image in product.images.all %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        {% if image.image.name|slice:":4" == "http" %}
-                        <img src="{{ image.image.name }}" class="d-block w-100" alt="{% trans 'Product image' %}"
-                             style="object-fit: contain;">
-                        {% else %}
-                        <img src="{{ image.image.url }}" class="d-block w-100" alt="{% trans 'Product image' %}"
-                             style="object-fit: contain;">
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDetail{{ product.id }}"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">{% trans "Previous" %}</span> <!-- Para accesibilidad -->
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselDetail{{ product.id }}"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">{% trans "Next" %}</span> <!-- Para accesibilidad -->
-                </button>
-            </div>
+  <div class="row">
+    <!-- Galería / imagen -->
+    <div class="col-md-6">
+      {% if product.images.exists %}
+      <div id="carouselDetail{{ product.id }}" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for image in product.images.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            {% if image.image.name|slice:":4" == "http" %}
+            <img src="{{ image.image.name }}" class="d-block w-100" alt="{% trans 'Product image' %}" style="object-fit:contain;">
             {% else %}
-            <img src="{% static 'img/defaults/no-image-available.png' %}"
-                 class="img-fluid"
-                 alt="{% trans 'No image available' %}"
-                 style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; object-position: center;">
+            <img src="{{ image.image.url }}" class="d-block w-100" alt="{% trans 'Product image' %}" style="object-fit:contain;">
             {% endif %}
+          </div>
+          {% endfor %}
         </div>
-
-        <div class="col-md-6">
-            <h2>{{ product.name }}</h2>
-            <p class="text-muted">{{ product.category.name }}</p>
-            <p>{{ product.description }}</p>
-            <h4 class="text-danger">€{{ product.price }}</h4>
-            <a href="{% url 'product_list' %}" class="btn btn-outline-secondary mt-3">{% trans "Back to products" %}</a>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselDetail{{ product.id }}" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Previous" %}</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselDetail{{ product.id }}" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">{% trans "Next" %}</span>
+        </button>
+      </div>
+      {% else %}
+      <img src="{% static 'img/defaults/no-image-available.png' %}"
+           class="img-fluid"
+           alt="{% trans 'No image available' %}"
+           style="aspect-ratio: 4 / 3; width: 100%; object-fit: cover; object-position: center;">
+      {% endif %}
     </div>
+
+    <!-- Datos + compra -->
+    <div class="col-md-6">
+      <h2 class="mb-2">{{ product.name }}</h2>
+      <p class="text-muted mb-3">{{ product.category.name }}</p>
+      <p class="mb-3">{{ product.description }}</p>
+
+      <div class="d-flex align-items-center gap-3 mb-4">
+        <span class="h4 text-danger mb-0">€{{ product.price }}</span>
+        {% if product.stock %}
+          <span class="badge bg-success">{% trans "In stock" %}: {{ product.stock }}</span>
+        {% else %}
+          <span class="badge bg-secondary">{% trans "No stock" %}</span>
+        {% endif %}
+      </div>
+
+      <!-- ADD TO CART FORM -->
+      <form method="post" action="{% url 'cart:cart_add' product.id %}" class="row g-2 align-items-center" novalidate>
+        {% csrf_token %}
+        <div class="col-auto">
+          <label for="qty" class="form-label mb-0 small">{% trans "Quantity" %}</label>
+          <input id="qty" name="quantity" type="number" min="1" value="1" inputmode="numeric"
+                 class="form-control" style="width:110px;" aria-label="{% trans 'Quantity' %}">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">
+            {% trans "Add to cart" %}
+          </button>
+        </div>
+      </form>
+
+      <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary mt-4">
+        {% trans "Back to products" %}
+      </a>
+    </div>
+  </div>
 </div>
+
 {% endblock %}
