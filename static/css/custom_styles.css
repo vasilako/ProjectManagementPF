@@ -32,6 +32,6 @@ i.fa-solid.fa-cart-shopping.fa-flip-horizontal{
 }
 
 /* Icono del carrito se pone rojo al pasar el mouse */
-.ms-auto:hover{
+div.ms-auto:hover{
     color: red;
 }
