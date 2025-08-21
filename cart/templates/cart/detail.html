@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div class="container py-4">
+    <h3 class="mb-3">{% trans "Your cart" %}</h3>
+
+    {% if items %}
+    <ul class="list-group mb-3">
+        {% for it in items %}
+        <li class="list-group-item">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div class="me-auto">
+                    <strong>{{ it.product.name }}</strong>
+                </div>
+
+                <form method="post" action="{% url 'cart:cart_update' it.product.id %}"
+                      class="d-flex align-items-center">
+                    {% csrf_token %}
+                    <label for="qty-{{ it.product.id }}" class="me-2 mb-0 small">{% trans "Quantity" %}</label>
+                    <input id="qty-{{ it.product.id }}" type="number" name="quantity" value="{{ it.qty }}" min="0"
+                           class="form-control form-control-sm me-2" style="width:80px;">
+                    <button type="submit" class="btn btn-sm btn-outline-primary">{% trans "Update" %}</button>
+                </form>
+
+                <form method="post" action="{% url 'cart:cart_remove' it.product.id %}" class="ms-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger">{% trans "Remove" %}</button>
+                </form>
+
+                <span class="ms-3">€{{ it.line_total|floatformat:2 }}</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <strong class="h5 mb-0">{% trans "Total" %}</strong>
+        <strong class="h5 mb-0">€{{ total|floatformat:2 }}</strong>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary">{% trans "Continue shopping"
+            %}</a>
+        <a href="{% url 'orders:checkout_cart' %}" class="btn btn-primary">{% trans "Proceed to checkout" %}</a>
+        {# Nota: cambia 'orders:checkout' por la URL real cuando implementes el checkout #}
+    </div>
+    {% else %}
+    <p class="text-muted">{% trans "Your cart is empty." %}</p>
+    <a href="{% url 'products:product_list' %}" class="btn btn-primary">{% trans "Browse products" %}</a>
+    {% endif %}
+</div>
+{% endblock %}

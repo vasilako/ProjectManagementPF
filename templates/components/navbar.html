@@ -1,33 +1,83 @@
-{% load static %}
+{% load static i18n %}
 
+{# Estilos mínimos para centrar el logo y el popover de categorías #}
+<style>
+    .brand-center {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .25rem .75rem;
+        border-radius: .5rem;
+        background: rgba(255, 255, 255, 0.06);
+        font-weight: 600;
+    }
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
+    .categories-popover {
+        position: absolute;
+        top: 100%; /* justo debajo del navbar */
+        left: 0;
+        margin-top: .5rem;
+        z-index: 1050;
+        min-width: 220px;
+    }
+</style>
 
-        <!-- Left: menu icon triggers collapse -->
-        <a class="navbar-brand" data-bs-toggle="collapse" href="#categoryMenu" role="button" aria-expanded="false"
-           aria-controls="categoryMenu">
-            <i class="fas fa-bars"></i>
+<nav class="navbar navbar-dark bg-dark sticky-top shadow-sm py-1">
+    <div class="container px-4 position-relative py-3">
+
+        <!-- Left: botón menú (tres rayas) -->
+        <button
+                class="btn btn-link text-white p-0 me-2"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#categoryMenu"
+                aria-controls="categoryMenu"
+                aria-expanded="false"
+                aria-label="{% trans 'Toggle categories' %}">
+            <i class="fas fa-bars fa-lg"></i>
+        </button>
+
+        <!-- Center: logo centrado -->
+        <a class="navbar-brand brand-center" href="{% url 'home' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" height="28" class="d-inline-block align-text-top">
+            <span class="d-none d-md-inline">Product Management</span>
         </a>
 
-        <!-- Collapsible categories list -->
-        <div class="collapse position-absolute bg-dark p-3 rounded shadow" id="categoryMenu"
-             style="top:60px; left:15px; z-index:999;">
-            <ul class="list-unstyled mb-0">
-                {% for cat in categories %}
-                <li>
-                    <a class="text-white text-decoration-none" href="{% url 'product_list' %}?category={{ cat.id }}">
-                        {{ cat.name }}
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
+
+        <!-- Right: enlace del carrito -->
+        <a class="nav-link text-white position-relative" href="{% url 'cart:cart_detail' %}">
+            <div class="ms-auto">
+                <span class="me-1"><i class="fa-solid fa-cart-shopping fa-flip-horizontal"></i></i></span>
+                <span class="d-none d-sm-inline">{% trans "Cart" %}</span>
+                {% if cart_total_items %}
+                <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+            {{ cart_total_items }}
+          </span>
+                {% endif %}
+
+            </div>
+        </a>
+        <!-- Menú de categorías colapsable (aparece debajo del navbar, lado izquierdo) -->
+        <div id="categoryMenu" class="collapse categories-popover">
+            <div class="bg-dark p-3 rounded shadow">
+                <ul class="list-unstyled mb-0">
+                    {% for cat in categories %}
+                    <li class="mb-2">
+                        <a class="text-white text-decoration-none"
+                           href="{% url 'products:product_list' %}?category={{ cat.id }}">
+                            {{ cat.name }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li class="text-muted">{% trans "No categories" %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-
-        <!-- Center: logo image -->
-        <a class="navbar-brand mx-auto" href="{% url 'home' %}">
-            <img src="{% static 'img/logo.png' %}" alt="Logo" height="80">
-        </a>
 
     </div>
 </nav>
