@@ -38,9 +38,6 @@ LOGGING = {
     },
 }
 
-
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -56,13 +53,11 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key')
 # Defaults to False and ensures the value is cast as a boolean.
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
     default='localhost,127.0.0.1',
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
-
 
 # Application definition
 
@@ -78,6 +73,7 @@ INSTALLED_APPS = [
     'core',
     'products.apps.ProductsConfig',
     'orders',
+    'cart',
 
 ]
 
@@ -95,7 +91,6 @@ MIDDLEWARE = [
 
 ]
 
-
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -108,7 +103,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Custom context processors
                 'core.context_processors.global_categories',
+                "cart.context_processors.cart_summary",
+
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
             ],
@@ -125,7 +123,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Determines whether to use PostgreSQL instead of the default SQLite database.
 # The value is read from environment variables and cast to a boolean.
 USE_POSTGRES = config('USE_POSTGRES', default=False, cast=bool)
-
 
 # If USE_POSTGRES is True, configure the database to use PostgreSQL with environment-based credentials.
 # Otherwise, fall back to using the default local SQLite database.
@@ -147,7 +144,6 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
 
 # Specifies the custom user model to be used throughout the application in place of Django's default User model
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -176,13 +172,12 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-en'
 
 USE_I18N = True  # Internationalization activated
-USE_L10N = True # Localization activated
+USE_L10N = True  # Localization activated
 
 LANGUAGES = (
     ('en', 'English'),
     ('es', 'Spanish'),
 )
-
 
 TIME_ZONE = 'UTC'
 USE_TZ = True
@@ -192,7 +187,6 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',  # Carpeta donde se guardarán los archivos .po y .mo
 ]
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -201,9 +195,10 @@ LOCALE_PATHS = [
 # Place custom assets (logo images, JS, CSS) inside the `static/` folder at project root.
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 
 # Media files (user-uploaded content)
 # These are files uploaded through ImageField/FileField, like product images.
