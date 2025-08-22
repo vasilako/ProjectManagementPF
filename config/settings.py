@@ -12,11 +12,19 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 from decouple import config
+config('TU_WALLET_SEPOLIA', default=None)
+TU_WALLET_SEPOLIA = config('TU_WALLET_SEPOLIA', default=None)
+ALCHEMY_END_POINT_SEPOLIA = config('ALCHEMY_END_POINT_SEPOLIA', default=None)
+# TU_WALLET_SEPOLIA = os.getenv("TU_WALLET_SEPOLIA")
+# ALCHEMY_END_POINT_SEPOLIA = os.getenv("ALCHEMY_END_POINT_SEPOLIA")
+
 
 import logging
-import sys
+
+
 
 LOGGING = {
     'version': 1,
@@ -46,7 +54,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key')
-# SECRET_KEY ='django-insecure-e#0jlw*x9g*$9wc%+7+++xb9o=43t-cz*(l#uw(3i0ooh6m@a!'
 
 
 # Retrieves the DEBUG setting from environment variables using decouple.
@@ -74,6 +81,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'orders',
     'cart',
+    'payments',
 
 ]
 
@@ -212,3 +220,20 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Configures WhiteNoise for compressing and serving static files with manifest caching
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
+
+CRYPTO_NETWORKS = {
+    "sepolia": {
+        "symbol": "ETH",
+        "chain_id": 11155111,
+        "decimals": 18,
+        "receiving_address": TU_WALLET_SEPOLIA,
+        "rpc_url": ALCHEMY_END_POINT_SEPOLIA,
+    },
+}
+CRYPTO_PRICE_BUFFER_PCT = 0.015
+CRYPTO_QUOTE_TTL_SECONDS = 180
+PAYMENT_VERIFY_TIMEOUT = 90   # segundos máximos esperando
+PAYMENT_VERIFY_POLL    = 3    # cada cuántos segundos reintentar

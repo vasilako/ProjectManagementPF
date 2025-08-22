@@ -1,9 +1,121 @@
-{% extends "base.html" %}
-{% load i18n %}
+{% extends "base.html" %}{% load i18n static %}
 {% block content %}
 <div class="container py-4">
   <h3 class="mb-3">{% trans "Checkout" %}</h3>
-  <p class="text-muted">{% trans "Checkout flow coming soon..." %}</p>
-  <a href="{% url 'cart:cart_detail' %}" class="btn btn-outline-secondary">{% trans "Back to cart" %}</a>
+
+  <ul class="list-group mb-3">
+    {% for p, qty, line in items %}
+      <li class="list-group-item d-flex justify-content-between">
+        <span>{{ p.name }} × {{ qty }}</span>
+        <span>€{{ line|floatformat:2 }}</span>
+      </li>
+    {% endfor %}
+    <li class="list-group-item d-flex justify-content-between">
+      <strong>{% trans "Total (EUR)" %}</strong>
+      <strong>€{{ total|floatformat:2 }}</strong>
+    </li>
+  </ul>
+
+  <div class="d-flex gap-2">
+    <button id="quoteBtn" class="btn btn-outline-secondary">
+      {% trans "Get quote (ETH Sepolia)" %}
+    </button>
+    <button id="payBtn" class="btn btn-primary" disabled>
+      {% trans "Pay with MetaMask" %}
+    </button>
+  </div>
+
+  <div id="quoteBox" class="mt-3 small text-muted"></div>
+  <div id="payResult" class="mt-2 small text-muted"></div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.11.1/dist/ethers.umd.min.js"></script>
+
+<script>
+const orderId = {{ order.id }};
+let quote = null;
+
+function getCookie(name) { // CSRF para fetch POST
+  const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  return m ? m.pop() : '';
+}
+const csrftoken = getCookie('csrftoken');
+
+const quoteBtn = document.getElementById('quoteBtn');
+const payBtn   = document.getElementById('payBtn');
+const box      = document.getElementById('quoteBox');
+const out      = document.getElementById('payResult');
+
+quoteBtn.onclick = async () => {
+  quoteBtn.disabled = true;
+  box.textContent = "Fetching quote…";
+  try {
+    const resp = await fetch("{% url 'orders:create_quote' order.id %}", { cache: "no-store" });
+    const data = await resp.json().catch(() => ({}));
+
+    if (!resp.ok || !data.ok) {
+      const msg = (data && data.error) ? data.error : ("http_" + resp.status);
+      box.textContent = "Error getting quote: " + msg;
+
+      // Si la order no existe o no está pendiente, refresca checkout para que se reconstruya
+      if (msg === "order_not_found" || msg === "order_not_pending") {
+        window.location.href = "{% url 'orders:checkout_cart' %}";
+      }
+      return;
+    }
+
+    quote = data;
+    box.textContent = `Amount: ${quote.amount_crypto} ${quote.symbol} · Expires: ${quote.expires_at}`;
+    payBtn.disabled = false;
+  } catch (e) {
+    box.textContent = "Network error: " + (e.message || e);
+  } finally {
+    quoteBtn.disabled = false; // o déjalo deshabilitado si prefieres
+  }
+};
+
+
+payBtn.onclick = async () => {
+  try {
+    if (!window.ethereum) throw new Error("MetaMask not found");
+    const sepoliaHex = "0xaa36a7";
+
+    // Conectar
+    await window.ethereum.request({ method: "eth_requestAccounts" });
+
+    // Cambiar a Sepolia si hace falta
+    const currentChain = await window.ethereum.request({ method: "eth_chainId" });
+    if (currentChain !== sepoliaHex) {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: sepoliaHex }],
+      });
+    }
+
+    // Enviar transacción
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const tx = await signer.sendTransaction({
+      to: quote.receiving_address,
+      value: ethers.parseEther(quote.amount_crypto),
+    });
+    out.textContent = "Tx sent: " + tx.hash;
+
+    // Confirmar en backend
+    const res = await fetch("{% url 'orders:confirm_payment' %}", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
+      body: JSON.stringify({ order_id: orderId, txHash: tx.hash })
+    });
+    const j = await res.json();
+    if (j.ok) {
+      window.location.href = "{% url 'orders:confirm' %}?id=" + orderId;
+    } else {
+      out.textContent = "Verification failed: " + (j.error || "unknown");
+    }
+  } catch (e) {
+    out.textContent = "Error: " + (e.message || e);
+  }
+};
+</script>
 {% endblock %}
