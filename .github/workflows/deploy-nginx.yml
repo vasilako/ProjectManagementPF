@@ -28,10 +28,10 @@ jobs:
 
             APP_DIR="/srv/nginx-test"
             PUBLIC_PORT="${PUBLIC_PORT:-8080}"    # puerto público del VPS
-            sudo mkdir -p "${APP_DIR}/site"
+            mkdir -p "${APP_DIR}/site"
 
             # Página simple para verificar que el deploy funciona
-            cat << 'EOF' | sudo tee "${APP_DIR}/site/index.html" > /dev/null
+            cat << 'EOF' | tee "${APP_DIR}/site/index.html" > /dev/null
             <!doctype html>
             <html lang="es">
             <head><meta charset="utf-8"><title>OK - Nginx CI</title></head>
@@ -45,9 +45,9 @@ jobs:
             EOF
 
             # Tirar si existe y levantar nuevo Nginx
-            sudo docker pull nginx:alpine
-            sudo docker rm -f nginx-test || true
-            sudo docker run -d --name nginx-test \
+            docker pull nginx:alpine
+            docker rm -f nginx-test || true
+            docker run -d --name nginx-test \
               --restart unless-stopped \
               -p ${PUBLIC_PORT}:80 \
               -v "${APP_DIR}/site:/usr/share/nginx/html:ro" \
