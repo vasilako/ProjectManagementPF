@@ -1,75 +1,47 @@
-name: Clean & Deploy Nginx (test)
+- name: Clean ALL & Deploy Nginx (no sudo, sin heredoc)
+  uses: appleboy/ssh-action@v1.2.0
+  with:
+    host: ${{ secrets.VPS_HOST }}
+    username: ${{ secrets.VPS_USER }}
+    key: ${{ secrets.VPS_SSH_KEY }}
+    port: ${{ secrets.VPS_PORT || 22 }}
+    script_stop: true
+    script: |
+      set -e
 
-on:
-  push:
-    branches: [ "test-ssh" ]
-  workflow_dispatch: {}
+      # matar todo
+      docker ps -aq | xargs -r docker rm -f
+      docker network prune -f || true
 
-jobs:
-  clean_and_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+      # base dir escribible
+      pick_writable_dir() {
+        for d in "$HOME" "$(pwd)" /var/tmp /tmp; do
+          if [ -n "$d" ] && mkdir -p "$d/.probe" >/dev/null 2>&1; then
+            rmdir "$d/.probe" 2>/dev/null || true
+            echo "$d"
+            return 0
+          fi
+        done
+        echo "/tmp"
+      }
+      BASE_DIR="$(pick_writable_dir)"
+      APP_DIR="${BASE_DIR%/}/nginx-test"
+      SITE_DIR="${APP_DIR}/site"
+      mkdir -p "${SITE_DIR}"
 
-      - name: Clean ALL containers & deploy Nginx
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || 22 }}
-          script_stop: true
-          script: |
-            set -e
+      # escribir HTML con un único comando
+      printf '%s' '<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>OK - Nginx CI</title></head>
+<body style="font-family:system-ui;margin:40px;">
+  <h1>✅ Deploy Nginx limpio (sin heredoc)</h1>
+  <p>Servido por <strong>nginx:alpine</strong> lanzado desde <strong>GitHub Actions</strong>.</p>
+  <p>Hora del servidor: <span id="ts"></span></p>
+  <script>document.getElementById("ts").textContent = new Date().toString();</script>
+</body></html>' > "${SITE_DIR}/index.html"
 
-            echo "== Docker access check =="
-            docker info >/dev/null
-
-            echo "== Killing ALL containers =="
-            docker ps -aq | xargs -r docker rm -f
-
-            echo "== Pruning unused networks =="
-            docker network prune -f || true
-
-            # Opcional (pesado): limpia imágenes huérfanas
-            # docker image prune -af || true
-
-            echo "== Picking a writable base dir =="
-            pick_writable_dir() {
-              for d in "$HOME" "$(pwd)" /var/tmp /tmp; do
-                if [ -n "$d" ] && mkdir -p "$d/.probe" >/dev/null 2>&1; then
-                  rmdir "$d/.probe" 2>/dev/null || true
-                  echo "$d"
-                  return 0
-                fi
-              done
-              echo "/tmp"
-            }
-            BASE_DIR="$(pick_writable_dir)"
-            APP_DIR="${BASE_DIR%/}/nginx-test"
-            SITE_DIR="${APP_DIR}/site"
-            echo "Using APP_DIR=${APP_DIR}"
-            mkdir -p "${SITE_DIR}"
-
-            cat > "${SITE_DIR}/index.html" << 'EOF'
-            <!doctype html>
-            <html lang="es"><head><meta charset="utf-8"><title>OK - Nginx CI</title></head>
-            <body style="font-family:system-ui;margin:40px;">
-              <h1>✅ Deploy Nginx limpio</h1>
-              <p>Todos los contenedores previos fueron eliminados y este Nginx se lanzó desde GitHub Actions.</p>
-              <p>Hora del servidor: <span id="ts"></span></p>
-              <script>document.getElementById('ts').textContent = new Date().toString();</script>
-            </body></html>
-            EOF
-
-            echo "== Pull & Run Nginx =="
-            docker pull nginx:alpine
-            docker run -d --name nginx-test \
-              --restart unless-stopped \
-              -p 8080:80 \
-              -v "${SITE_DIR}:/usr/share/nginx/html:ro" \
-              nginx:alpine
-
-      - name: Health check
-        run: |
-          curl -fsS "http://${{ secrets.VPS_HOST }}:8080" | head -n 3
+      docker pull nginx:alpine
+      docker run -d --name nginx-test \
+        --restart unless-stopped \
+        -p 8080:80 \
+        -v "${SITE_DIR}:/usr/share/nginx/html:ro" \
+        nginx:alpine
