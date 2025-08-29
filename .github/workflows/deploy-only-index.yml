@@ -1,6 +1,5 @@
 name: Deploy only index (no registry)
 
-
 on:
   push:
     branches: [ "VPS/index-test" ]
@@ -9,18 +8,32 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+
     env:
       IMAGE_NAME: portfolio-index
       IMAGE_TAG: ${{ github.sha }}
       BUILD_CONTEXT: text_index_VPS
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Build image (Caddy + index)
         run: |
           docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ${BUILD_CONTEXT}
           docker save ${IMAGE_NAME}:${IMAGE_TAG} | gzip > image.tar.gz
+          ls -lh image.tar.gz
+
+      - name: Ensure target dir on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script_stop: true
+          script: |
+            mkdir -p /srv/portfolio-index
 
       - name: Upload image to VPS (SCP)
         uses: appleboy/scp-action@v0.1.7
@@ -41,29 +54,31 @@ jobs:
           port: ${{ secrets.VPS_PORT || 22 }}
           script_stop: true
           script: |
-            set -e
+            set -euo pipefail
             APP_DIR="/srv/portfolio-index"
             CONTAINER="portfolio-index"
-            IMAGE_REF="portfolio-index:446c95c15e914ef6a1ecc4c24d154cdaeefff457"
             cd "${APP_DIR}"
 
             # parar/eliminar si ya existía
             docker rm -f "${CONTAINER}" || true
 
-            # cargar imagen
+            # cargar la imagen que acabamos de subir
             docker load -i image.tar.gz
 
             # volúmenes para certificados/config de Caddy
             docker volume create caddy_data >/dev/null 2>&1 || true
             docker volume create caddy_config >/dev/null 2>&1 || true
 
-            # lanzar en 80/443 (HTTPS automático)
+            # (debug opcional)
+            docker images | awk 'NR==1 || /portfolio-index/ {print $0}'
+
+            # lanzar en 80/443 con la referencia RESUELTA por GitHub
             docker run -d --name "${CONTAINER}" \
               --restart unless-stopped \
               -p 80:80 -p 443:443 \
               -v caddy_data:/data \
               -v caddy_config:/config \
-              ${IMAGE_NAME}:${{ env.IMAGE_TAG }}
+              "${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
             # limpiar tar
             rm -f image.tar.gz || true
