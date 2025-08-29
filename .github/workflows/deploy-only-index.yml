@@ -1,5 +1,6 @@
 name: Deploy only index (no registry)
 
+
 on:
   push:
     branches: [ "VPS/index-test" ]
