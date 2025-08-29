@@ -3,54 +3,73 @@ name: Deploy Nginx to VPS (test)
 
 on:
   push:
-    branches: [ "test-ssh" ]       # o la rama que quieras
-  workflow_dispatch:            # permite lanzarlo a mano
+    branches: [ "test-ssh" ]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # Nos conectamos por SSH al VPS y lanzamos nginx:alpine
-      - name: Deploy over SSH
+      - name: Deploy Nginx (robusto, sin sudo)
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.VPS_HOST }}      # ej. 1.2.3.4
-          username: ${{ secrets.VPS_USER }}  # ej. ubuntu
-          key: ${{ secrets.VPS_SSH_KEY }}    # clave privada del usuario del VPS
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT || 22 }}
           script_stop: true
           script: |
             set -e
 
-            APP_DIR="/home/danjo/nginx-test"
-            PUBLIC_PORT="${PUBLIC_PORT:-8080}"    # puerto público del VPS
-            mkdir -p "${APP_DIR}/site"
+            echo "== Diagnóstico breve =="
+            whoami || true
+            id || true
+            echo "HOME=$HOME"
+            pwd
 
-            # Página simple para verificar que el deploy funciona
-            cat << 'EOF' | tee "${APP_DIR}/site/index.html" > /dev/null
+            # Elegir carpeta base escribible: HOME -> PWD -> /var/tmp -> /tmp
+            pick_writable_dir() {
+              for d in "$HOME" "$(pwd)" /var/tmp /tmp; do
+                if [ -n "$d" ] && mkdir -p "$d/.probe" >/dev/null 2>&1; then
+                  rmdir "$d/.probe" 2>/dev/null || true
+                  echo "$d"
+                  return 0
+                fi
+              done
+              echo "/tmp"
+            }
+
+            BASE_DIR="$(pick_writable_dir)"
+            APP_DIR="${BASE_DIR%/}/nginx-test"
+            SITE_DIR="${APP_DIR}/site"
+
+            echo "Usando APP_DIR=${APP_DIR}"
+            mkdir -p "${SITE_DIR}"
+
+            cat > "${SITE_DIR}/index.html" << 'EOF'
             <!doctype html>
-            <html lang="es">
-            <head><meta charset="utf-8"><title>OK - Nginx CI</title></head>
+            <html lang="es"><head><meta charset="utf-8"><title>OK - Nginx CI</title></head>
             <body style="font-family:system-ui;margin:40px;">
               <h1>✅ Deploy Nginx funcionando</h1>
               <p>Servido por <strong>nginx:alpine</strong> lanzado desde <strong>GitHub Actions</strong>.</p>
               <p>Hora del servidor: <span id="ts"></span></p>
               <script>document.getElementById('ts').textContent = new Date().toString();</script>
-            </body>
-            </html>
+            </body></html>
             EOF
 
-            # Tirar si existe y levantar nuevo Nginx
+            # Asegúrate de que puedes usar docker SIN sudo (grupo docker)
+            docker info >/dev/null
+
             docker pull nginx:alpine
             docker rm -f nginx-test || true
             docker run -d --name nginx-test \
               --restart unless-stopped \
-              -p ${PUBLIC_PORT}:80 \
-              -v "${APP_DIR}/site:/usr/share/nginx/html:ro" \
+              -p 8080:80 \
+              -v "${SITE_DIR}:/usr/share/nginx/html:ro" \
               nginx:alpine
 
-            echo "Nginx desplegado en puerto ${PUBLIC_PORT}"
+      - name: Health check
+        run: |
+          curl -fsS "http://${{ secrets.VPS_HOST }}:8080" | head -n 2
