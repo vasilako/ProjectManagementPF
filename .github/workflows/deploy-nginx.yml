@@ -1,18 +1,17 @@
-# .github/workflows/deploy-nginx.yml
-name: Deploy Nginx to VPS (test)
+name: Clean & Deploy Nginx (test)
 
 on:
   push:
     branches: [ "test-ssh" ]
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
-  deploy:
+  clean_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy Nginx (robusto, sin sudo)
+      - name: Clean ALL containers & deploy Nginx
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -23,13 +22,19 @@ jobs:
           script: |
             set -e
 
-            echo "== Diagnóstico breve =="
-            whoami || true
-            id || true
-            echo "HOME=$HOME"
-            pwd
+            echo "== Docker access check =="
+            docker info >/dev/null
 
-            # Elegir carpeta base escribible: HOME -> PWD -> /var/tmp -> /tmp
+            echo "== Killing ALL containers =="
+            docker ps -aq | xargs -r docker rm -f
+
+            echo "== Pruning unused networks =="
+            docker network prune -f || true
+
+            # Opcional (pesado): limpia imágenes huérfanas
+            # docker image prune -af || true
+
+            echo "== Picking a writable base dir =="
             pick_writable_dir() {
               for d in "$HOME" "$(pwd)" /var/tmp /tmp; do
                 if [ -n "$d" ] && mkdir -p "$d/.probe" >/dev/null 2>&1; then
@@ -40,30 +45,25 @@ jobs:
               done
               echo "/tmp"
             }
-
             BASE_DIR="$(pick_writable_dir)"
             APP_DIR="${BASE_DIR%/}/nginx-test"
             SITE_DIR="${APP_DIR}/site"
-
-            echo "Usando APP_DIR=${APP_DIR}"
+            echo "Using APP_DIR=${APP_DIR}"
             mkdir -p "${SITE_DIR}"
 
             cat > "${SITE_DIR}/index.html" << 'EOF'
             <!doctype html>
             <html lang="es"><head><meta charset="utf-8"><title>OK - Nginx CI</title></head>
             <body style="font-family:system-ui;margin:40px;">
-              <h1>✅ Deploy Nginx funcionando</h1>
-              <p>Servido por <strong>nginx:alpine</strong> lanzado desde <strong>GitHub Actions</strong>.</p>
+              <h1>✅ Deploy Nginx limpio</h1>
+              <p>Todos los contenedores previos fueron eliminados y este Nginx se lanzó desde GitHub Actions.</p>
               <p>Hora del servidor: <span id="ts"></span></p>
               <script>document.getElementById('ts').textContent = new Date().toString();</script>
             </body></html>
             EOF
 
-            # Asegúrate de que puedes usar docker SIN sudo (grupo docker)
-            docker info >/dev/null
-
+            echo "== Pull & Run Nginx =="
             docker pull nginx:alpine
-            docker rm -f nginx-test || true
             docker run -d --name nginx-test \
               --restart unless-stopped \
               -p 8080:80 \
@@ -72,4 +72,4 @@ jobs:
 
       - name: Health check
         run: |
-          curl -fsS "http://${{ secrets.VPS_HOST }}:8080" | head -n 2
+          curl -fsS "http://${{ secrets.VPS_HOST }}:8080" | head -n 3
