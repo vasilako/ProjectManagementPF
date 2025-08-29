@@ -1,0 +1,4 @@
+portfoliolab.ddnsfree.com {
+    root * /srv
+    file_server
+}
