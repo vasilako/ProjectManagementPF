@@ -44,6 +44,7 @@ jobs:
             set -e
             APP_DIR="/srv/portfolio-index"
             CONTAINER="portfolio-index"
+            IMAGE_REF="portfolio-index:446c95c15e914ef6a1ecc4c24d154cdaeefff457"
             cd "${APP_DIR}"
 
             # parar/eliminar si ya existía
