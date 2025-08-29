@@ -1,0 +1,67 @@
+name: Deploy only index (no registry)
+
+on:
+  push:
+    branches: [ "VPS/index-test" ]
+  workflow_dispatch: {}
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: portfolio-index
+      IMAGE_TAG: ${{ github.sha }}
+      BUILD_CONTEXT: text_index_VPS
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image (Caddy + index)
+        run: |
+          docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ${BUILD_CONTEXT}
+          docker save ${IMAGE_NAME}:${IMAGE_TAG} | gzip > image.tar.gz
+
+      - name: Upload image to VPS (SCP)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          source: image.tar.gz
+          target: /srv/portfolio-index/
+
+      - name: SSH deploy (load + run on 80/443)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -e
+            APP_DIR="/srv/portfolio-index"
+            CONTAINER="portfolio-index"
+            cd "${APP_DIR}"
+
+            # parar/eliminar si ya existía
+            docker rm -f "${CONTAINER}" || true
+
+            # cargar imagen
+            docker load -i image.tar.gz
+
+            # volúmenes para certificados/config de Caddy
+            docker volume create caddy_data >/dev/null 2>&1 || true
+            docker volume create caddy_config >/dev/null 2>&1 || true
+
+            # lanzar en 80/443 (HTTPS automático)
+            docker run -d --name "${CONTAINER}" \
+              --restart unless-stopped \
+              -p 80:80 -p 443:443 \
+              -v caddy_data:/data \
+              -v caddy_config:/config \
+              ${IMAGE_NAME}:${{ env.IMAGE_TAG }}
+
+            # limpiar tar
+            rm -f image.tar.gz || true
