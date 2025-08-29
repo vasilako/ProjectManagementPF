@@ -26,7 +26,7 @@ jobs:
           script: |
             set -e
 
-            APP_DIR="/srv/nginx-test"
+            APP_DIR="/home/danjo/nginx-test"
             PUBLIC_PORT="${PUBLIC_PORT:-8080}"    # puerto público del VPS
             mkdir -p "${APP_DIR}/site"
 
