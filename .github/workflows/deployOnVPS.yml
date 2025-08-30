@@ -38,7 +38,13 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script_stop: true
           script: |
-            mkdir -p ${REMOTE_DIR}
+            # Verificar existencia de carpeta
+            if [ -d "${REMOTE_DIR}" ]; then
+              echo "✔ Carpeta ${REMOTE_DIR} ya existe"
+              ls -ald ${REMOTE_DIR}
+            else
+              echo "✘ Carpeta ${REMOTE_DIR} NO existe" && exit 1
+            fi
 
       - name: Upload tar + rendered compose + Caddyfile
         uses: appleboy/scp-action@v0.1.7
