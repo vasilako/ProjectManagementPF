@@ -29,22 +29,7 @@ jobs:
           sed -E 's/\$\{IMAGE_TAG\}/'"${IMAGE_TAG}"'/g' docker-compose.yml > docker-compose.deploy.yml
           head -n 30 docker-compose.deploy.yml | sed -n '1,30p'
 
-      - name: Ensure dir on VPS
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT }}
-          script_stop: true
-          script: |
-            # Verificar existencia de carpeta
-            if [ -d "${REMOTE_DIR}" ]; then
-              echo "✔ Carpeta ${REMOTE_DIR} ya existe"
-              ls -ald ${REMOTE_DIR}
-            else
-              echo "✘ Carpeta ${REMOTE_DIR} NO existe" && exit 1
-            fi
+      
 
       - name: Upload tar + rendered compose + Caddyfile
         uses: appleboy/scp-action@v0.1.7
