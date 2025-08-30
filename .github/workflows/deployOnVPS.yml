@@ -1,4 +1,90 @@
-name: deployOnVPS.yml
+name: Deploy (Compose on VPS)
+
 on:
+  push:
+    branches: [ "develop" ]
+  workflow_dispatch: {}
 
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: pfapp/img
+      IMAGE_TAG: ${{ github.sha }}
+      TAR_NAME: image.tar.gz
+      REMOTE_DIR: /srv/portfoliolab/deploy
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image
+        run: |
+          docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+          docker save ${IMAGE_NAME}:${IMAGE_TAG} | gzip > ${TAR_NAME}
+          ls -lh ${TAR_NAME}
+
+      - name: Render compose with baked tag
+        run: |
+          sed -E 's/\$\{IMAGE_TAG\}/'"${IMAGE_TAG}"'/g' docker-compose.yml > docker-compose.deploy.yml
+          head -n 30 docker-compose.deploy.yml | sed -n '1,30p'
+
+      - name: Ensure dir on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            mkdir -p ${REMOTE_DIR}
+
+      - name: Upload tar + rendered compose + Caddyfile
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          source: |
+            image.tar.gz
+            docker-compose.deploy.yml
+            Caddyfile
+          target: ${{ env.REMOTE_DIR }}
+
+
+      - name: Create .env on VPS from Secrets
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd ${REMOTE_DIR}
+            cat >> .env <<'EOF'
+            IMAGE_TAG=${{ env.IMAGE_TAG }}
+            EOF
+            
+
+      - name: Load image & compose up & migrate
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd ${REMOTE_DIR}
+            docker load -i image.tar.gz
+            rm -f image.tar.gz
+            mv -f docker-compose.deploy.yml docker-compose.yml
+            docker compose up -d --remove-orphans
+            # Django management commands (idempotentes)
+            docker compose exec -T web python manage.py migrate --noinput || true
+            docker compose exec -T web python manage.py collectstatic --noinput || true

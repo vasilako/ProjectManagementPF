@@ -3,8 +3,8 @@ __pycache__/
 *.pyc
 *.sqlite3
 .env
+.env.white
 tareas_semanales.md
-.env
 Django_secret_key_for_render
 .DS_Store
 static/.DS_Store
@@ -14,3 +14,4 @@ static/img/.DS_Store
 .utils/
 # La basura que genera terabox, para limpiar:  find . -name "*.terabox.uploading.cfg" -delete
 *.terabox.uploading.cfg
+
