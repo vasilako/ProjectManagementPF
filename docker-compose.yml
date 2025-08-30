@@ -1,59 +1,59 @@
 version: "3.9"
-name: portfoliolab
+
+name: myapp-stack
 
 networks:
-  backend-net:
+  MyComposeNet:
 
 volumes:
-  pgdata-pf:
-  static-pf:
+  pgdata:
+  static:
   caddy_data:
   caddy_config:
 
 services:
-  postgres-pf:
+  db:
     image: postgres:16-alpine
-    container_name: postgres-pf
     restart: unless-stopped
-    networks: [backend-net]
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    volumes:
-      - pgdata-pf:/var/lib/postgresql/data
-
-  pgadmin-pf:
-    image: dpage/pgadmin4:8.12
-    container_name: pgadmin-pf
-    restart: unless-stopped
-    networks: [backend-net]
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-    ports:
-      - "127.0.0.1:5050:80"   # solo accesible por túnel SSH
-
-  webapp-pf:
-    image: webapp-pf:${WEBAPP_TAG}
-    container_name: webapp-pf
-    restart: unless-stopped
-    networks: [backend-net]
     env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [MyComposeNet]
+
+  web:
+    image: pfapp/img:${IMAGE_TAG}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     depends_on:
-      - postgres-pf
+      db:
+        condition: service_healthy
+    volumes:
+      - static:/app/staticfiles
     expose:
       - "8000"
-    volumes:
-      - static-pf:/app/staticfiles   # destino de collectstatic
+    networks: [MyComposeNet]
 
-  caddy-pf:
-    image: caddy:2
-    container_name: caddy-pf
+  # TLS y estáticos (opcional pero recomendado)
+  caddy:
+    image: caddy:2.8
     restart: unless-stopped
-    networks: [backend-net]
-    depends_on:
-      - webapp-pf
     ports:
       - "80:80"
       - "443:443"
@@ -61,4 +61,20 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
-      - static-pf:/srv/static:ro     # Caddy sirve /static
+      - static:/srv/static:ro
+    depends_on: [web]
+    networks: [MyComposeNet]
+
+  # Panel pgAdmin (solo por túnel localhost)
+  pgadmin:
+    image: dpage/pgadmin4:8
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "127.0.0.1:5050:5050"
+    depends_on: [db]
+    networks: [MyComposeNet]
