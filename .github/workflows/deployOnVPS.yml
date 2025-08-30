@@ -23,12 +23,34 @@ jobs:
           docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
           docker save ${IMAGE_NAME}:${IMAGE_TAG} | gzip > ${TAR_NAME}
           ls -lh ${TAR_NAME}
+          
+
+      - name: Verify artifacts exist
+        run: |
+          set -euo pipefail
+          echo "PWD=$(pwd)"
+          ls -alh
+          test -f image.tar.gz || { echo "❌ Missing image.tar.gz"; exit 1; }
+          # si usas el 'baked' compose:
+          if test -f docker-compose.deploy.yml; then
+            echo "✅ docker-compose.deploy.yml present"
+          else
+            echo "ℹ️ No baked compose, will fall back to docker-compose.yml"
+            test -f docker-compose.yml || { echo "❌ Missing docker-compose.yml"; exit 1; }
+            cp docker-compose.yml docker-compose.deploy.yml
+          fi
+          test -f Caddyfile || echo "⚠️ Caddyfile not found (ok si no lo usas)"
+          ls -lh image.tar.gz docker-compose.deploy.yml || true
+          
+      
 
       - name: Render compose with baked tag
         run: |
-          sed -E 's/\$\{IMAGE_TAG\}/'"${IMAGE_TAG}"'/g' docker-compose.yml > docker-compose.deploy.yml
-          head -n 30 docker-compose.deploy.yml | sed -n '1,30p'
-
+          export IMAGE_TAG="${IMAGE_TAG}"
+          envsubst '${IMAGE_TAG}' < docker-compose.yml > docker-compose.deploy.yml
+          head -n 30 docker-compose.deploy.yml
+      
+      
       
 
       - name: Upload tar + rendered compose + Caddyfile
@@ -38,28 +60,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: |
-            image.tar.gz
-            docker-compose.deploy.yml
-            Caddyfile
+          source: "image.tar.gz,docker-compose.deploy.yml,Caddyfile"
           target: ${{ env.REMOTE_DIR }}
+          overwrite: true
 
-
-      - name: Create .env on VPS from Secrets
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT }}
-          script_stop: true
-          script: |
-            set -euo pipefail
-            cd ${REMOTE_DIR}
-            cat >> .env <<'EOF'
-            IMAGE_TAG=${{ env.IMAGE_TAG }}
-            EOF
-            
 
       - name: Load image & compose up & migrate
         uses: appleboy/ssh-action@v1.2.0
