@@ -47,6 +47,7 @@ jobs:
           export IMAGE_TAG="${IMAGE_TAG}"
           envsubst '${IMAGE_TAG}' < docker-compose.yml > docker-compose.deploy.yml
           head -n 30 docker-compose.deploy.yml
+          mv docker-compose.deploy.yml docker-compose.yml
 
 
       - name: Upload tar + rendered compose + Caddyfile
@@ -56,7 +57,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
-          source: "image.tar.gz,docker-compose.deploy.yml,Caddyfile"
+          source: "image.tar.gz,docker-compose.yml,Caddyfile"
           target: ${{ env.REMOTE_DIR }}
           overwrite: true
           rm: false  # Evita que elimine archivos existentes
