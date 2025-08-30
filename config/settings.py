@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 import sys
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 config('TU_WALLET_SEPOLIA', default=None)
 TU_WALLET_SEPOLIA = config('TU_WALLET_SEPOLIA', default=None)
 ALCHEMY_END_POINT_SEPOLIA = config('ALCHEMY_END_POINT_SEPOLIA', default=None)
@@ -65,6 +65,12 @@ ALLOWED_HOSTS = config(
     default='localhost,127.0.0.1',
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
+
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+
+# Recomendado en HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
@@ -222,7 +228,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='')
+
 
 
 CRYPTO_NETWORKS = {
