@@ -1,0 +1,14 @@
+{
+    email basilio.cristov@gmail.com
+}
+
+portfoliolab.ddnsfree.com {
+    encode zstd gzip
+
+    handle_path /static/* {
+        root * /srv/static
+        file_server
+    }
+
+    reverse_proxy webapp-pf:8000
+}

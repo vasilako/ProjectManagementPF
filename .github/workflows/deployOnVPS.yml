@@ -1,0 +1,4 @@
+name: deployOnVPS.yml
+on:
+
+jobs:

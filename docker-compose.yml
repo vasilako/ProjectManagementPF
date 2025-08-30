@@ -1,0 +1,64 @@
+version: "3.9"
+name: portfoliolab
+
+networks:
+  backend-net:
+
+volumes:
+  pgdata-pf:
+  static-pf:
+  caddy_data:
+  caddy_config:
+
+services:
+  postgres-pf:
+    image: postgres:16-alpine
+    container_name: postgres-pf
+    restart: unless-stopped
+    networks: [backend-net]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - pgdata-pf:/var/lib/postgresql/data
+
+  pgadmin-pf:
+    image: dpage/pgadmin4:8.12
+    container_name: pgadmin-pf
+    restart: unless-stopped
+    networks: [backend-net]
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "127.0.0.1:5050:80"   # solo accesible por túnel SSH
+
+  webapp-pf:
+    image: webapp-pf:${WEBAPP_TAG}
+    container_name: webapp-pf
+    restart: unless-stopped
+    networks: [backend-net]
+    env_file: .env
+    depends_on:
+      - postgres-pf
+    expose:
+      - "8000"
+    volumes:
+      - static-pf:/app/staticfiles   # destino de collectstatic
+
+  caddy-pf:
+    image: caddy:2
+    container_name: caddy-pf
+    restart: unless-stopped
+    networks: [backend-net]
+    depends_on:
+      - webapp-pf
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - static-pf:/srv/static:ro     # Caddy sirve /static
