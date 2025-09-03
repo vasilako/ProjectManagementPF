@@ -80,3 +80,26 @@ jobs:
             docker compose exec -T web python manage.py migrate --noinput || true
             docker compose exec -T web python manage.py collectstatic --noinput || true
             docker compose ps
+
+
+      - name: Cleanup old web images
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd "${{ env.REMOTE_DIR }}"
+            # Imagen actual usada por el contenedor web
+            current=$(docker compose ps -q web | xargs docker inspect --format '{{.Image}}')
+            # Todas las imágenes pfapp/img
+            all=$(docker images pfapp/img --format '{{.ID}}')
+            # Borrar todas salvo la actual
+            for img in $all; do
+              if [ "$img" != "$current" ]; then
+                docker rmi -f "$img" || true
+              fi
+            done
