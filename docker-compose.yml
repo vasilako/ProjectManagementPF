@@ -7,6 +7,7 @@ networks:
 volumes:
   pgdata:
   static:
+  media:
   caddy_data:
   caddy_config:
 
