@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 
 # Create your views here.
 
+
 class HomeView(TemplateView):
     # template_name = "core/home.html" # esto es cuando entra en home
     def get(self, request, *args, **kwargs):
