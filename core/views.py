@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 class HomeView(TemplateView):
     # template_name = "core/home.html" # esto es cuando entra en home
     def get(self, request, *args, **kwargs):
-        return redirect('products')
+        return redirect('products:product_list')
 
 
 
@@ -16,7 +16,7 @@ def test_message_view(request):
     messages.info(request, "This is an info message.")
     messages.warning(request, "This is a warning.")
     messages.error(request, "This is an error.")
-    return redirect('products')
+    return redirect('')
 
 
 
