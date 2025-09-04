@@ -1,5 +1,5 @@
 name: Deploy (Compose on VPS)
-# Comment tes
+
 on:
   push:
     branches: [ "develop" ]
