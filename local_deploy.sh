@@ -21,13 +21,13 @@ echo "🔨 Build imagen local: $IMAGE_NAME:$IMAGE_TAG"
 docker build -t "$IMAGE_NAME:$IMAGE_TAG" .
 export IMAGE_TAG="$IMAGE_TAG"
 
-echo "⬆️  Levantar db primero"
+#echo "⬆️  Levantar db primero"
 # Usa override de puertos si quieres (p.ej., docker-compose.override.yml)
-docker compose $COMPOSE_FILES --env-file "$ENV_LOCAL" up -d db
+#docker compose $COMPOSE_FILES --env-file "$ENV_LOCAL" up -d db
 
-echo "⏳ Esperando a que db esté lista..."
+#echo "⏳ Esperando a que db esté lista..."
 # Espera simple (si tienes healthcheck, puedes inspeccionarlo)
-sleep 8
+#sleep 8
 
 echo "⬆️  Levantar web y nginx"
 docker compose $COMPOSE_FILES --env-file "$ENV_LOCAL" up -d nginx web

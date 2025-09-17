@@ -1,3 +1,4 @@
+python-dotenv
 aiohappyeyeballs==2.6.1
 aiohttp==3.12.15
 aiosignal==1.4.0
@@ -31,9 +32,6 @@ pillow==11.2.1
 propcache==0.3.2
 psycopg2-binary==2.9.10
 pycryptodome==3.23.0
-pydantic==2.11.7
-pydantic_core==2.33.2
-python-decouple==3.8
 pyunormalize==16.0.0
 regex==2025.7.34
 requests==2.32.4

@@ -11,19 +11,36 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
+
+# from decouple import config, Csv
+# import environ
 import os
 import sys
 from pathlib import Path
-from decouple import config, Csv
-config('TU_WALLET_SEPOLIA', default=None)
-TU_WALLET_SEPOLIA = config('TU_WALLET_SEPOLIA', default=None)
-ALCHEMY_END_POINT_SEPOLIA = config('ALCHEMY_END_POINT_SEPOLIA', default=None)
-# TU_WALLET_SEPOLIA = os.getenv("TU_WALLET_SEPOLIA")
-# ALCHEMY_END_POINT_SEPOLIA = os.getenv("ALCHEMY_END_POINT_SEPOLIA")
-
-
 import logging
 
+from dotenv import load_dotenv
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
+
+TU_WALLET_SEPOLIA = os.getenv("TU_WALLET_SEPOLIA", None)
+ALCHEMY_END_POINT_SEPOLIA = os.getenv("ALCHEMY_END_POINT_SEPOLIA", None)
+
+
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+
+# 1) Cargar siempre .env primero
+load_dotenv(BASE_DIR / ".env")
+
+# 2) Si USE_LOCAL_ENV=True, sobreescribe con .env.local
+if os.getenv("USE_LOCAL_ENV", "False").lower() == "true":
+    load_dotenv(BASE_DIR / ".env.local", override=True)
 
 
 LOGGING = {
@@ -46,27 +63,29 @@ LOGGING = {
     },
 }
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key')
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 
 
 # Retrieves the DEBUG setting from environment variables using decouple.
 # Defaults to False and ensures the value is cast as a boolean.
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = config(
-    'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1',
-    cast=lambda v: [s.strip() for s in v.split(',')]
-)
 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='', cast=Csv())
+ALLOWED_HOSTS = [
+    h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()
+]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if origin.strip()
+]
+
 
 # Recomendado en HTTPS
 CSRF_COOKIE_SECURE = True
@@ -136,28 +155,37 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Determines whether to use PostgreSQL instead of the default SQLite database.
 # The value is read from environment variables and cast to a boolean.
-USE_POSTGRES = config('USE_POSTGRES', default=False, cast=bool)
-
+USE_POSTGRES = os.getenv("USE_POSTGRES", "False").lower() == "true"
 # If USE_POSTGRES is True, configure the database to use PostgreSQL with environment-based credentials.
 # Otherwise, fall back to using the default local SQLite database.
+
+
 if USE_POSTGRES:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config('POSTGRES_DB'),
-            'USER': config('POSTGRES_USER'),
-            'PASSWORD': config('POSTGRES_PASSWORD'),
-            'HOST': config('POSTGRES_HOST', default='db'),
-            'PORT': config('POSTGRES_PORT', default='5432'),
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB", os.getenv("DATABASE_NAME", "myappDB")),
+            "USER": os.getenv("POSTGRES_USER", os.getenv("DATABASE_USER", "myDBuser")),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", os.getenv("DATABASE_PASSWORD", "")),
+            "HOST": os.getenv("POSTGRES_HOST", os.getenv("DATABASE_HOST", "db")),
+            "PORT": os.getenv("POSTGRES_PORT", os.getenv("DATABASE_PORT", "5432")),
         }
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+
+logging.warning(
+    "DB → host=%s port=%s db=%s user=%s",
+    os.getenv("POSTGRES_HOST", os.getenv("DATABASE_HOST")),
+    os.getenv("POSTGRES_PORT", os.getenv("DATABASE_PORT")),
+    os.getenv("POSTGRES_DB", os.getenv("DATABASE_NAME")),
+    os.getenv("POSTGRES_USER", os.getenv("DATABASE_USER")),
+)
 
 # Specifies the custom user model to be used throughout the application in place of Django's default User model
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -196,10 +224,12 @@ LANGUAGES = (
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Carpeta donde se guardarán los archivos .po y .mo
 LOCALE_PATHS = [
-    BASE_DIR / 'locale',  # Carpeta donde se guardarán los archivos .po y .mo
+    BASE_DIR / 'locale',
 ]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
