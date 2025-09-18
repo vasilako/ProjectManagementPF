@@ -1,112 +1,67 @@
 {% load static i18n %}
 
-<style>
-  /* Centro del logo */
-  .brand-center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    padding: .25rem .75rem;
-    border-radius: .5rem;
-    background: rgba(255, 255, 255, 0.06);
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .brand-logo {
-    height: 28px; /* base */
-  }
-  .brand-text {
-    line-height: 1.1;
-  }
+<!-- Barra gris superior -->
+<div class="info-bar">
+    <div class="container d-flex justify-content-between align-items-center py-1">
+        <span class="info-text small">{% trans "This website is a sample included in my professional portfolio." %}</span>
+        <a href="/accounts/login/" class="btn btn-primary btn-sm">{% trans "LogIn/SignUp" %}</a>
+    </div>
+</div>
 
-  /* Desktop (y tablet como desktop) */
-  @media (min-width: 768px) {
-    .brand-logo { height: 56px; } /* +200% vs 28px */
-    .brand-center { flex-direction: row; }
-  }
+<!-- Navbar principal -->
+<nav class="navbar navbar-dark bg-dark shadow-sm py-2">
+    <div class="container d-flex align-items-center justify-content-between">
 
-  /* Móvil horizontal = como desktop */
-  @media (max-width: 767.98px) and (orientation: landscape) {
-    .brand-logo { height: 56px; } /* +200% */
-    .brand-center { flex-direction: row; }
-  }
+        <!-- Left -->
+        <!-- Botón hamburguesa -->
+        <button class="btn btn-link text-white p-0 me-2"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasCategories"
+                aria-controls="offcanvasCategories">
+            <i class="fas fa-bars fa-lg"></i>
+        </button>
 
-  /* Móvil vertical: texto debajo */
-  @media (max-width: 767.98px) and (orientation: portrait) {
-    .brand-center {
-      flex-direction: column;
-      gap: .25rem;
-      padding: .25rem .5rem;
-    }
-    .brand-text {
-      font-size: .875rem; /* compacto */
-      display: block;     /* fuerza visibilidad */
-    }
-  }
+        <!-- Sidebar de categorías -->
+        <div class="offcanvas offcanvas-start text-bg-secondary" tabindex="-1" id="offcanvasCategories"
+             aria-labelledby="offcanvasCategoriesLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">{% trans "Categories" %}</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="list-unstyled">
+                    {% for cat in categories %}
+                    <li class="mb-2">
+                        <a class="text-white text-decoration-none"
+                           href="{% url 'products:product_list' %}?category={{ cat.id }}">
 
-  /* Popover categorías (igual que tenías) */
-  .categories-popover {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: .5rem;
-    z-index: 1050;
-    min-width: 220px;
-  }
-</style>
+                            {{ cat.name }}
+                        </a>
+                    </li>
+                    {% empty %}
+                    <li class="text-muted">{% trans "No categories" %}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
-<nav class="navbar navbar-dark bg-dark sticky-top shadow-sm py-1">
-  <div class="container px-4 position-relative py-3">
 
-    <!-- Left -->
-    <button
-      class="btn btn-link text-white p-0 me-2"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#categoryMenu"
-      aria-controls="categoryMenu"
-      aria-expanded="false"
-      aria-label="{% trans 'Toggle categories' %}">
-      <i class="fas fa-bars fa-lg"></i>
-    </button>
+        <!-- Center: SOLO logo -->
+        <a class="navbar-brand mx-auto" href="{% url 'home' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-logo">
+        </a>
 
-    <!-- Center -->
-    <a class="navbar-brand brand-center" href="{% url 'home' %}">
-      <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-logo d-inline-block align-text-top">
-      <span class="brand-text">Product Management</span>
-    </a>
-
-    <!-- Right -->
-    <a class="nav-link text-white position-relative" href="{% url 'cart:cart_detail' %}">
-      <div class="ms-auto">
-        <span class="me-1"><i class="fa-solid fa-cart-shopping fa-flip-horizontal"></i></span>
-        <span class="d-none d-sm-inline">{% trans "Cart" %}</span>
-        {% if cart_total_items %}
-          <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">{{ cart_total_items }}</span>
-        {% endif %}
-      </div>
-    </a>
-
-    <!-- Categorías -->
-    <div id="categoryMenu" class="collapse categories-popover">
-      <div class="bg-dark p-3 rounded shadow">
-        <ul class="list-unstyled mb-0">
-          {% for cat in categories %}
-            <li class="mb-2">
-              <a class="text-white text-decoration-none" href="{% url 'products:product_list' %}?category={{ cat.id }}">
-                {{ cat.name }}
-              </a>
-            </li>
-          {% empty %}
-            <li class="text-muted">{% trans "No categories" %}</li>
-          {% endfor %}
-        </ul>
-      </div>
+        <!-- Right -->
+        <a class="nav-link text-white position-relative" href="{% url 'cart:cart_detail' %}">
+            <span class="me-1"><i class="fa-solid fa-cart-shopping fa-flip-horizontal"></i></span>
+            <span class="d-none d-sm-inline">{% trans "Cart" %}</span>
+            {% if cart_total_items %}
+            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">{{ cart_total_items }}</span>
+            {% endif %}
+        </a>
     </div>
 
-  </div>
+
 </nav>
