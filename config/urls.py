@@ -42,6 +42,8 @@ urlpatterns += i18n_patterns(
     path('products/', include(('products.urls', 'products'), namespace='products')),
     path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
     path('orders/', include(('orders.urls', 'orders'), namespace='orders')),
+    path("payments/", include("payments.urls")),
+
 )
 
 # Configure Django to serve media files (user-uploaded content) during development

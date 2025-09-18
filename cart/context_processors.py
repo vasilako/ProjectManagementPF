@@ -1,3 +1,5 @@
+# cart/contex_processors.py
+
 from products.models import Product
 
 def cart_summary(request):

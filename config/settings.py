@@ -274,3 +274,12 @@ CRYPTO_PRICE_BUFFER_PCT = 0.015
 CRYPTO_QUOTE_TTL_SECONDS = 180
 PAYMENT_VERIFY_TIMEOUT = 90   # segundos máximos esperando
 PAYMENT_VERIFY_POLL    = 3    # cada cuántos segundos reintentar
+
+
+# --- Las variabels de entorno API KEY para Stripe ---
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", None)
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", None)
+import os
+
+STRIPE_DOMAIN = os.getenv("STRIPE_DOMAIN", "http://localhost:8000")  # fallback local
+
