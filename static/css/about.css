@@ -1,0 +1,54 @@
+/* ============================
+   Estilos sección "Acerca de la web"
+   Archivo: static/css/about.css
+   ============================ */
+
+.about-section {
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.about-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-container h2 {
+  margin-top: 25px;
+  color: #0056b3;
+}
+
+.about-container p {
+  color: #444;
+  font-size: 16px;
+}
+
+.about-container ul {
+  margin: 10px 0 20px 20px;
+  padding-left: 0;
+}
+
+.about-container li {
+  margin-bottom: 8px;
+}
+
+.about-container a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.about-container a:hover {
+  text-decoration: underline;
+}

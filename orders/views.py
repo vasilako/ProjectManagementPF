@@ -5,6 +5,7 @@ from time import sleep
 import datetime, json
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.utils import timezone
@@ -17,10 +18,14 @@ from payments.services.rates import eur_to_eth
 from web3 import Web3
 
 
+
+
+
+
 def _get_cart(session):
     return session.setdefault("cart", {})
 
-
+@login_required
 def checkout_cart(request):
     cart = _get_cart(request.session)
     if not cart:

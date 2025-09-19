@@ -43,6 +43,7 @@ urlpatterns += i18n_patterns(
     path('cart/', include(('cart.urls', 'cart'), namespace='cart')),
     path('orders/', include(('orders.urls', 'orders'), namespace='orders')),
     path("payments/", include("payments.urls")),
+    path("users/", include("users.urls", namespace="users")),
 
 )
 

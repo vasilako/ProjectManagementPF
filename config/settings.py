@@ -283,3 +283,7 @@ import os
 
 STRIPE_DOMAIN = os.getenv("STRIPE_DOMAIN", "http://localhost:8000")  # fallback local
 
+
+LOGIN_URL = '/users/login/'
+
+

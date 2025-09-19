@@ -1,0 +1,54 @@
+/* ============================
+   Estilos sección "Términos"
+   Archivo: static/css/terms.css
+   ============================ */
+
+.terms-section {
+  background-color: #fdfdfd;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.7;
+}
+
+.terms-container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.terms-container h1 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 25px;
+}
+
+.terms-container h2 {
+  margin-top: 25px;
+  color: #0056b3;
+}
+
+.terms-container p {
+  color: #444;
+  font-size: 16px;
+}
+
+.terms-container ul {
+  margin: 15px 0 20px 20px;
+  padding-left: 0;
+}
+
+.terms-container li {
+  margin-bottom: 10px;
+}
+
+.terms-container blockquote {
+  margin: 20px 0;
+  padding: 15px 20px;
+  border-left: 4px solid #0056b3;
+  background: #f5f9ff;
+  font-style: italic;
+  color: #333;
+}

@@ -1,6 +1,8 @@
 # payments/views.py
 import stripe
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse, HttpResponseBadRequest
@@ -9,7 +11,7 @@ from orders.models import Order
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-
+@login_required
 def create_stripe_checkout_session(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
 
