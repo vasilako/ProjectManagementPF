@@ -224,7 +224,6 @@ LANGUAGES = (
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
-
 # Carpeta donde se guardarán los archivos .po y .mo
 LOCALE_PATHS = [
     BASE_DIR / 'locale',

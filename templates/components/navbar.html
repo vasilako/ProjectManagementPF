@@ -33,29 +33,43 @@
             <i class="fas fa-bars fa-lg"></i>
         </button>
 
-        <!-- Sidebar de categorías -->
-        <div class="offcanvas offcanvas-start text-bg-secondary" tabindex="-1" id="offcanvasCategories"
-             aria-labelledby="offcanvasCategoriesLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">{% trans "Categories" %}</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="list-unstyled">
-                    {% for cat in categories %}
-                    <li class="mb-2">
-                        <a class="text-white text-decoration-none"
-                           href="{% url 'products:product_list' %}?category={{ cat.id }}">
-                            {{ cat.name }}
-                        </a>
-                    </li>
-                    {% empty %}
-                    <li class="text-muted">{% trans "No categories" %}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+<!-- Sidebar de categorías -->
+<div class="offcanvas offcanvas-start text-bg-secondary" tabindex="-1" id="offcanvasCategories"
+     aria-labelledby="offcanvasCategoriesLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">{% trans "Categories" %}</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+  </div>
+
+  <div class="offcanvas-body d-flex flex-column">
+    <!-- Lista de categorías -->
+    <ul class="list-unstyled flex-grow-1">
+      {% for cat in categories %}
+      <li class="mb-2">
+        <a class="text-white text-decoration-none"
+           href="{% url 'products:product_list' %}?category={{ cat.id }}">
+          {{ cat.name }}
+        </a>
+      </li>
+      {% empty %}
+      <li class="text-muted">{% trans "No categories" %}</li>
+      {% endfor %}
+    </ul>
+
+    <!-- Selector de idioma -->
+    <div class="language-switcher mt-auto pt-3 border-top">
+      <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <div class="btn-group w-100">
+          <button type="submit" name="language" value="en" class="btn btn-sm btn-outline-light">🇬🇧 EN</button>
+          <button type="submit" name="language" value="es" class="btn btn-sm btn-outline-light">🇪🇸 ES</button>
         </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
         <!-- Center: SOLO logo -->
         <a class="navbar-brand mx-auto" href="{% url 'core:home' %}">

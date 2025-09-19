@@ -1,33 +1,49 @@
-{# .users/templates/users/register.html #}
+{# users/templates/users/register.html #}
 {% extends "base.html" %}
 {% load static i18n %}
+
 {% block content %}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <h2 class="mb-4 text-center">Crear cuenta</h2>
+
+      <!-- Título -->
+      <h2 class="mb-4 text-center">{% trans "Create account" %}</h2>
+
+      <!-- Formulario -->
       <form method="post" novalidate>
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
         {{ form.non_field_errors }}
+
         {% for field in form %}
           <div class="mb-3">
             {{ field.label_tag }}
             {{ field }}
+
             {% if field.help_text %}
               <div class="form-text">{{ field.help_text }}</div>
             {% endif %}
+
             {% for error in field.errors %}
               <div class="text-danger small">{{ error }}</div>
             {% endfor %}
           </div>
         {% endfor %}
-        <button type="submit" class="btn btn-success w-100">Registrarse</button>
+
+        <button type="submit" class="btn btn-success w-100">
+          {% trans "Register" %}
+        </button>
       </form>
+
+      <!-- Link a login -->
       <p class="mt-3 text-center">
-        ¿Ya tienes cuenta?
-        <a href="{% url 'users:login' %}{% if next %}?next={{ next }}{% endif %}">Inicia sesión</a>
+        {% trans "Already have an account?" %}
+        <a href="{% url 'users:login' %}{% if next %}?next={{ next }}{% endif %}">
+          {% trans "Sign in" %}
+        </a>
       </p>
+
     </div>
   </div>
 </div>

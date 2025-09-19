@@ -1,46 +1,56 @@
-{# /core/templates/core/about.html #}
-
+{# core/templates/core/terms.html #}
 {% extends "base.html" %}
 {% load i18n %}
-{% block content %}
 
+{% block content %}
 <section class="terms-section">
   <div class="terms-container">
-    <h1>Términos de uso</h1>
+
+    <h1>{% trans "Terms of use" %}</h1>
 
     <p>
-      Este proyecto, <strong>PortfolioLab</strong> (<a href="https://portfoliolab.ddnsfree.com" target="_blank">portfoliolab.ddnsfree.com</a>), 
-      es un desarrollo de código abierto. El objetivo es que cualquier persona pueda aprovechar 
-      las ideas, el código y la estructura de esta web para sus propios proyectos.
+      {% blocktrans %}
+      This project, <strong>PortfolioLab</strong> (<a href="https://portfoliolab.ddnsfree.com" target="_blank">portfoliolab.ddnsfree.com</a>),
+      is an open-source development. The goal is that anyone can take advantage of
+      the ideas, code and structure of this website for their own projects.
+      {% endblocktrans %}
     </p>
 
-    <h2>Condiciones</h2>
+    <h2>{% trans "Conditions" %}</h2>
     <ul>
-      <li>Puedes utilizar, modificar y distribuir el código sin coste alguno.</li>
-      <li>Puedes emplearlo tanto para proyectos personales como comerciales.</li>
+      <li>{% blocktrans %}You may use, modify, and distribute the code free of charge.{% endblocktrans %}</li>
+      <li>{% blocktrans %}You may use it for both personal and commercial projects.{% endblocktrans %}</li>
       <li>
-        La única condición es que, en algún lugar visible de tu proyecto (código fuente, 
-        documentación o interfaz), incluyas una <strong>mención de la autoría original</strong>.
+        {% blocktrans %}
+        The only condition is that, in some visible place in your project (source code,
+        documentation, or interface), you include a <strong>mention of the original authorship</strong>.
+        {% endblocktrans %}
       </li>
     </ul>
 
-    <h2>Licencia recomendada</h2>
+    <h2>{% trans "Recommended license" %}</h2>
     <p>
-      El código se publica bajo una licencia de estilo <strong>MIT</strong>, lo que significa que 
-      se otorga libertad total de uso, siempre que se mantenga el aviso de copyright 
-      y se reconozca la autoría original.
+      {% blocktrans %}
+      The code is released under an <strong>MIT-style license</strong>, which means it grants
+      complete freedom of use, provided the copyright notice is kept and
+      the original authorship is acknowledged.
+      {% endblocktrans %}
     </p>
 
     <blockquote>
-      “El software se proporciona ‘tal cual’, sin garantía de ningún tipo, expresa o implícita, 
-      incluyendo, pero no limitado a, garantías de comerciabilidad o adecuación para un propósito particular.”
+      {% blocktrans %}
+      “The software is provided ‘as is’, without warranty of any kind, express or implied,
+      including but not limited to the warranties of merchantability or fitness for a particular purpose.”
+      {% endblocktrans %}
     </blockquote>
 
     <p>
-      Si reutilizas este código, por favor incluye un enlace a este sitio web 
-      o una referencia a <strong>PortfolioLab</strong>.
+      {% blocktrans %}
+      If you reuse this code, please include a link to this website
+      or a reference to <strong>PortfolioLab</strong>.
+      {% endblocktrans %}
     </p>
+
   </div>
 </section>
-
 {% endblock %}

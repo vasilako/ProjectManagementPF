@@ -1,45 +1,52 @@
-{# /core/templates/core/about.html #}
-
+{# core/templates/core/about.html #}
 {% extends "base.html" %}
 {% load i18n %}
+
 {% block content %}
 <section class="about-section">
-    <div class="about-container">
-        <h1>Acerca de la web</h1>
-        <p>
-            <strong>PortfolioLab</strong> (<a href="https://portfoliolab.ddnsfree.com" target="_blank">portfoliolab.ddnsfree.com</a>)
-            es un proyecto de gestión de productos y ventas online. A través de esta plataforma se pueden
-            <strong>vender y administrar productos</strong> de forma sencilla, integrando múltiples opciones de pago.
-        </p>
+  <div class="about-container">
 
-        <h2>Formas de pago</h2>
-        <ul>
-            <li>Pagos con <strong>criptoactivos</strong> (Ethereum y otras wallets compatibles)</li>
-            <li><strong>Tarjetas bancarias</strong> de crédito y débito</li>
-            <li><strong>Links de pago</strong> personalizados</li>
-            <li><strong>PayPal</strong> como pasarela adicional</li>
-        </ul>
+    <h1>{% trans "About the website" %}</h1>
 
-        <h2>Gestión del administrador</h2>
-        <p>
-            El administrador de la web puede acceder al <strong>panel de gestión</strong> para:
-        </p>
-        <ul>
-            <li>Dar de alta y editar <strong>categorías</strong> de productos</li>
-            <li>Crear, modificar y eliminar <strong>productos</strong></li>
-            <li>Gestionar el <strong>stock</strong> disponible</li>
-            <li>Supervisar y controlar <strong>órdenes de compra</strong></li>
-            <li>Administrar <strong>usuarios</strong> registrados</li>
-        </ul>
+    <p>
+      {% blocktrans %}
+      <strong>PortfolioLab</strong> (<a href="https://portfoliolab.ddnsfree.com" target="_blank">portfoliolab.ddnsfree.com</a>)
+      is a project for managing products and online sales. Through this platform you can
+      <strong>sell and manage products</strong> easily, integrating multiple payment options.
+      {% endblocktrans %}
+    </p>
 
-        <h2>Futuras funcionalidades</h2>
-        <p>
-            Está previsto incorporar un sistema de <strong>seguimiento de pedidos</strong>, que permitirá a los clientes
-            consultar el estado de sus compras mediante un número de referencia
-            emitido por la empresa de mensajería.
-        </p>
-    </div>
+    <h2>{% trans "Payment methods" %}</h2>
+    <ul>
+      <li>{% blocktrans %}Payments with <strong>crypto assets</strong> (Ethereum and compatible wallets){% endblocktrans %}</li>
+      <li>{% blocktrans %}<strong>Credit and debit cards</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Personalized <strong>payment links</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}<strong>PayPal</strong> as an additional gateway{% endblocktrans %}</li>
+    </ul>
+
+    <h2>{% trans "Administrator management" %}</h2>
+    <p>
+      {% blocktrans %}
+      The administrator can access the <strong>management panel</strong> to:
+      {% endblocktrans %}
+    </p>
+    <ul>
+      <li>{% blocktrans %}Create and edit product <strong>categories</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Create, modify and delete <strong>products</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Manage available <strong>stock</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Supervise and control <strong>purchase orders</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Manage registered <strong>users</strong>{% endblocktrans %}</li>
+    </ul>
+
+    <h2>{% trans "Future features" %}</h2>
+    <p>
+      {% blocktrans %}
+      A <strong>tracking system for orders</strong> is planned, allowing customers
+      to check the status of their purchases using a reference number
+      provided by the courier company.
+      {% endblocktrans %}
+    </p>
+
+  </div>
 </section>
-
-
 {% endblock %}

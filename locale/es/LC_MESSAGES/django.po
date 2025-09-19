@@ -3,144 +3,578 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-24 16:46+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2025-09-19 17:00+0000\n"
+"PO-Revision-Date: 2025-09-19 18:00+0000\n"
+"Last-Translator: PortfolioLab <info@portfoliolab.ddnsfree.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cart/templates/cart/detail.html:8
+msgid "Your cart"
+msgstr "Tu carrito"
+
+#: cart/templates/cart/detail.html:22
+#: products/templates/products/product_detail.html:58
+#: products/templates/products/product_detail.html:60
+msgid "Quantity"
+msgstr "Cantidad"
+
+#: cart/templates/cart/detail.html:25
+msgid "Update"
+msgstr "Actualizar"
+
+#: cart/templates/cart/detail.html:30
+msgid "Remove"
+msgstr "Eliminar"
+
+#: cart/templates/cart/detail.html:40 orders/admin.py:80
+msgid "Total"
+msgstr "Total"
+
+#: cart/templates/cart/detail.html:45 orders/templates/orders/confirm.html:9
+msgid "Continue shopping"
+msgstr "Seguir comprando"
+
+#: cart/templates/cart/detail.html:46
+msgid "Proceed to checkout"
+msgstr "Proceder al pago"
+
+#: cart/templates/cart/detail.html:50
+msgid "Your cart is empty."
+msgstr "Tu carrito está vacío."
+
+#: cart/templates/cart/detail.html:51
+msgid "Browse products"
+msgstr "Explorar productos"
+
+#: cart/views.py:58
+#, python-format
+msgid "Added %(qty)d × %(name)s to your cart."
+msgstr "Se añadió %(qty)d × %(name)s a tu carrito."
+
+#: cart/views.py:75
+msgid "Product removed from cart"
+msgstr "Producto eliminado del carrito"
+
+#: cart/views.py:96
+#, python-format
+msgid "Updated %(name)s to %(qty)d units."
+msgstr "Se actualizó %(name)s a %(qty)d unidades."
+
+#: cart/views.py:100
+#, python-format
+msgid "Removed %(name)s from your cart."
+msgstr "Se eliminó %(name)s de tu carrito."
+
+#: core/templates/core/about.html:9
+msgid "About the website"
+msgstr "Acerca de la web"
+
+#: core/templates/core/about.html:12
+msgid ""
+"\n"
+"      <strong>PortfolioLab</strong> (<a href=\"https://"
+"portfoliolab.ddnsfree.com\" target=\"_blank\">portfoliolab.ddnsfree.com</"
+"a>)\n"
+"      is a project for managing products and online sales. Through this "
+"platform you can\n"
+"      <strong>sell and manage products</strong> easily, integrating multiple "
+"payment options.\n"
+"      "
+msgstr ""
+"\n"
+"      <strong>PortfolioLab</strong> (<a href=\"https://"
+"portfoliolab.ddnsfree.com\" target=\"_blank\">portfoliolab.ddnsfree.com</"
+"a>)\n"
+"      es un proyecto de gestión de productos y ventas online. A través de "
+"esta plataforma se pueden\n"
+"      <strong>vender y administrar productos</strong> fácilmente, integrando "
+"múltiples opciones de pago.\n"
+"      "
+
+#: core/templates/core/about.html:19
+msgid "Payment methods"
+msgstr "Formas de pago"
+
+#: core/templates/core/about.html:21
+msgid ""
+"Payments with <strong>crypto assets</strong> (Ethereum and compatible "
+"wallets)"
+msgstr ""
+"Pagos con <strong>criptoactivos</strong> (Ethereum y wallets compatibles)"
+
+#: core/templates/core/about.html:22
+msgid "<strong>Credit and debit cards</strong>"
+msgstr "<strong>Tarjetas de crédito y débito</strong>"
+
+#: core/templates/core/about.html:23
+msgid "Personalized <strong>payment links</strong>"
+msgstr "<strong>Enlaces de pago</strong> personalizados"
+
+#: core/templates/core/about.html:24
+msgid "<strong>PayPal</strong> as an additional gateway"
+msgstr "<strong>PayPal</strong> como pasarela adicional"
+
+#: core/templates/core/about.html:27
+msgid "Administrator management"
+msgstr "Gestión del administrador"
+
+#: core/templates/core/about.html:29
+msgid ""
+"\n"
+"      The administrator can access the <strong>management panel</strong> "
+"to:\n"
+"      "
+msgstr ""
+"\n"
+"      El administrador puede acceder al <strong>panel de gestión</strong> "
+"para:\n"
+"      "
+
+#: core/templates/core/about.html:34
+msgid "Create and edit product <strong>categories</strong>"
+msgstr "Crear y editar <strong>categorías</strong> de productos"
+
+#: core/templates/core/about.html:35
+msgid "Create, modify and delete <strong>products</strong>"
+msgstr "Crear, modificar y eliminar <strong>productos</strong>"
+
+#: core/templates/core/about.html:36
+msgid "Manage available <strong>stock</strong>"
+msgstr "Gestionar el <strong>stock</strong> disponible"
+
+#: core/templates/core/about.html:37
+msgid "Supervise and control <strong>purchase orders</strong>"
+msgstr "Supervisar y controlar <strong>órdenes de compra</strong>"
+
+#: core/templates/core/about.html:38
+msgid "Manage registered <strong>users</strong>"
+msgstr "Administrar <strong>usuarios</strong> registrados"
+
+#: core/templates/core/about.html:41
+msgid "Future features"
+msgstr "Futuras funcionalidades"
+
+#: core/templates/core/about.html:43
+msgid ""
+"\n"
+"      A <strong>tracking system for orders</strong> is planned, allowing "
+"customers\n"
+"      to check the status of their purchases using a reference number\n"
+"      provided by the courier company.\n"
+"      "
+msgstr ""
+"\n"
+"      Está previsto un <strong>sistema de seguimiento de pedidos</strong>, "
+"que permitirá a los clientes\n"
+"      consultar el estado de sus compras mediante un número de referencia\n"
+"      proporcionado por la empresa de mensajería.\n"
+"      "
 
 #: core/templates/core/home.html:8
 msgid "Welcome to Product Management PF"
-msgstr "Bienvenido a la gestión de productos PF"
+msgstr "Bienvenido a Product Management PF"
 
-#: products/apps.py:7 products/templates/products/product_list.html:7
+#: core/templates/core/terms.html:9
+msgid "Terms of use"
+msgstr "Términos de uso"
+
+#: core/templates/core/terms.html:12
+msgid ""
+"\n"
+"      This project, <strong>PortfolioLab</strong> (<a href=\"https://"
+"portfoliolab.ddnsfree.com\" target=\"_blank\">portfoliolab.ddnsfree.com</"
+"a>),\n"
+"      is an open-source development. The goal is that anyone can take "
+"advantage of\n"
+"      the ideas, code and structure of this website for their own projects.\n"
+"      "
+msgstr ""
+"\n"
+"      Este proyecto, <strong>PortfolioLab</strong> (<a href=\"https://"
+"portfoliolab.ddnsfree.com\" target=\"_blank\">portfoliolab.ddnsfree.com</"
+"a>),\n"
+"      es un desarrollo de código abierto. El objetivo es que cualquiera "
+"pueda aprovechar\n"
+"      las ideas, el código y la estructura de esta web para sus propios "
+"proyectos.\n"
+"      "
+
+#: core/templates/core/terms.html:19
+msgid "Conditions"
+msgstr "Condiciones"
+
+#: core/templates/core/terms.html:21
+msgid "You may use, modify, and distribute the code free of charge."
+msgstr "Puedes usar, modificar y distribuir el código de forma gratuita."
+
+#: core/templates/core/terms.html:22
+msgid "You may use it for both personal and commercial projects."
+msgstr "Puedes utilizarlo tanto para proyectos personales como comerciales."
+
+#: core/templates/core/terms.html:24
+#, fuzzy
+#| msgid ""
+#| "The only condition is that, in some visible place in your project (source "
+#| "code, documentation, or interface), you include a <strong>mention of the "
+#| "original authorship</strong>."
+msgid ""
+"\n"
+"        The only condition is that, in some visible place in your project "
+"(source code,\n"
+"        documentation, or interface), you include a <strong>mention of the "
+"original authorship</strong>.\n"
+"        "
+msgstr ""
+"La única condición es que, en algún lugar visible de tu proyecto (código "
+"fuente, documentación o interfaz), incluyas una <strong>mención de la "
+"autoría original</strong>."
+
+#: core/templates/core/terms.html:31
+msgid "Recommended license"
+msgstr "Licencia recomendada"
+
+#: core/templates/core/terms.html:33
+#, fuzzy
+#| msgid ""
+#| "The code is released under an <strong>MIT-style license</strong>, which "
+#| "means it grants complete freedom of use, provided the copyright notice is "
+#| "kept and the original authorship is acknowledged."
+msgid ""
+"\n"
+"      The code is released under an <strong>MIT-style license</strong>, "
+"which means it grants\n"
+"      complete freedom of use, provided the copyright notice is kept and\n"
+"      the original authorship is acknowledged.\n"
+"      "
+msgstr ""
+"\n"
+"      El código se publica bajo una <strong>licencia de estilo MIT</strong>, "
+"lo que significa que concede libertad total de uso, siempre que se mantenga "
+"el aviso de copyright y se reconozca la autoría original.\n"
+"      "
+
+#: core/templates/core/terms.html:41
+#, fuzzy
+#| msgid ""
+#| "“The software is provided ‘as is’, without warranty of any kind, express "
+#| "or implied, including but not limited to the warranties of "
+#| "merchantability or fitness for a particular purpose.”"
+msgid ""
+"\n"
+"      “The software is provided ‘as is’, without warranty of any kind, "
+"express or implied,\n"
+"      including but not limited to the warranties of merchantability or "
+"fitness for a particular purpose.”\n"
+"      "
+msgstr ""
+"\n"
+"      “El software se proporciona ‘tal cual’, sin garantía de ningún tipo, "
+"expresa o implícita,\n"
+"      incluyendo, pero no limitado a, garantías de comerciabilidad o "
+"adecuación para un propósito particular.”\n"
+"      "
+
+
+#: core/templates/core/terms.html:48
+#, fuzzy
+#| msgid ""
+#| "If you reuse this code, please include a link to this website or a "
+#| "reference to <strong>PortfolioLab</strong>."
+msgid ""
+"\n"
+"      If you reuse this code, please include a link to this website\n"
+"      or a reference to <strong>PortfolioLab</strong>.\n"
+"      "
+msgstr ""
+"\n"
+"      Si reutilizas este código, por favor incluye un enlace a este sitio "
+"web\n"
+"      o una referencia a <strong>PortfolioLab</strong>.\n"
+"      "
+
+#: orders/admin.py:76
+msgid "Status"
+msgstr "Estado"
+
+#: orders/models.py:20
+msgid "Pending"
+msgstr "Pendiente"
+
+#: orders/models.py:21
+msgid "Processing"
+msgstr "Procesando"
+
+#: orders/models.py:22
+msgid "Shipped"
+msgstr "Enviado"
+
+#: orders/models.py:23
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#: orders/models.py:24
+msgid "Paid"
+msgstr "Pagado"
+
+#: orders/models.py:47 orders/models.py:57 orders/models.py:78
+msgid "Order"
+msgstr "Pedido"
+
+#: orders/models.py:48
+msgid "Orders"
+msgstr "Pedidos"
+
+#: orders/models.py:74
+msgid "Order item"
+msgstr "Artículo del pedido"
+
+#: orders/models.py:75
+msgid "Order items"
+msgstr "Artículos del pedido"
+
+#: orders/templates/orders/checkout.html:5
+msgid "Checkout"
+msgstr "Finalizar compra"
+
+#: orders/templates/orders/checkout.html:15
+msgid "Total (EUR)"
+msgstr "Total (EUR)"
+
+#: orders/templates/orders/checkout.html:23
+msgid "Get quote (ETH Sepolia)"
+msgstr "Obtener cotización (ETH Sepolia)"
+
+#: orders/templates/orders/checkout.html:28
+msgid "Pay with MetaMask"
+msgstr "Pagar con MetaMask"
+
+#: orders/templates/orders/checkout.html:35
+msgid "Pay with card (Stripe)"
+msgstr "Pagar con tarjeta (Stripe)"
+
+#: orders/templates/orders/confirm.html:6
+msgid "Payment confirmed"
+msgstr "Pago confirmado"
+
+#: orders/templates/orders/confirm.html:7
+msgid "Order ID"
+msgstr "ID del pedido"
+
+#: payments/templates/payments/cancel.html:5
+msgid "Payment cancelled"
+msgstr "Pago cancelado"
+
+#: payments/templates/payments/cancel.html:6
+msgid "You can try again or choose another payment method."
+msgstr "Puedes intentarlo de nuevo o elegir otro método de pago."
+
+#: payments/templates/payments/success.html:5
+msgid "Payment successful"
+msgstr "Pago realizado con éxito"
+
+#: payments/templates/payments/success.html:6
+msgid "Thank you for your order."
+msgstr "Gracias por tu pedido."
+
+#: products/apps.py:8 products/templates/products/product_list.html:7
 msgid "Products"
 msgstr "Productos"
 
-#: products/templates/products/_product_card.html:15
-#: products/templates/products/_product_card.html:18
+#: products/templates/products/_product_card.html:16
+#: products/templates/products/_product_card.html:19
 #: products/templates/products/product_detail.html:15
-#: products/templates/products/product_detail.html:18
+#: products/templates/products/product_detail.html:17
 msgid "Product image"
-msgstr "Imagen de producto"
+msgstr "Imagen del producto"
 
-#: products/templates/products/_product_card.html:27
-#: products/templates/products/product_detail.html:27
+#: products/templates/products/_product_card.html:28
+#: products/templates/products/product_detail.html:24
 #: products/templates/products/product_list.html:37
 #: products/templates/products/product_list.html:39
 msgid "Previous"
 msgstr "Anterior"
 
-#: products/templates/products/_product_card.html:32
-#: products/templates/products/product_detail.html:32
+#: products/templates/products/_product_card.html:33
+#: products/templates/products/product_detail.html:28
 #: products/templates/products/product_list.html:58
 #: products/templates/products/product_list.html:60
 msgid "Next"
 msgstr "Siguiente"
 
-#: products/templates/products/_product_card.html:36
-#: products/templates/products/product_detail.html:38
+#: products/templates/products/_product_card.html:37
+#: products/templates/products/product_detail.html:34
 msgid "No image available"
 msgstr "Imagen no disponible"
 
-#: products/templates/products/_product_card.html:45
+#: products/templates/products/_product_card.html:46
 msgid "Read more"
-msgstr "Leer mas"
+msgstr "Leer más"
 
 #: products/templates/products/product_detail.html:48
+msgid "In stock"
+msgstr "En stock"
+
+#: products/templates/products/product_detail.html:50
+msgid "No stock"
+msgstr "Sin stock"
+
+#: products/templates/products/product_detail.html:64
+msgid "Add to cart"
+msgstr "Añadir al carrito"
+
+#: products/templates/products/product_detail.html:70
 msgid "Back to products"
 msgstr "Volver a productos"
 
 #: products/templates/products/product_list.html:26
 msgid "No products found"
-msgstr "No se han econtraron productos"
+msgstr "No se encontraron productos"
 
 #: products/templates/products/product_list.html:33
 msgid "Page navigation"
-msgstr ""
-
-#: products/views.py:28
-msgid "Product List"
 msgstr "Navegación de la página"
 
-#: templates/components/footer.html:9
-msgid "About"
-msgstr "Acerca de la web"
+#: products/views.py:33
+msgid "Product List"
+msgstr "Lista de productos"
 
-#: templates/components/footer.html:10
+#: templates/components/footer.html:9
+msgid "Product Management PF"
+msgstr "Product Management PF"
+
+#: templates/components/footer.html:14
+msgid "About"
+msgstr "Acerca de"
+
+#: templates/components/footer.html:15
 msgid "Contact"
 msgstr "Contacto"
 
-#: templates/components/footer.html:11
-msgid "Terms"
-msgstr "Terminos"
-
 #: templates/components/footer.html:16
-#, fuzzy
-#| msgid "Welcome to Product Management PF"
-msgid "Product Management PF"
-msgstr "Bienvenido a la gestión de productos PF"
-
-#: templates/components/footer.html:24
-msgid "Admin"
-msgstr "Administrar"
+msgid "Terms"
+msgstr "Términos"
 
 #: templates/components/footer.html:25
+msgid "Admin"
+msgstr "Administración"
+
+#: templates/components/footer.html:26
 msgid "Messages"
 msgstr "Mensajes"
 
-#: users/admin.py:30
+#: templates/components/navbar.html:6
+msgid "This website is a sample included in my professional portfolio."
+msgstr "Este sitio web es una muestra incluida en mi portafolio profesional."
+
+#: templates/components/navbar.html:11
+msgid "Welcome,"
+msgstr "Bienvenido,"
+
+#: templates/components/navbar.html:13
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: templates/components/navbar.html:17
+msgid "LogIn/SignUp"
+msgstr "Iniciar sesión / Registrarse"
+
+#: templates/components/navbar.html:40
+msgid "Categories"
+msgstr "Categorías"
+
+#: templates/components/navbar.html:56
+msgid "No categories"
+msgstr "No hay categorías"
+
+#: templates/components/navbar.html:82
+msgid "Cart"
+msgstr "Carrito"
+
+#: users/admin.py:32
 msgid "Personal info"
 msgstr "Información personal"
 
-#: users/admin.py:31
+#: users/admin.py:33
 msgid "Permissions"
 msgstr "Permisos"
 
-#: users/admin.py:32
+#: users/admin.py:34
 msgid "Important dates"
-msgstr "Datos importantes"
+msgstr "Fechas importantes"
 
-#: users/apps.py:7 users/models.py:30
+#: users/apps.py:9 users/models.py:31
 msgid "Users"
 msgstr "Usuarios"
 
-#: users/managers.py:12
-#, fuzzy
-#| msgid "Email must be defined"
+#: users/forms.py:10 users/forms.py:11
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: users/forms.py:14 users/forms.py:15
+msgid "Password"
+msgstr "Contraseña"
+
+#: users/managers.py:14
 msgid "El email debe estar definido"
 msgstr "El email debe estar definido"
 
-#: users/managers.py:31
+#: users/managers.py:33
 msgid "Superusuario debe tener is_staff=True."
-msgstr ""
+msgstr "El superusuario debe tener is_staff=True."
 
-#: users/managers.py:34
+#: users/managers.py:36
 msgid "Superusuario debe tener is_superuser=True."
-msgstr ""
+msgstr "El superusuario debe tener is_superuser=True."
 
-#: users/models.py:10
+#: users/models.py:11
 msgid "email address"
-msgstr "Correo electrónico"
+msgstr "Dirección de correo electrónico"
 
-#: users/models.py:12
+#: users/models.py:13
 msgid "first name"
 msgstr "Nombre"
 
-#: users/models.py:13
+#: users/models.py:14
 msgid "last name"
 msgstr "Apellido"
 
-#: users/models.py:29
+#: users/models.py:30
 msgid "User"
 msgstr "Usuario"
+
+#: users/templates/users/login.html:10
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: users/templates/users/login.html:30 users/templates/users/register.html:43
+msgid "Sign in"
+msgstr "Acceder"
+
+#: users/templates/users/login.html:36
+msgid "Don't have an account?"
+msgstr "¿No tienes cuenta?"
+
+#: users/templates/users/login.html:38
+msgid "Register here"
+msgstr "Regístrate aquí"
+
+#: users/templates/users/register.html:11
+msgid "Create account"
+msgstr "Crear cuenta"
+
+#: users/templates/users/register.html:35
+msgid "Register"
+msgstr "Registrarse"
+
+#: users/templates/users/register.html:41
+msgid "Already have an account?"
+msgstr "¿Ya tienes cuenta?"

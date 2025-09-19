@@ -36,6 +36,7 @@ urlpatterns = [
 
 # Add URL patterns with i18n support for internationalization and localization
 urlpatterns += i18n_patterns(
+    path('i18n/', include('django.conf.urls.i18n')),
     path('health/', health_check_view, name='health_check'),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
