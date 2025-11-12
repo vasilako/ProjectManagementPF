@@ -60,9 +60,17 @@ jobs:
           head -n 30 docker-compose.deploy.yml
           mv docker-compose.deploy.yml docker-compose.yml
 
+      - name: Check Docker before SCP
+        run: |
+          echo "Checking available space and Docker images..."
+          df -h
+          docker images | head -n 10 || true
+          docker pull appleboy/drone-scp:1.8.0 || true
+
 
       - name: Upload tar + rendered compose + Caddyfile
         uses: appleboy/scp-action@v0.1.7
+        continue-on-error: false
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
@@ -71,7 +79,8 @@ jobs:
           source: "image.tar.gz,docker-compose.yml,Caddyfile"
           target: ${{ env.REMOTE_DIR }}
           overwrite: true
-          rm: false  # Evita que elimine archivos existentes
+          rm: false
+          debug: true
 
 
       - name: Load image & compose up & migrate
