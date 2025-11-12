@@ -15,17 +15,19 @@ jobs:
       REMOTE_DIR: /srv/portfoliolab/deploy
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+
       - name: Clean Docker and free space
         run: |
           echo "Before cleanup:"
           df -h
-          docker system prune -af || true
+          docker system prune -af --volumes || true
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
           echo "After cleanup:"
           df -h
 
-      - name: Checkout
-        uses: actions/checkout@v4
 
       - name: Build image
         run: |
