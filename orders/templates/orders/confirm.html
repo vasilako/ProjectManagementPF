@@ -1,10 +1,19 @@
-{# ./orders/templates/orders/checkout.html #}
-
+{# ./orders/templates/orders/confirm.html #}
 {% extends "base.html" %}{% load i18n %}
 {% block content %}
 <div class="container py-4">
   <h3 class="mb-3">✅ {% trans "Payment confirmed" %}</h3>
+
   <p>{% trans "Order ID" %}: {{ id }}</p>
+
+  {% if tx_hash %}
+    <p>
+      {% trans "Transaction" %}:
+      <a href="https://sepolia.etherscan.io/tx/{{ tx_hash }}"
+         target="_blank" rel="noopener noreferrer">{{ tx_hash }}</a>
+    </p>
+  {% endif %}
+
   <a href="{% url 'products:product_list' %}" class="btn btn-primary">
     {% trans "Continue shopping" %}
   </a>

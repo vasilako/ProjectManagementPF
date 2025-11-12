@@ -1,54 +1,113 @@
-{# /cart/templates/cart/detail.html #}
-
+{# cart/templates/cart/detail.html #}
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block content %}
 
 <div class="container py-4">
-    <h3 class="mb-3">{% trans "Your cart" %}</h3>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">{% trans "Your Shopping Cart" %}</h2>
+    <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary">
+      ← {% trans "Continue Shopping" %}
+    </a>
+  </div>
 
-    {% if items %}
-    <ul class="list-group mb-3">
-        {% for it in items %}
-        <li class="list-group-item">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-                <div class="me-auto">
-                    <strong>{{ it.product.name }}</strong>
-                </div>
+  {% if items %}
+  <div class="row g-4">
+    <!-- Izquierda: listado -->
+    <div class="col-lg-9">
+      {% for it in items %}
+      <div class="card shadow-sm">
+        <div class="row g-0 align-items-center p-2">
+          <!-- Miniatura fija -->
+          <div class="col-3 col-md-2">
+            {% with first_image=it.product.images.first %}
+              {% if first_image %}
+                <img src="{{ first_image.image.url }}" class="img-fluid rounded-start" alt="{{ it.product.name }}">
+              {% else %}
+                <img src="{% static 'img/no-image-available.png' %}" class="img-fluid rounded-start" alt="{{ it.product.name }}">
+              {% endif %}
+            {% endwith %}
+          </div>
 
-                <form method="post" action="{% url 'cart:cart_update' it.product.id %}"
-                      class="d-flex align-items-center">
+          <!-- Info + acciones -->
+          <div class="col-9 col-md-10">
+            <div class="px-2">
+              <!-- Fila 1: nombre + qty/acciones a la derecha -->
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <h5 class="mb-0 me-3">{{ it.product.name }}</h5>
+
+                <div class="d-flex align-items-center gap-2">
+                  <form method="post" action="{% url 'cart:cart_update' it.product.id %}" class="d-flex align-items-center gap-1">
                     {% csrf_token %}
-                    <label for="qty-{{ it.product.id }}" class="me-2 mb-0 small">{% trans "Quantity" %}</label>
-                    <input id="qty-{{ it.product.id }}" type="number" name="quantity" value="{{ it.qty }}" min="0"
-                           class="form-control form-control-sm me-2" style="width:80px;">
-                    <button type="submit" class="btn btn-sm btn-outline-primary">{% trans "Update" %}</button>
-                </form>
+                    <div class="input-group input-group-sm" style="width:128px;">
+                      <button type="button" class="btn btn-outline-secondary qty-btn" data-action="decrease">−</button>
+                      <input type="number" name="quantity" value="{{ it.qty }}" min="1" class="form-control text-center">
+                      <button type="button" class="btn btn-outline-secondary qty-btn" data-action="increase">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">{% trans "Update" %}</button>
+                  </form>
 
-                <form method="post" action="{% url 'cart:cart_remove' it.product.id %}" class="ms-2">
+                  <form method="post" action="{% url 'cart:cart_remove' it.product.id %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-outline-danger">{% trans "Remove" %}</button>
-                </form>
+                  </form>
+                </div>
+              </div>
 
-                <span class="ms-3">€{{ it.line_total|floatformat:2 }}</span>
+              <!-- Fila 2: precio unitario izquierda / subtotal derecha -->
+              <div class="d-flex justify-content-between align-items-center mt-2 text-muted small">
+                <span>€{{ it.product.price|floatformat:2 }} {% trans "each" %}</span>
+                <span>{% trans "Subtotal" %}: <strong>€{{ it.line_total|floatformat:2 }}</strong></span>
+              </div>
             </div>
-        </li>
-        {% endfor %}
-    </ul>
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <strong class="h5 mb-0">{% trans "Total" %}</strong>
-        <strong class="h5 mb-0">€{{ total|floatformat:2 }}</strong>
+          </div>
+        </div>
+      </div>
+      {% if not forloop.last %}<div class="my-3"></div>{% endif %}
+      {% endfor %}
     </div>
 
-    <div class="d-flex gap-2">
-        <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary">{% trans "Continue shopping" %}</a>
-        <a href="{% url 'orders:checkout_cart' %}" class="btn btn-primary">{% trans "Proceed to checkout" %}</a>
-        {# Nota: cambia 'orders:checkout' por la URL real cuando implementes el checkout #}
+    <!-- Derecha: resumen -->
+    <div class="col-lg-3">
+      <div class="card shadow-sm sticky-top" style="top:90px; min-width:260px;">
+        <div class="card-body">
+          <h5 class="card-title mb-2">{% trans "Order Summary" %}</h5>
+          <hr class="mt-0">
+          <div class="d-flex justify-content-between mb-2">
+            <span>{% trans "Total items" %}</span>
+            <span>{{ total_items }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <strong>{% trans "Total" %}</strong>
+            <strong>€{{ total|floatformat:2 }}</strong>
+          </div>
+          <div class="d-grid">
+            <a href="{% url 'orders:checkout_cart' %}" class="btn btn-primary btn-lg">
+              {% trans "Proceed to Checkout" %}
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-    {% else %}
-    <p class="text-muted">{% trans "Your cart is empty." %}</p>
-    <a href="{% url 'products:product_list' %}" class="btn btn-primary">{% trans "Browse products" %}</a>
-    {% endif %}
+  </div>
+  {% else %}
+    <div class="alert alert-info">{% trans "Your cart is empty." %}</div>
+    <a href="{% url 'products:product_list' %}" class="btn btn-primary">
+      {% trans "Browse products" %}
+    </a>
+  {% endif %}
 </div>
+
+<script>
+  document.querySelectorAll(".qty-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const input = e.target.closest("form").querySelector('input[name="quantity"]');
+      let v = parseInt(input.value, 10) || 1;
+      if (btn.dataset.action === "increase") v++;
+      if (btn.dataset.action === "decrease" && v > 1) v--;
+      input.value = v;
+    });
+  });
+</script>
+
 {% endblock %}

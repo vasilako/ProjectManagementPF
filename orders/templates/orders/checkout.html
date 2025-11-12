@@ -1,125 +1,137 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% block content %}
-<div class="container py-4">
-  <h3 class="mb-3">{% trans "Checkout" %}</h3>
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
 
-  <ul class="list-group mb-3">
-    {% for p, qty, line in items %}
-      <li class="list-group-item d-flex justify-content-between">
-        <span>{{ p.name }} × {{ qty }}</span>
-        <span>€{{ line|floatformat:2 }}</span>
-      </li>
-    {% endfor %}
-    <li class="list-group-item d-flex justify-content-between">
-      <strong>{% trans "Total (EUR)" %}</strong>
-      <strong>€{{ total|floatformat:2 }}</strong>
-    </li>
-  </ul>
+<div class="container py-4 checkout-container">
+  <div class="row">
+    <!-- Shipping -->
+    <div class="col-md-8">
+      <h4 class="mb-3">{% trans "Select shipping provider" %}</h4>
+      <div class="d-flex gap-3 flex-wrap">
+        <label class="shipping-option">
+          <input type="radio" name="shipping" value="sendcloud" data-cost="4.90" checked>
+          <span><img src="{% static 'img/sendcloud.png' %}" alt="Sendcloud" height="30"></span>
+        </label>
+        <label class="shipping-option">
+          <input type="radio" name="shipping" value="ups" data-cost="7.90" disabled>
+          <span><img src="{% static 'img/ups.png' %}" alt="UPS" height="30"></span>
+        </label>
+        <label class="shipping-option">
+          <input type="radio" name="shipping" value="fedex" data-cost="8.90" disabled>
+          <span><img src="{% static 'img/fedex.png' %}" alt="FedEx" height="30"></span>
+        </label>
+        <label class="shipping-option">
+          <input type="radio" name="shipping" value="gls" data-cost="6.90" disabled>
+          <span><img src="{% static 'img/gls.png' %}" alt="GLS" height="30"></span>
+        </label>
+      </div>
+    </div>
 
-  <div class="d-flex flex-wrap gap-2 mb-3">
-    <!-- Botón de cotización ETH -->
-    <button id="quoteBtn" class="btn btn-outline-secondary">
-      {% trans "Get quote (ETH Sepolia)" %}
-    </button>
-
-    <!-- Botón de pago con MetaMask -->
-    <button id="payBtn" class="btn btn-primary" disabled>
-      {% trans "Pay with MetaMask" %}
-    </button>
-
-    <!-- Botón de pago con Stripe -->
-    <form method="post" action="{% url 'payments:stripe_checkout' order.id %}">
-      {% csrf_token %}
-      <button type="submit" class="btn btn-outline-success">
-        {% trans "Pay with card (Stripe)" %}
-      </button>
-    </form>
+    <!-- Shipping image -->
+    <div class="col-md-4 text-center">
+      <img src="{% static 'img/shipping.jpg' %}" alt="Shipping" class="img-fluid rounded shadow-sm">
+    </div>
   </div>
 
-  <div id="quoteBox" class="mt-3 small text-muted"></div>
-  <div id="payResult" class="mt-2 small text-muted"></div>
+  <hr>
+
+  <!-- Order Summary -->
+  <div class="row mt-4">
+    <div class="col-md-8">
+      <h4>{% trans "Finalize your order" %}</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{% trans "Product" %}</th>
+            <th>{% trans "Quantity" %}</th>
+            <th>{% trans "Price" %}</th>
+          </tr>
+        </thead>
+        <tbody id="order-items">
+          {% for p, qty, line in items %}
+          <tr>
+            <td>{{ p.name }}</td>
+            <td>{{ qty }}</td>
+            <td>€{{ line|floatformat:2 }}</td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td>{% trans "Shipping" %}</td>
+            <td>1</td>
+            <td id="shipping-cost">€4.90</td>
+          </tr>
+          <tr>
+            <td colspan="2">{% trans "Subtotal" %}</td>
+            <!-- Subtotal = order.total_amount + shipping -->
+            <td id="subtotal">€0.00</td>
+          </tr>
+          <tr>
+            <td colspan="2">IVA (21%)</td>
+            <td id="tax">€0.00</td>
+          </tr>
+          <tr class="fw-bold">
+            <td colspan="2">{% trans "Total (EUR)" %}</td>
+            <td id="total">€0.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Payment methods -->
+    <div class="col-md-4">
+      <h4>{% trans "Payment methods" %}</h4>
+
+      <!-- Crypto Wallet -->
+      <div class="payment-box mb-3">
+        <strong>Cripto Wallet</strong>
+        <button id="quoteBtn" class="btn btn-outline-secondary w-100 mt-2">
+          {% trans "Get quote (ETH Sepolia)" %}
+        </button>
+        <div id="quoteBox" class="quote-box"></div>
+        <button id="payBtn" class="btn btn-primary w-100 mt-2" disabled>
+          {% trans "Pay with MetaMask" %}
+        </button>
+        <div id="payResult" class="mt-2 small text-muted"></div>
+      </div>
+
+            <!-- Stripe -->
+      <div class="payment-box mb-3">
+        <form method="post" action="{% url 'payments:stripe_checkout' order.id %}">
+          {% csrf_token %}
+          <button type="submit" class="btn p-0 border-0 w-100">
+            <img src="{% static 'img/pay-cart-img.png' %}" alt="Stripe" class="img-fluid">
+          </button>
+        </form>
+      </div>
+
+      <!-- PayPal -->
+      <div class="payment-box mb-3">
+        <button type="button" class="btn p-0 border-0 w-100">
+          <img src="{% static 'img/PayPal-img.png' %}" alt="PayPal" class="img-fluid">
+        </button>
+      </div>
+
+      <!-- Revolut -->
+      <div class="payment-box">
+        <button type="button" class="btn p-0 border-0 w-100">
+          <img src="{% static 'img/pay-revolut-img.png' %}" alt="Revolut" class="img-fluid">
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.11.1/dist/ethers.umd.min.js"></script>
-
 <script>
-const orderId = {{ order.id }};
-let quote = null;
-
-function getCookie(name) {
-  const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-  return m ? m.pop() : '';
-}
-const csrftoken = getCookie('csrftoken');
-
-const quoteBtn = document.getElementById('quoteBtn');
-const payBtn   = document.getElementById('payBtn');
-const box      = document.getElementById('quoteBox');
-const out      = document.getElementById('payResult');
-
-quoteBtn.onclick = async () => {
-  quoteBtn.disabled = true;
-  box.textContent = "Fetching quote…";
-  try {
-    const resp = await fetch("{% url 'orders:create_quote' order.id %}", { cache: "no-store" });
-    const data = await resp.json().catch(() => ({}));
-
-    if (!resp.ok || !data.ok) {
-      const msg = (data && data.error) ? data.error : ("http_" + resp.status);
-      box.textContent = "Error getting quote: " + msg;
-      if (msg === "order_not_found" || msg === "order_not_pending") {
-        window.location.href = "{% url 'orders:checkout_cart' %}";
-      }
-      return;
-    }
-
-    quote = data;
-    box.textContent = `Amount: ${quote.amount_crypto} ${quote.symbol} · Expires: ${quote.expires_at}`;
-    payBtn.disabled = false;
-  } catch (e) {
-    box.textContent = "Network error: " + (e.message || e);
-  } finally {
-    quoteBtn.disabled = false;
-  }
-};
-
-payBtn.onclick = async () => {
-  try {
-    if (!window.ethereum) throw new Error("MetaMask not found");
-    const sepoliaHex = "0xaa36a7";
-
-    await window.ethereum.request({ method: "eth_requestAccounts" });
-    const currentChain = await window.ethereum.request({ method: "eth_chainId" });
-    if (currentChain !== sepoliaHex) {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: sepoliaHex }],
-      });
-    }
-
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const tx = await signer.sendTransaction({
-      to: quote.receiving_address,
-      value: ethers.parseEther(quote.amount_crypto),
-    });
-    out.textContent = "Tx sent: " + tx.hash;
-
-    const res = await fetch("{% url 'orders:confirm_payment' %}", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-CSRFToken": csrftoken },
-      body: JSON.stringify({ order_id: orderId, txHash: tx.hash })
-    });
-    const j = await res.json();
-    if (j.ok) {
-      window.location.href = "{% url 'orders:confirm' %}?id=" + orderId;
-    } else {
-      out.textContent = "Verification failed: " + (j.error || "unknown");
-    }
-  } catch (e) {
-    out.textContent = "Error: " + (e.message || e);
-  }
-};
+ window.orderId = {{ order.id }};
+  window.orderTotal = {{ total|floatformat:2 }};  // 👈 total de productos (backend)
+  window.urls = {
+    createQuote: "{% url 'orders:create_quote' order.id %}",
+    validatePayment: "{% url 'orders:validate_payment' %}",
+    confirmPayment: "{% url 'orders:confirm_payment' %}",
+    confirmPage: "{% url 'orders:confirm' %}"
+  };
 </script>
+<script src="{% static 'js/checkout.js' %}"></script>
 {% endblock %}

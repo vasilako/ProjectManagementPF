@@ -16,37 +16,33 @@ from .models import Order, OrderItem
 from payments.models import PaymentQuote
 from payments.services.rates import eur_to_eth
 from web3 import Web3
-
-
-
-
+from django.views.decorators.csrf import csrf_protect
 
 
 def _get_cart(session):
     return session.setdefault("cart", {})
 
+
+
 @login_required
 def checkout_cart(request):
-    cart = _get_cart(request.session)
+    cart = request.session.setdefault("cart", {})
     if not cart:
         return redirect("cart:cart_detail")
 
-    # Calcula líneas y total
+    # Recalcular líneas desde el carrito
     items, total = [], Decimal("0")
     for pid, qty in cart.items():
         p = Product.objects.get(pk=int(pid))
         qty = int(qty)
         line = (p.price or Decimal("0")) * qty
-        items.append((p, qty, line)); total += line
+        items.append((p, qty, line))
+        total += line
 
-    # Recupera order de sesión si existe
-    order = None
-    order_id = request.session.get("order_id")
-    if order_id:
-        order = Order.objects.filter(pk=order_id).first()
+    order = Order.objects.filter(pk=request.session.get("order_id")).first()
 
-    # Si no existe o no está pendiente → crea una nueva
     if not order or order.status != Order.STATUS_PENDING:
+        # Crear nueva
         net = settings.CRYPTO_NETWORKS["sepolia"]
         order = Order.objects.create(
             user=request.user if request.user.is_authenticated else None,
@@ -59,12 +55,23 @@ def checkout_cart(request):
         for p, qty, _line in items:
             OrderItem.objects.create(order=order, product=p, quantity=qty, price=p.price)
         request.session["order_id"] = order.id
+    else:
+        # Sincronizar existente
+        if order.total_amount != total:
+            order.total_amount = total
+            order.save(update_fields=["total_amount"])
+        # Volcar las líneas (opción simple y robusta)
+        OrderItem.objects.filter(order=order).delete()
+        for p, qty, _line in items:
+            OrderItem.objects.create(order=order, product=p, quantity=qty, price=p.price)
 
     return render(request, "orders/checkout.html", {"order": order, "items": items, "total": total})
 
 
-@require_GET
+
+@require_POST
 def create_quote(request, order_id):
+    """Devuelve una cotización ETH de demo para la order."""
     order = Order.objects.filter(pk=order_id).first()
     if not order:
         return JsonResponse({"ok": False, "error": "order_not_found"}, status=404)
@@ -72,6 +79,7 @@ def create_quote(request, order_id):
         return JsonResponse({"ok": False, "error": "order_not_pending"}, status=409)
 
     net = settings.CRYPTO_NETWORKS["sepolia"]
+    # Nota: usamos order.total_amount (DEMO). En real sumarías envío + impuestos.
     amount_crypto = eur_to_eth(Decimal(order.total_amount), Decimal(str(settings.CRYPTO_PRICE_BUFFER_PCT)))
     expires_at = timezone.now() + datetime.timedelta(seconds=settings.CRYPTO_QUOTE_TTL_SECONDS)
 
@@ -83,13 +91,33 @@ def create_quote(request, order_id):
     return JsonResponse({
         "ok": True,
         "quote_id": str(q.quote_id),
-        "symbol": q.symbol,
+        "symbol": net["symbol"],
         "chain_id": net["chain_id"],
-        "amount_crypto": str(q.amount_crypto),
+        "amount_crypto": format(q.amount_crypto, "f"),
         "receiving_address": q.receiving_address,
         "expires_at": expires_at.isoformat(),
     })
 
+
+@require_POST
+def validate_payment(request):
+    """
+    TODO / OJO (SEGURIDAD):
+    DEMO: aceptamos el total que llega del frontend.
+    En producción recalcula SIEMPRE: productos + envío + impuestos,
+    y compara con lo recibido. Rechaza si difiere.
+    """
+    try:
+        data = json.loads(request.body.decode())
+        order_id = data.get("order_id")
+        frontend_total = float(data.get("total", 0))
+        backend_total = frontend_total  #  TODO: OJO solo DEMO debe de arreglarse el calculo a nivel de modelo, asi es peligroso
+        return JsonResponse({"ok": True, "order_id": order_id, "total": backend_total})
+    except Exception as e:
+        return JsonResponse({"ok": False, "error": str(e)})
+
+
+# confirm_payment() y confirm_page() se quedan igual que los que ya tienes
 
 @require_POST
 def confirm_payment(request):
@@ -142,8 +170,6 @@ def confirm_payment(request):
         # Aún no hay receipt: indica al front que siga intentando (no marcar error definitivo)
         return JsonResponse({"ok": False, "pending": True, "error": "tx_pending"})
 
-
-
     # Ya hay receipt: traemos también la tx para verificar 'to' y 'value'
     try:
         tx = w3.eth.get_transaction(tx_hash)
@@ -151,11 +177,10 @@ def confirm_payment(request):
     except Exception as e:
         return JsonResponse({"ok": False, "error": f"rpc_error: {e}"})
 
-
     ok_basic = (
-        tx and receipt and receipt["status"] == 1 and
-        tx["to"] and tx["to"].lower() == (order.receiving_address or net["receiving_address"]).lower() and
-        int(tx["value"]) >= expected_wei
+            tx and receipt and receipt["status"] == 1 and
+            tx["to"] and tx["to"].lower() == (order.receiving_address or net["receiving_address"]).lower() and
+            int(tx["value"]) >= expected_wei
     )
     if not ok_basic:
         return JsonResponse({"ok": False, "error": "tx_mismatch"})
@@ -178,4 +203,8 @@ def confirm_payment(request):
 
 
 def confirm_page(request):
-    return render(request, "orders/confirm.html", {"id": request.GET.get("id")})
+    return render(request, "orders/confirm.html", {
+        "id": request.GET.get("id"),
+        "tx_hash": request.GET.get("tx"),
+    })
+

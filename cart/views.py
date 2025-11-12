@@ -14,16 +14,61 @@ def _get_cart(session):
     return session.setdefault(CART_SESSION_KEY, {})  # { "product_id_str": qty }
 
 
+from decimal import Decimal
+from django.shortcuts import render
+from django.db.models import Prefetch
+from products.models import Product  # ajusta el import según tu estructura
+
 def cart_detail(request):
-    cart = _get_cart(request.session)
-    items, total = [], Decimal("0")
-    for pid, qty in cart.items():
-        product = get_object_or_404(Product, pk=int(pid))
-        price = product.price or Decimal("0")
-        line_total = price * qty
-        items.append({"product": product, "qty": qty, "line_total": line_total})
-        total += line_total
-    return render(request, "cart/detail.html", {"items": items, "total": total})
+    """
+    Renderiza el carrito con:
+      - items: lista de dicts {product, qty, line_total}
+      - total: suma de subtotales
+      - total_items: suma de cantidades (no número de líneas)
+    Optimiza consultas cargando todos los productos de una vez y
+    prefetch de imágenes (relación 'images').
+    """
+    cart = _get_cart(request.session)  # dict {product_id(str/int): qty(int)}
+
+    # Normaliza ids y filtra cantidades válidas (>0)
+    pid_qty = {}
+    for pid, qty in (cart or {}).items():
+        try:
+            ipid = int(pid)
+            iqty = int(qty)
+        except (TypeError, ValueError):
+            continue
+        if iqty > 0:
+            pid_qty[ipid] = iqty
+
+    items: list[dict] = []
+    total = Decimal("0")
+    total_items = 0
+
+    if pid_qty:
+        products = (
+            Product.objects
+            .filter(pk__in=pid_qty.keys())
+            .prefetch_related("images")  # si tu relación es otra, cámbiala
+        )
+        pmap = {p.pk: p for p in products}
+
+        # Conserva el orden de inserción del carrito
+        for pid, qty in pid_qty.items():
+            product = pmap.get(pid)
+            if not product:
+                continue  # producto eliminado o inexistente
+            price = product.price if product.price is not None else Decimal("0")
+            line_total = price * qty
+            items.append({"product": product, "qty": qty, "line_total": line_total})
+            total += line_total
+            total_items += qty
+
+    return render(
+        request,
+        "cart/detail.html",
+        {"items": items, "total": total, "total_items": total_items},
+    )
 
 
 def cart_add(request, product_id):

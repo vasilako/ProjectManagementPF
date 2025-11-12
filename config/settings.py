@@ -235,7 +235,7 @@ LOCALE_PATHS = [
 
 # Used for project-wide static assets, served via STATICFILES_DIRS during development.
 # Static files are served from STATICFILES_DIRS (in dev) and collected with collectstatic (in prod).
-# Place custom assets (logo images, JS, CSS) inside the `static/` folder at project root.
+# Place custom assets (logo images, js, CSS) inside the `static/` folder at project root.
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
