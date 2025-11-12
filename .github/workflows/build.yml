@@ -34,4 +34,4 @@ jobs:
           docker push $IMAGE_NAME:latest
 
       - name: Output image tag
-        run: echo "✅ Published: $IMAGE_NAME:$IMAGE_TAG"
+        run: echo "✅ Published"
