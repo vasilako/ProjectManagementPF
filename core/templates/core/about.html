@@ -1,0 +1,52 @@
+{# core/templates/core/about.html #}
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<section class="about-section">
+  <div class="about-container">
+
+    <h1>{% trans "About the website" %}</h1>
+
+    <p>
+      {% blocktrans %}
+      <strong>PortfolioLab</strong> (<a href="https://portfoliolab.ddnsfree.com" target="_blank">portfoliolab.ddnsfree.com</a>)
+      is a project for managing products and online sales. Through this platform you can
+      <strong>sell and manage products</strong> easily, integrating multiple payment options.
+      {% endblocktrans %}
+    </p>
+
+    <h2>{% trans "Payment methods" %}</h2>
+    <ul>
+      <li>{% blocktrans %}Payments with <strong>crypto assets</strong> (Ethereum and compatible wallets){% endblocktrans %}</li>
+      <li>{% blocktrans %}<strong>Credit and debit cards</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Personalized <strong>payment links</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}<strong>PayPal</strong> as an additional gateway{% endblocktrans %}</li>
+    </ul>
+
+    <h2>{% trans "Administrator management" %}</h2>
+    <p>
+      {% blocktrans %}
+      The administrator can access the <strong>management panel</strong> to:
+      {% endblocktrans %}
+    </p>
+    <ul>
+      <li>{% blocktrans %}Create and edit product <strong>categories</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Create, modify and delete <strong>products</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Manage available <strong>stock</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Supervise and control <strong>purchase orders</strong>{% endblocktrans %}</li>
+      <li>{% blocktrans %}Manage registered <strong>users</strong>{% endblocktrans %}</li>
+    </ul>
+
+    <h2>{% trans "Future features" %}</h2>
+    <p>
+      {% blocktrans %}
+      A <strong>tracking system for orders</strong> is planned, allowing customers
+      to check the status of their purchases using a reference number
+      provided by the courier company.
+      {% endblocktrans %}
+    </p>
+
+  </div>
+</section>
+{% endblock %}

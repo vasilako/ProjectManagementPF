@@ -1,0 +1,37 @@
+name: Build (GHCR)
+
+on:
+  push:
+    branches: ["develop"]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    env:
+      IMAGE_NAME: ghcr.io/vasilako/projectmanagementpf
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔐 Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: 🏗️ Build Docker image
+        run: |
+          docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .
+          docker images | grep projectmanagementpf
+
+      - name: 📦 Push image to GHCR
+        run: |
+          docker push $IMAGE_NAME:$IMAGE_TAG
+          docker push $IMAGE_NAME:latest
+
+      - name: ✅ Output image tag
+        run: echo "✅ Published image"

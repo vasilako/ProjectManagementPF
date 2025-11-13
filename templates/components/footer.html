@@ -1,0 +1,31 @@
+{% load i18n %} <!-- Añadir para cargar internacionalización -->
+{% load static %}
+<footer class="bg-dark text-light mt-4 py-4">
+    <div class="container">
+        <div class="row text-center text-md-start align-items-center">
+
+            <!-- Center: App name (primero en móvil, centro en desktop) -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0 order-1 order-md-2 text-center">
+                <span class="fw-bold">© {% now "Y" %} {% trans "Product Management PF" %}</span>
+            </div>
+
+            <!-- Left: Nav links (segundo en móvil, primero en desktop) -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0 order-2 order-md-1 d-flex flex-column flex-md-row justify-content-center justify-content-md-start gap-2 gap-md-3">
+                <a href="{% url 'core:about' %}" class="text-light text-decoration-none">{% trans "About" %}</a>
+                <a href="#" class="text-light text-decoration-none">{% trans "Contact" %}</a>
+                <a href="{% url 'core:terms' %}" class="text-light text-decoration-none">{% trans "Terms" %}</a>
+            </div>
+
+            <!-- Right: Social + Admin (tercero en móvil, tercero en desktop) -->
+            <div class="col-12 col-md-4 mb-3 mb-md-0 order-3 order-md-3 d-flex flex-column flex-md-row justify-content-center justify-content-md-end gap-2 gap-md-3">
+                <a href="https://github.com/vasilako/ProjectManagementPF" target="_blank"
+                   class="text-light text-decoration-none">
+                    <i class="fab fa-github me-1"></i>GitHub
+                </a>
+                <a href="{% url 'admin:index' %}" class="text-light text-decoration-none">{% trans "Admin" %}</a>
+                <a href="{% url 'core:test_messages' %}" class="text-light text-decoration-none">{% trans "Messages" %}</a>
+            </div>
+
+        </div>
+    </div>
+</footer>

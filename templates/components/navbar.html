@@ -1,0 +1,90 @@
+{% load static i18n %}
+
+<!-- Barra gris superior -->
+<div class="info-bar">
+    <div class="container d-flex justify-content-between align-items-center py-1">
+        <span class="info-text small">{% trans "This website is a sample included in my professional portfolio." %}</span>
+
+        {% if user.is_authenticated %}
+            <div class="d-flex align-items-center gap-2">
+                <span class="text-white small">
+                    {% trans "Welcome," %} {{ user.first_name|default:user.email }}
+                </span>
+                <a href="{% url 'users:logout' %}" class="btn btn-outline-light btn-sm">{% trans "Logout" %}</a>
+            </div>
+        {% else %}
+            <a href="{% url 'users:login' %}" class="btn btn-primary btn-sm">
+                {% trans "LogIn/SignUp" %}
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Navbar principal -->
+<nav class="navbar navbar-dark bg-dark shadow-sm py-2">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <!-- Left: Botón hamburguesa -->
+        <button class="btn btn-link text-white p-0 me-2"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasCategories"
+                aria-controls="offcanvasCategories">
+            <i class="fas fa-bars fa-lg"></i>
+        </button>
+
+<!-- Sidebar de categorías -->
+<div class="offcanvas offcanvas-start text-bg-secondary" tabindex="-1" id="offcanvasCategories"
+     aria-labelledby="offcanvasCategoriesLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasCategoriesLabel">{% trans "Categories" %}</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+  </div>
+
+  <div class="offcanvas-body d-flex flex-column">
+    <!-- Lista de categorías -->
+    <ul class="list-unstyled flex-grow-1">
+      {% for cat in categories %}
+      <li class="mb-2">
+        <a class="text-white text-decoration-none"
+           href="{% url 'products:product_list' %}?category={{ cat.id }}">
+          {{ cat.name }}
+        </a>
+      </li>
+      {% empty %}
+      <li class="text-muted">{% trans "No categories" %}</li>
+      {% endfor %}
+    </ul>
+
+    <!-- Selector de idioma -->
+    <div class="language-switcher mt-auto pt-3 border-top">
+      <form action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <div class="btn-group w-100">
+          <button type="submit" name="language" value="en" class="btn btn-sm btn-outline-light">🇬🇧 EN</button>
+          <button type="submit" name="language" value="es" class="btn btn-sm btn-outline-light">🇪🇸 ES</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+        <!-- Center: SOLO logo -->
+        <a class="navbar-brand mx-auto" href="{% url 'core:home' %}">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-logo">
+        </a>
+
+        <!-- Right: Enlace al carrito -->
+        <a class="nav-link text-white position-relative" href="{% url 'cart:cart_detail' %}">
+            <span class="me-1"><i class="fa-solid fa-cart-shopping fa-flip-horizontal"></i></span>
+            <span class="d-none d-sm-inline">{% trans "Cart" %}</span>
+            {% if cart_total_items %}
+            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+                {{ cart_total_items }}
+            </span>
+            {% endif %}
+        </a>
+    </div>
+</nav>

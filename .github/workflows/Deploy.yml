@@ -1,0 +1,43 @@
+name: Deploy (VPS with Compose + GHCR)
+
+on:
+  workflow_run:
+    workflows: ["Build (GHCR)"]
+    types:
+      - completed
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 Deploy on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd /srv/portfoliolab/deploy
+
+            echo "🔹 Logging in to GHCR..."
+            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u vasilako --password-stdin
+
+            echo "🔹 Pulling latest image..."
+            docker pull ghcr.io/vasilako/projectmanagementpf:latest
+
+            echo "🔹 Restarting containers..."
+            docker compose down
+            docker compose up -d --remove-orphans
+
+            echo "🔹 Applying migrations..."
+            docker compose exec -T web python manage.py migrate --noinput || true
+            docker compose exec -T web python manage.py collectstatic --noinput || true
+
+            echo "✅ Deployment completed!"

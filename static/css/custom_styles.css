@@ -1,0 +1,130 @@
+/* === custom_styles.css === */
+
+/* Centrar el logo en el navbar */
+.brand-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .25rem .75rem;
+    border-radius: .5rem;
+    background: rgba(255, 255, 255, 0.06);
+    font-weight: 600;
+}
+
+/* Menú de categorías colapsable */
+.categories-popover {
+    position: absolute;
+    top: 100%; /* justo debajo del navbar */
+    left: 0;
+    margin-top: .5rem;
+    z-index: 1050;
+    min-width: 220px;
+}
+
+/* Icono del carrito */
+i.fa-solid.fa-cart-shopping.fa-flip-horizontal {
+    font-size: 2rem; /* más grande */
+}
+
+div.ms-auto:hover {
+    color: red; /* se pone rojo al pasar el mouse */
+}
+
+/* === Logo === */
+/* Tamaño base (móvil vertical) */
+.brand-logo {
+    height: 60px; /* controlamos la altura */
+    width: auto; /* el ancho se adapta */
+    max-height: 60px; /* no puede crecer más */
+    object-fit: contain; /* mantiene proporción interna */
+    display: block; /* evita que herede inline spacing */
+}
+
+
+/* Desktop y móvil horizontal */
+@media (min-width: 768px) and (orientation: landscape) {
+    .brand-logo {
+        height: 80px;
+        max-height: 80px;
+    }
+
+    .info-text {
+        font-size: 1.2rem;
+    }
+
+
+}
+
+/* Móvil vertical → logo encima del texto */
+@media (max-width: 767.98px) and (orientation: portrait) {
+    .navbar-brand {
+        flex-direction: column !important;
+    }
+
+    .brand-logo {
+        height: 100px;
+        max-height: 100px;
+    }
+
+    .info-text {
+        font-size: 1rem;
+    }
+}
+
+/* Forzar footer en columnas verticales hasta pantallas grandes */
+@media (max-width: 1199.98px) {
+     /* Footer ajustes móviles */
+     footer .row {
+    flex-direction: column !important; /* apilar */
+    text-align: center !important;     /* centrar todo */
+  }
+
+  footer .col-md-4 {
+    width: 100% !important;            /* ocupa todo */
+    justify-content: center !important;
+    margin-bottom: 0.75rem;            /* separación */
+  }
+
+  footer .col-md-4:last-child {
+    margin-bottom: 0;                  /* sin margen en el último */
+  }
+}
+
+/* Barra gris superior */
+.info-bar {
+    background: #8b8885;
+}
+
+.info-bar .info-text {
+    color: #fff;
+}
+
+/* Menu lateral */
+.offcanvas .list-unstyled a:hover {
+  color: #F2CA02 !important;
+}
+
+.offcanvas-backdrop {
+  background-color: rgba(0, 0, 0, 0.25) !important; /* fondo más claro */
+}
+
+
+/* Idioma en el sidebar */
+.language-switcher {
+  text-align: center;
+}
+
+.language-switcher .btn {
+  font-weight: 600;
+}
+.language-switcher .btn:hover {
+  background-color: rgba(255,255,255,0.15);
+}
+
+#payResult {
+  white-space: pre-line;
+}

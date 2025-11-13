@@ -1,0 +1,83 @@
+
+name: myapp-stack
+
+networks:
+  MyComposeNet:
+
+volumes:
+  pgdata:
+  static:
+  media:
+  caddy_data:
+  caddy_config:
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - /srv/portfoliolab/deploy/.env:/app/config/.env:ro # TODO Ojo debo apuntar esto bien
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    networks: [MyComposeNet]
+
+  web:
+    image: pfapp/img:${IMAGE_TAG}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - static:/app/staticfiles
+      - media:/app/media
+    expose:
+      - "8000"
+    networks: [MyComposeNet]
+
+  # TLS y estáticos (opcional pero recomendado)
+  caddy:
+    image: caddy:2.8
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /srv/portfoliolab/deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - static:/srv/static:ro
+      - media:/srv/media:ro
+    depends_on: [web]
+    networks: [MyComposeNet]
+
+  # Panel pgAdmin (solo por túnel localhost)
+  pgadmin:
+    image: dpage/pgadmin4:8
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_LISTEN_PORT=5050
+    ports:
+      - "127.0.0.1:5050:5050"
+    depends_on: [db]
+    networks: [MyComposeNet]
