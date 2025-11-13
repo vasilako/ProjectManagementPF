@@ -1,4 +1,5 @@
-name: BuildandPublish(GHCR)
+name: Build(GHCR)
+
 
 on:
   push:
