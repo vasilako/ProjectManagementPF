@@ -3,7 +3,7 @@ name: Deploy (VPS with Compose + GHCR)
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Build(GHCR)"]
+    workflows: [Build(GHCR)]
     types:
       - completed
     branches:
