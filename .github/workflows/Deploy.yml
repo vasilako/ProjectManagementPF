@@ -2,12 +2,11 @@ name: Deploy (VPS with Compose + GHCR)
 
 on:
   workflow_run:
-    workflows: ["Build (GHCR)"]  # debe coincidir exactamente con el name del build.yml
+    workflows: ["Build (GHCR)"]
     types:
       - completed
     branches:
       - develop
-
 
 jobs:
   deploy:
