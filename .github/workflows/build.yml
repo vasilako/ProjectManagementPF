@@ -1,5 +1,4 @@
-name: Build(GHCR)
-
+name: Build (GHCR)
 
 on:
   push:
@@ -18,21 +17,21 @@ jobs:
       IMAGE_TAG: ${{ github.sha }}
 
     steps:
-      - name: Checkout
+      - name: 🧩 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Log in to GitHub Container Registry
+      - name: 🔐 Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build image
+      - name: 🏗️ Build Docker image
         run: |
           docker build -t $IMAGE_NAME:$IMAGE_TAG -t $IMAGE_NAME:latest .
           docker images | grep projectmanagementpf
 
-      - name: Push image to GHCR
+      - name: 📦 Push image to GHCR
         run: |
           docker push $IMAGE_NAME:$IMAGE_TAG
           docker push $IMAGE_NAME:latest
 
-      - name: Output image tag
-        run: echo "✅ Published"
+      - name: ✅ Output image tag
+        run: echo "✅ Published image: $IMAGE_NAME:$IMAGE_TAG"

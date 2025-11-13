@@ -1,9 +1,8 @@
 name: Deploy (VPS with Compose + GHCR)
 
 on:
-  workflow_dispatch:
   workflow_run:
-    workflows: [Build(GHCR)]
+    workflows: ["Build (GHCR)"]  # debe coincidir exactamente con el name del build.yml
     types:
       - completed
     branches:
@@ -11,10 +10,11 @@ on:
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy on VPS
+      - name: 🚀 Deploy on VPS
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
