@@ -1,15 +1,15 @@
 name: Deploy (VPS with Compose + GHCR)
 
 on:
-  workflow_run:
-    workflows: ["Build (GHCR)"]
+  workflow_dispatch:  # 🔹 Permite ejecutarlo manualmente desde Actions
+  workflow_run:       # 🔹 Se ejecuta automáticamente tras "Build (GHCR)"
+    workflows: ["Build (GHCR)"]  # Debe coincidir EXACTAMENTE con el name del build.yml
     types:
       - completed
-    branches:
-      - develop
 
 jobs:
   deploy:
+    # 🔹 Solo continúa si el workflow anterior ("Build") terminó con éxito
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
