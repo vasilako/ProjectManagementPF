@@ -30,6 +30,7 @@ services:
       retries: 20
     networks: [MyComposeNet]
 
+
   web:
     image: ghcr.io/vasilako/projectmanagementpf:latest
     restart: unless-stopped
